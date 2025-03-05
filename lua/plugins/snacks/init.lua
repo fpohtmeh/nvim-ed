@@ -1,5 +1,7 @@
 return {
   "folke/snacks.nvim",
+  priority = 1000,
+  lazy = false,
   opts = {
     dashboard = require("plugins.snacks.dashboard"),
     lazygit = {
@@ -7,6 +9,9 @@ return {
     },
     notifier = {
       top_down = false,
+    },
+    picker = {
+      layout = { preset = "ivy" },
     },
     styles = {
       notification = { focusable = false },
@@ -22,4 +27,5 @@ return {
       show = { statusline = true },
     },
   },
+  keys = require("plugins.snacks.keys"),
 }
