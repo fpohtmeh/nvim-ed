@@ -36,6 +36,14 @@ map("n", "<leader><A-x>", function()
 end, { desc = "Delete Other Buffers" })
 map("n", "<leader>X", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
 
+-- Terminal
+-- stylua: ignore start
+map("n", "<c-/>", function() Snacks.terminal() end, { desc = "Terminal" })
+map("n", "<c-_>", function() Snacks.terminal() end, { desc = "which_key_ignore" })
+map("t", "<c-/>", "<cmd>close<cr>", { desc = "Hide Terminal" })
+map("t", "<c-_>", "<cmd>close<cr>", { desc = "which_key_ignore" })
+-- stylua: ignore end
+
 -- Lazygit
 if vim.fn.executable("lazygit") == 1 then
   map("n", "<leader>G", function()
