@@ -36,3 +36,9 @@ map("n", "<leader><A-x>", function()
 end, { desc = "Delete Other Buffers" })
 map("n", "<leader>X", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
 
+-- Lazygit
+if vim.fn.executable("lazygit") == 1 then
+  map("n", "<leader>G", function()
+    Snacks.lazygit({ cwd = Snacks.git.get_root() })
+  end, { desc = "Lazygit" })
+end
