@@ -38,3 +38,7 @@ opt.updatetime = 200
 opt.virtualedit = "block"
 opt.winminwidth = 5
 opt.wrap = false
+
+if vim.fn.has("win32") == 1 then
+  require("core.terminal").setup("pwsh")
+end
