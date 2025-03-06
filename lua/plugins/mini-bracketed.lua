@@ -13,7 +13,7 @@ end
 
 return {
   "echasnovski/mini.bracketed",
-  lazy = false,
+  event = "BufReadPre",
   opts = {
     buffer = { suffix = "" },
     comment = { suffix = "" },
