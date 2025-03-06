@@ -6,7 +6,7 @@ return {
       col = 0,
       width = 0,
       height = function()
-        return vim.o.lines - 2
+        return vim.o.lines - 1
       end,
       backdrop = false,
     },

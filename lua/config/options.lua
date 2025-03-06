@@ -8,6 +8,7 @@ vim.g.snacks_scroll = false
 local opt = vim.opt
 
 opt.clipboard = vim.env.SSH_TTY and "" or "unnamedplus"
+opt.cmdheight = 0
 opt.confirm = true
 opt.cursorline = true
 opt.expandtab = true
