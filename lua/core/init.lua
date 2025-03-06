@@ -7,4 +7,14 @@ M.keys = {
   prev = ",",
 }
 
+M.indentation = {
+  excluded_filetypes = {
+    "help",
+    "lazy",
+    "snacks_dashboard",
+    "log",
+    "Outline",
+  },
+}
+
 return M

@@ -6,6 +6,7 @@ return {
   lazy = false,
   opts = {
     dashboard = require("plugins.snacks.dashboard"),
+    indent = { enabled = false },
     lazygit = {
       configure = false,
     },

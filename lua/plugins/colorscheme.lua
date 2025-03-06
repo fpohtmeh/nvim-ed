@@ -27,6 +27,9 @@ return {
       hl.MiniStatuslineFilename = { fg = c.green, bg = c.bg }
       hl.MiniStatuslineFileinfo = { fg = c.blue, bg = c.bg_highlight }
       hl.MiniStatuslineInactive = { fg = c.green, bg = c.bg }
+
+      -- Indentation
+      hl.MiniIndentscopeSymbol = { fg = c.green }
     end,
   },
   init = function()
