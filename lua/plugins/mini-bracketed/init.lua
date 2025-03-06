@@ -1,0 +1,21 @@
+return {
+  "echasnovski/mini.bracketed",
+  event = "BufReadPre",
+  opts = {
+    buffer = { suffix = "" },
+    comment = { suffix = "" },
+    conflict = { suffix = "" },
+    diagnostic = { suffix = "" },
+    file = { suffix = "" },
+    indent = { suffix = "" },
+    jump = { suffix = "" },
+    location = { suffix = "" },
+    oldfile = { suffix = "" },
+    quickfix = { suffix = "" },
+    treesitter = { suffix = "" },
+    undo = { suffix = "" },
+    window = { suffix = "" },
+    yank = { suffix = "" },
+  },
+  keys = require("plugins.mini-bracketed.keys"),
+}
