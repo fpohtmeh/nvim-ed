@@ -13,9 +13,7 @@ return {
     picker = {
       layout = { preset = "ivy" },
     },
-    styles = {
-      notification = { focusable = false },
-    },
+    styles = require("plugins.snacks.styles"),
     terminal = {
       win = {
         keys = { nav_h = false, nav_j = false, nav_k = false, nav_l = false },
