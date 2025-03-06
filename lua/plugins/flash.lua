@@ -10,6 +10,9 @@ return {
       search = {
         enabled = true,
       },
+      char = {
+        keys = { "f", "F", "t", "T" },
+      },
     },
   },
   keys = {
