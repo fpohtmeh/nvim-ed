@@ -24,7 +24,7 @@ return {
     },
     zen = {
       toggles = { git_signs = true },
-      show = { statusline = true },
+      show = { statusline = true, tabline = false },
     },
   },
   keys = require("plugins.snacks.keys"),
