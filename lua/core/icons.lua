@@ -6,4 +6,6 @@ M.package = {
   uninstalled = "󰚌",
 }
 
+M.mark = ""
+
 return M

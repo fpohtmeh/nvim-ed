@@ -10,6 +10,7 @@ return {
       end,
       backdrop = false,
     },
+    zoom_indicator = { text = " 󰊓 zoom " },
   },
   notification = function(buf, notif, ctx)
     ctx.opts.border = "single"

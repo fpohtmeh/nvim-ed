@@ -1,3 +1,4 @@
+local icons = require("core.icons")
 local styles = require("plugins.snacks.styles")
 
 return {
@@ -16,6 +17,11 @@ return {
     },
     picker = {
       layout = { preset = "ivy" },
+      icons = {
+        ui = {
+          selected = icons.mark .. " ",
+        },
+      },
     },
     styles = styles.config,
     terminal = {
