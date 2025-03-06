@@ -12,7 +12,6 @@ return {
       hl.Comment = { fg = c.comment, italic = false }
       hl.PmenuThumb = { bg = c.fg }
       hl.WinSeparator = { fg = c.blue }
-
       -- Snacks
       hl.SnacksDashboardHeader = { fg = c.blue }
       hl.SnacksDashboardDesc = { fg = c.green }
@@ -21,15 +20,18 @@ return {
       hl.SnacksDashboardTitle = { fg = c.blue }
       hl.SnacksNotifierBorderInfo = { fg = c.blue }
       hl.SnacksNotifierIconInfo = { fg = c.blue }
-
       -- Statusline
       hl.MiniStatuslineDevinfo = { fg = c.blue, bg = c.bg_highlight }
       hl.MiniStatuslineFilename = { fg = c.green, bg = c.bg }
       hl.MiniStatuslineFileinfo = { fg = c.blue, bg = c.bg_highlight }
       hl.MiniStatuslineInactive = { fg = c.green, bg = c.bg }
-
       -- Indentation
       hl.MiniIndentscopeSymbol = { fg = c.green }
+      -- Flash
+      local flash_fg = "#1B1D2B"
+      hl.FlashCurrent = { fg = c.fg, bg = c.blue0 }
+      hl.FlashMatch = { fg = flash_fg, bg = c.blue }
+      hl.FlashLabel = { fg = flash_fg, bg = c.yellow }
     end,
   },
   init = function()
