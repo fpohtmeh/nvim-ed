@@ -1,5 +1,9 @@
 local M = {}
 
+M.cwd = function()
+  return vim.fn.getcwd()
+end
+
 M.path_exists = function(path)
   return vim.loop.fs_stat(path) and true or false
 end
