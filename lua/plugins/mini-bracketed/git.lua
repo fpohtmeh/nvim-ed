@@ -15,6 +15,9 @@ H.get_git_data = function()
       table.insert(file_basenames, file)
     end
   end
+  if #file_basenames == 0 then
+    return nil
+  end
   table.sort(file_basenames)
 
   return {
