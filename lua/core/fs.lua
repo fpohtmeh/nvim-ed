@@ -1,5 +1,9 @@
 local M = {}
 
+M.path_exists = function(path)
+  return vim.loop.fs_stat(path) and true or false
+end
+
 M.to_escaped = function(path)
   return path:gsub(" ", "\\ ")
 end
