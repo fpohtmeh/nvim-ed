@@ -19,6 +19,8 @@ return {
       hl.SnacksDashboardIcon = { fg = c.blue }
       hl.SnacksDashboardKey = { fg = c.blue }
       hl.SnacksDashboardTitle = { fg = c.blue }
+      hl.SnacksNotifierBorderInfo = { fg = c.blue }
+      hl.SnacksNotifierIconInfo = { fg = c.blue }
 
       -- Statusline
       hl.MiniStatuslineDevinfo = { fg = c.blue, bg = c.bg_highlight }

@@ -1,3 +1,5 @@
+local styles = require("plugins.snacks.styles")
+
 return {
   "folke/snacks.nvim",
   priority = 1000,
@@ -9,11 +11,12 @@ return {
     },
     notifier = {
       top_down = false,
+      style = styles.notification,
     },
     picker = {
       layout = { preset = "ivy" },
     },
-    styles = require("plugins.snacks.styles"),
+    styles = styles.config,
     terminal = {
       win = {
         keys = { nav_h = false, nav_j = false, nav_k = false, nav_l = false },
