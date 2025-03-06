@@ -21,8 +21,9 @@ map({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = tru
 -- Save
 map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
 
--- Quit
+-- Quit, Close
 map("n", "<leader>q", "<cmd>qa<cr>", { desc = "Quit All" })
+map("n", "<leader>w", "<cmd>close<cr>", { desc = "Close" })
 
 -- Lazy
 map("n", "<leader>L", "<cmd>Lazy<cr>", opts)
