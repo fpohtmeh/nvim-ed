@@ -1,14 +1,15 @@
 local function add_buffer_mappings(buffer)
+  local keys = require("core").keys
   local actions = require("plugins.git.actions")
 
   local function map(mode, l, r, desc)
     vim.keymap.set(mode, l, r, { buffer = buffer, desc = desc })
   end
 
-  map("n", "]h", actions.nav_next_hunk, "Next Hunk")
-  map("n", "[h", actions.nav_prev_hunk, "Prev Hunk")
-  map("n", "]H", actions.nav_last_hunk, "Last Hunk")
-  map("n", "[H", actions.nav_first_hunk, "First Hunk")
+  map("n", keys.prev .. "h", actions.nav_prev_hunk, "Prev Hunk")
+  map("n", keys.next .. "h", actions.nav_next_hunk, "Next Hunk")
+  map("n", keys.prev .. "H", actions.nav_first_hunk, "First Hunk")
+  map("n", keys.next .. "H", actions.nav_last_hunk, "Last Hunk")
 
   map("n", "<leader>hs", actions.stage_hunk, "Stage Hunk")
   map("n", "<leader>hr", actions.reset_hunk, "Reset Hunk")
