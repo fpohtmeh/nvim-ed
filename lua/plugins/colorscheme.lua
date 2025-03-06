@@ -19,6 +19,12 @@ return {
       hl.SnacksDashboardIcon = { fg = c.blue }
       hl.SnacksDashboardKey = { fg = c.blue }
       hl.SnacksDashboardTitle = { fg = c.blue }
+
+      -- Statusline
+      hl.MiniStatuslineDevinfo = { fg = c.blue, bg = c.bg_highlight }
+      hl.MiniStatuslineFilename = { fg = c.green, bg = c.bg }
+      hl.MiniStatuslineFileinfo = { fg = c.blue, bg = c.bg_highlight }
+      hl.MiniStatuslineInactive = { fg = c.green, bg = c.bg }
     end,
   },
   init = function()
