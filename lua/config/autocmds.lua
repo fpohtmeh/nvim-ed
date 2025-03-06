@@ -13,3 +13,10 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = require("core").indentation.excluded_filetypes,
   callback = disable_indentation,
 })
+
+-- Yank
+vim.api.nvim_create_autocmd("TextYankPost", {
+  callback = function()
+    vim.highlight.on_yank({ higroup = "FlashLabel", timeout = 250 })
+  end,
+})
