@@ -23,14 +23,6 @@ $  $$$    $$$$$$$$$$$$$$$$$$    $$$  $
 M.keys = {
   { action = ":ene | startinsert", desc = "New file", icon = "", key = "n" },
   { action = ':lua require("persistence").load()', desc = "Restore Session", icon = "", key = "s" },
-  { action = ":Git status", desc = "Git status", icon = "", key = "g" },
-  { action = ":Lazy", desc = "Lazy", icon = "", key = "l" },
-  {
-    action = ":lua Snacks.dashboard.pick('files', { cwd = vim.fn.stdpath('config') })",
-    desc = "Config",
-    icon = "",
-    key = "c",
-  },
   { action = ":qa", desc = "Quit", icon = "", key = "q" },
 }
 

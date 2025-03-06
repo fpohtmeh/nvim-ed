@@ -14,8 +14,11 @@ return {
       hl.WinSeparator = { fg = c.blue }
 
       -- Snacks
-      hl.SnacksDashboardHeader = hl.ErrorMsg
-      hl.SnacksDashboardTitle = hl.Comment
+      hl.SnacksDashboardHeader = { fg = c.blue }
+      hl.SnacksDashboardDesc = { fg = c.green }
+      hl.SnacksDashboardIcon = { fg = c.blue }
+      hl.SnacksDashboardKey = { fg = c.blue }
+      hl.SnacksDashboardTitle = { fg = c.blue }
     end,
   },
   init = function()
