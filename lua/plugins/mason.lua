@@ -1,3 +1,6 @@
+local border = require("core").border
+local icons = require("core.icons").package
+
 return {
   "williamboman/mason.nvim",
   cmd = "Mason",
@@ -9,6 +12,16 @@ return {
     ensure_installed = {
       "stylua",
       "shfmt",
+    },
+    ui = {
+      width = 0.7,
+      height = 0.85,
+      border = border,
+      icons = {
+        package_pending = icons.pending,
+        package_installed = icons.installed,
+        package_uninstalled = icons.uninstalled,
+      },
     },
   },
   config = function(_, opts)
