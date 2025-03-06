@@ -62,8 +62,7 @@ M.toggle_tasks_list = function()
 end
 
 M.toggle_recent_task_output = function()
-  local utils = require("core.utils")
-  local win = utils.find_window_by_filetype("OverseerOutput")
+  local win = require("core.fn").find_window_by_filetype("OverseerOutput")
   if win ~= nil then
     vim.api.nvim_win_close(win, false)
     return

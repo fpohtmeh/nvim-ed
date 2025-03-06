@@ -1,5 +1,5 @@
 local function make_keymap(letter, action, direction)
-  local capitalize = require("core.utils").capitalize
+  local capitalize = require("core.fn").capitalize
   letter = (direction == "first" or direction == "last") and capitalize(letter) or letter
   local keys = require("core").keys
   local key_dir = (direction == "first" or direction == "backward") and keys.prev or keys.next
