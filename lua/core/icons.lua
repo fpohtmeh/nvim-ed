@@ -7,5 +7,6 @@ M.package = {
 }
 
 M.mark = ""
+M.separator = ""
 
 return M

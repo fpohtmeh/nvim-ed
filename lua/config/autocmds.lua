@@ -20,3 +20,11 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     vim.highlight.on_yank({ higroup = "FlashLabel", timeout = 250 })
   end,
 })
+
+-- Grug-far
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "grug-far" },
+  callback = function(event)
+    require("plugins.grug-far.keymaps").attach_to_buffer(event.buf)
+  end,
+})
