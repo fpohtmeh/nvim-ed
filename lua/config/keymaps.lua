@@ -83,3 +83,12 @@ if vim.fn.executable("lazygit") == 1 then
     Snacks.lazygit({ cwd = Snacks.git.get_root() })
   end, { desc = "Lazygit" })
 end
+
+-- LSP
+-- stylua: ignore start
+map("n", "gd", function() Snacks.picker.lsp_definitions() end, { desc = "Goto Definition" })
+map("n", "gD", function() Snacks.picker.lsp_declarations() end, { desc = "Goto Declaration" })
+map("n", "gr", function() Snacks.picker.lsp_references() end, { nowait = true, desc = "References" })
+map("n", "gI", function() Snacks.picker.lsp_implementations() end, { desc = "Goto Implementation" })
+map("n", "gy", function() Snacks.picker.lsp_type_definitions() end, { desc = "Goto Type Definition" })
+-- stylua: ignore end
