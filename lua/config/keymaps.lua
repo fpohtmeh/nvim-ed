@@ -36,6 +36,14 @@ map("n", "<leader><A-x>", function()
 end, { desc = "Delete Other Buffers" })
 map("n", "<leader>X", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
 
+-- Move Lines
+map("n", "<A-j>", "<cmd>execute 'move .+' . v:count1<cr>==", { desc = "Move Down" })
+map("n", "<A-k>", "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==", { desc = "Move Up" })
+map("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", { desc = "Move Down" })
+map("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", { desc = "Move Up" })
+map("v", "<A-j>", ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv", { desc = "Move Down" })
+map("v", "<A-k>", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", { desc = "Move Up" })
+
 -- Terminal
 -- stylua: ignore start
 map("n", "<c-/>", function() Snacks.terminal() end, { desc = "Terminal" })
