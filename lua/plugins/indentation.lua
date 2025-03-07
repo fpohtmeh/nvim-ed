@@ -3,7 +3,7 @@ local excluded_filetypes = require("core").indentation.excluded_filetypes
 local mini = {
   "echasnovski/mini.indentscope",
   version = false,
-  event = "BufReadPre",
+  event = "LazyFile",
   opts = {
     symbol = "│",
     options = { try_as_border = true },
@@ -17,7 +17,7 @@ local mini = {
 
 local blankline = {
   "lukas-reineke/indent-blankline.nvim",
-  event = "BufReadPre",
+  event = "LazyFile",
   opts = {
     indent = {
       char = "│",

@@ -25,7 +25,7 @@ end
 
 return {
   "lewis6991/gitsigns.nvim",
-  event = "BufReadPre",
+  event = "LazyFile",
   opts = {
     signs = {
       add = { text = "▎" },
