@@ -31,6 +31,20 @@ H.replace_icons = function(str, hl, map)
   return res
 end
 
+M.section_filename = function()
+  local args = { trunc_width = 140 }
+  if vim.bo.buftype == "terminal" then
+    return "%t"
+  end
+
+  local modified = vim.bo.modified and " " .. H.icons.modified or ""
+  if MiniStatusline.is_truncated(args.trunc_width) then
+    return "%f%r" .. modified
+  else
+    return "%F%r" .. modified
+  end
+end
+
 M.section_diff = function(hl)
   local args = { trunc_width = 75, icon = "" }
   local diff = require("mini.statusline").section_diff(args):sub(2)

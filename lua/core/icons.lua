@@ -6,6 +6,7 @@ M.package = {
   uninstalled = "󰚌",
 }
 
+M.modified = "●"
 M.mark = ""
 M.separator = ""
 
