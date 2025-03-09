@@ -2,6 +2,7 @@ return {
   "stevearc/conform.nvim",
   event = { "BufWritePre" },
   cmd = { "ConformInfo" },
+  dependencies = { "mason.nvim" },
   opts = {
     formatters_by_ft = {
       lua = { "stylua" },
