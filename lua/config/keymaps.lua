@@ -57,46 +57,31 @@ map("n", keys.prev .. "<A-q>", function() pcall(vim.cmd.colder) end, { desc = "P
 map("n", keys.next .. "<A-q>", function() pcall(vim.cmd.cnewer) end, { desc = "Next Quickfix list" })
 -- stylua: ignore end
 
--- Diagnostic
-local diagnostic_goto = function(next, severity)
-  local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
-  severity = severity and vim.diagnostic.severity[severity] or nil
-  return function()
-    go({ severity = severity, float = false })
-  end
-end
-map("n", keys.prev .. "d", diagnostic_goto(false), { desc = "Prev Diagnostic" })
-map("n", keys.next .. "d", diagnostic_goto(true), { desc = "Next Diagnostic" })
-map("n", keys.prev .. "e", diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
-map("n", keys.next .. "e", diagnostic_goto(true, "ERROR"), { desc = "Next Error" })
-map("n", keys.prev .. "w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
-map("n", keys.next .. "w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
-
 -- Terminal
--- stylua: ignore start
-map("n", "<c-/>", function() Snacks.terminal() end, { desc = "Terminal" })
-map("n", "<c-_>", function() Snacks.terminal() end, { desc = "which_key_ignore" })
-map("t", "<c-/>", "<cmd>close<cr>", { desc = "Hide Terminal" })
-map("t", "<c-_>", "<cmd>close<cr>", { desc = "which_key_ignore" })
--- stylua: ignore end
+local terminal = require("core.terminal")
+map("n", "<c-/>", terminal.open, { desc = "Terminal" })
+map("n", "<c-_>", terminal.open, { desc = "which_key_ignore" })
+map("t", "<c-/>", terminal.close, { desc = "Hide Terminal" })
+map("t", "<c-_>", terminal.close, { desc = "which_key_ignore" })
 
 -- Lazygit
 if vim.fn.executable("lazygit") == 1 then
-  --@type snacks.lazygit.Config
-  local lazygit_opts = { cwd = Snacks.git.get_root() }
-  -- stylua: ignore
-  map("n", "<leader>G", function() Snacks.lazygit(lazygit_opts) end, { desc = "Lazygit" })
+  map("n", "<leader>G", terminal.lazy_git, { desc = "Lazygit" })
 end
 
 -- LSP
-local rename = function()
-  return ":" .. require("inc_rename").config.cmd_name .. " " .. vim.fn.expand("<cword>")
-end
-map("n", "gr", rename, { expr = true, desc = "Rename" })
--- stylua: ignore start
-map("n", "gd", function() Snacks.picker.lsp_definitions() end, { desc = "Goto Definition" })
-map("n", "gD", function() Snacks.picker.lsp_declarations() end, { desc = "Goto Declaration" })
-map("n", "gR", function() Snacks.picker.lsp_references() end, { nowait = true, desc = "References" })
-map("n", "gI", function() Snacks.picker.lsp_implementations() end, { desc = "Goto Implementation" })
-map("n", "gY", function() Snacks.picker.lsp_type_definitions() end, { desc = "Goto Type Definition" })
--- stylua: ignore end
+local lsp = require("core.lsp")
+map("n", "gr", lsp.rename, { expr = true, desc = "Rename" })
+map("n", "gd", lsp.pick.definition, { desc = "Goto Definition" })
+map("n", "gD", lsp.pick.declaration, { desc = "Goto Declaration" })
+map("n", "gR", lsp.pick.reference, { nowait = true, desc = "References" })
+map("n", "gI", lsp.pick.implementation, { desc = "Goto Implementation" })
+map("n", "gY", lsp.pick.type_definition, { desc = "Goto Type Definition" })
+
+-- Diagnostic
+map("n", keys.prev .. "d", lsp.diagnostic.goto(false), { desc = "Prev Diagnostic" })
+map("n", keys.next .. "d", lsp.diagnostic.goto(true), { desc = "Next Diagnostic" })
+map("n", keys.prev .. "e", lsp.diagnostic.goto(false, "ERROR"), { desc = "Prev Error" })
+map("n", keys.next .. "e", lsp.diagnostic.goto(true, "ERROR"), { desc = "Next Error" })
+map("n", keys.prev .. "w", lsp.diagnostic.goto(false, "WARN"), { desc = "Prev Warning" })
+map("n", keys.next .. "w", lsp.diagnostic.goto(true, "WARN"), { desc = "Next Warning" })

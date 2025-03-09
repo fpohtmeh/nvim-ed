@@ -19,4 +19,18 @@ function M.setup(shell)
   end
 end
 
+function M.open()
+  Snacks.terminal()
+end
+
+function M.close()
+  vim.cmd.close()
+end
+
+function M.lazy_git()
+  --@type snacks.lazygit.Config
+  local lazygit_opts = { cwd = Snacks.git.get_root() }
+  Snacks.lazygit(lazygit_opts)
+end
+
 return M
