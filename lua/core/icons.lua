@@ -9,4 +9,11 @@ M.package = {
 M.mark = ""
 M.separator = ""
 
+M.diagnostics = {
+  error = " ",
+  warn = " ",
+  hint = " ",
+  info = " ",
+}
+
 return M

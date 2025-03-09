@@ -37,13 +37,11 @@ map("n", keys.prev .. "b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 map("n", keys.next .. "b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 
 -- Delete buffer
-map("n", "<leader>x", function()
-  Snacks.bufdelete()
-end, { desc = "Delete Buffer" })
-map("n", "<leader><A-x>", function()
-  Snacks.bufdelete.other()
-end, { desc = "Delete Other Buffers" })
+-- stylua: ignore start
+map("n", "<leader>x", function() Snacks.bufdelete() end, { desc = "Delete Buffer" })
+map("n", "<leader><A-x>", function() Snacks.bufdelete.other() end, { desc = "Delete Other Buffers" })
 map("n", "<leader>X", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
+-- stylua: ignore end
 
 -- Move Lines
 map("n", "<A-j>", "<cmd>execute 'move .+' . v:count1<cr>==", { desc = "Move Down" })
@@ -84,16 +82,21 @@ map("t", "<c-_>", "<cmd>close<cr>", { desc = "which_key_ignore" })
 
 -- Lazygit
 if vim.fn.executable("lazygit") == 1 then
-  map("n", "<leader>G", function()
-    Snacks.lazygit({ cwd = Snacks.git.get_root() })
-  end, { desc = "Lazygit" })
+  --@type snacks.lazygit.Config
+  local lazygit_opts = { cwd = Snacks.git.get_root() }
+  -- stylua: ignore
+  map("n", "<leader>G", function() Snacks.lazygit(lazygit_opts) end, { desc = "Lazygit" })
 end
 
 -- LSP
+local rename = function()
+  return ":" .. require("inc_rename").config.cmd_name .. " " .. vim.fn.expand("<cword>")
+end
+map("n", "gr", rename, { expr = true, desc = "Rename" })
 -- stylua: ignore start
 map("n", "gd", function() Snacks.picker.lsp_definitions() end, { desc = "Goto Definition" })
 map("n", "gD", function() Snacks.picker.lsp_declarations() end, { desc = "Goto Declaration" })
-map("n", "gr", function() Snacks.picker.lsp_references() end, { nowait = true, desc = "References" })
+map("n", "gR", function() Snacks.picker.lsp_references() end, { nowait = true, desc = "References" })
 map("n", "gI", function() Snacks.picker.lsp_implementations() end, { desc = "Goto Implementation" })
-map("n", "gy", function() Snacks.picker.lsp_type_definitions() end, { desc = "Goto Type Definition" })
+map("n", "gY", function() Snacks.picker.lsp_type_definitions() end, { desc = "Goto Type Definition" })
 -- stylua: ignore end
