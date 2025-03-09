@@ -16,4 +16,10 @@ M.diagnostics = {
   info = " ",
 }
 
+M.git = {
+  added = " ",
+  modified = " ",
+  removed = " ",
+}
+
 return M

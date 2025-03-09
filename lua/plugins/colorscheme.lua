@@ -32,10 +32,13 @@ return {
       hl.MiniStatuslineFilename = { fg = c.green, bg = c.bg }
       hl.MiniStatuslineFileinfo = { fg = c.blue, bg = c.bg_highlight }
       hl.MiniStatuslineInactive = { fg = c.green, bg = c.bg }
-      hl.MiniStatuslineDiagnosticError = { fg = hl.DiagnosticError.fg, bg = c.bg_highlight }
-      hl.MiniStatuslineDiagnosticWarn = { fg = hl.DiagnosticWarn.fg, bg = c.bg_highlight }
-      hl.MiniStatuslineDiagnosticInfo = { fg = hl.DiagnosticInfo.fg, bg = c.bg_highlight }
-      hl.MiniStatuslineDiagnosticHint = { fg = hl.DiagnosticHint.fg, bg = c.bg_highlight }
+      hl.MiniStatuslineDiagnosticError = { fg = hl.DiagnosticError.fg }
+      hl.MiniStatuslineDiagnosticWarn = { fg = hl.DiagnosticWarn.fg }
+      hl.MiniStatuslineDiagnosticInfo = { fg = hl.DiagnosticInfo.fg }
+      hl.MiniStatuslineDiagnosticHint = { fg = hl.DiagnosticHint.fg }
+      hl.MiniStatuslineGitAdded = { fg = c.git.add }
+      hl.MiniStatuslineGitModified = { fg = c.git.change }
+      hl.MiniStatuslineGitRemoved = { fg = c.git.delete }
       -- Indentation
       hl.MiniIndentscopeSymbol = { fg = c.green }
       -- Flash
