@@ -6,7 +6,7 @@ H.get_git_data = function()
   local file_basenames = {}
   local fs = require("core.fs")
 
-  local list = vim.fn.systemlist({ "git", "status", "--porcelain=v1" })
+  local list = vim.fn.systemlist({ "git", "status", "-u", "--porcelain=v1" })
   for i, v in ipairs(list) do
     local status = string.sub(v, 1, 2)
     local is_staged = string.sub(status, 2) == " "
@@ -65,12 +65,12 @@ Bracketed.git = function(direction, opts)
     return ind - 1
   end
 
-  local path_sep = package.config:sub(1, 1)
-  local cur_filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":~")
+  local fs = require("core.fs")
+  local cur_filename = fs.buf_full_path()
   local cur_basename_ind
   if cur_basename ~= "" then
     for i, f in ipairs(file_basenames) do
-      if cur_filename == directory .. path_sep .. f then
+      if cur_filename == fs.join(directory, f) then
         cur_basename_ind = i
         break
       end
@@ -86,6 +86,6 @@ Bracketed.git = function(direction, opts)
     return
   end
 
-  local target_path = directory .. path_sep .. file_basenames[res_ind]
+  local target_path = fs.join(directory, file_basenames[res_ind])
   engine.edit(target_path)
 end
