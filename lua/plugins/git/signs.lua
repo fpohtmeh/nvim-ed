@@ -36,6 +36,7 @@ return {
       untracked = { text = "▎" },
     },
     signs_staged_enable = false,
+    attach_to_untracked = true,
     on_attach = add_buffer_mappings,
   },
 }
