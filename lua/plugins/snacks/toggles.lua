@@ -1,0 +1,14 @@
+local M = {}
+
+function M.setup()
+  Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
+  Snacks.toggle.diagnostics():map("<leader>ud")
+  Snacks.toggle.line_number():map("<leader>ul")
+  Snacks.toggle.option("relativenumber", { name = "Relative Numbers" }):map("<leader>uL")
+
+  local format = require("core.format")
+  format.toggle(false):map("<leader>uF")
+  format.toggle(true):map("<leader>uf")
+end
+
+return M

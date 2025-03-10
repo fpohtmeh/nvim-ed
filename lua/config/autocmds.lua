@@ -28,3 +28,11 @@ vim.api.nvim_create_autocmd("FileType", {
     require("plugins.grug-far.keymaps").attach_to_buffer(event.buf)
   end,
 })
+
+-- Format
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  callback = function(args)
+    require("core.format").format(args.buf)
+  end,
+})

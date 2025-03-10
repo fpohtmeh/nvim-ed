@@ -24,6 +24,7 @@ opt.foldenable = false
 opt.foldexpr = "nvim_treesitter#foldexpr()"
 opt.foldlevel = 99
 opt.foldmethod = "expr"
+opt.formatexpr = "v:lua.require'conform'.formatexpr()"
 opt.laststatus = 3
 opt.list = true
 opt.number = true

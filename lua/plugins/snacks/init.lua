@@ -28,4 +28,8 @@ return {
     },
   },
   keys = require("plugins.snacks.keys"),
+  config = function(_, opts)
+    require("snacks").setup(opts)
+    require("plugins.snacks.toggles").setup()
+  end,
 }
