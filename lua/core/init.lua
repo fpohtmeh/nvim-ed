@@ -14,6 +14,10 @@ M.indentation = {
     "log",
     "noice",
     "snacks_dashboard",
+    "snacks_terminal",
+    "OverseerForm",
+    "OverseerList",
+    "OverseerOutput",
     "Outline",
   },
 }
