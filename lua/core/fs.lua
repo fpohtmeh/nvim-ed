@@ -7,7 +7,7 @@ M.cwd = function()
 end
 
 M.path_exists = function(path)
-  return vim.loop.fs_stat(path) and true or false
+  return vim.uv.fs_stat(path) and true or false
 end
 
 M.join = function(path, name)
