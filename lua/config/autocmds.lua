@@ -36,3 +36,13 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     require("core.format").format(args.buf)
   end,
 })
+
+-- Block comment support
+local block_autocmd
+block_autocmd = vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "qml" },
+  callback = function()
+    require("Comment.ft").set("qml", { "//%s", "/*%s*/" })
+    pcall(vim.api.nvim_del_autocmd, block_autocmd)
+  end,
+})
