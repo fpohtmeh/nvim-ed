@@ -9,7 +9,7 @@ H.active = function()
   local diff = sections.section_diff("MiniStatuslineFilename")
   local diagnostics = sections.section_diagnostics("MiniStatuslineFilename")
   local filename = sections.section_filename()
-  local fileinfo = this.section_fileinfo({ trunc_width = 120 })
+  local fileinfo = sections.section_fileinfo()
   local location = this.section_location({ trunc_width = 75 })
   local search = this.section_searchcount({ trunc_width = 75 })
 

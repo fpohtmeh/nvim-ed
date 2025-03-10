@@ -45,6 +45,40 @@ M.section_filename = function()
   end
 end
 
+H.get_filesize = function()
+  local size = math.max(vim.fn.line2byte(vim.fn.line("$") + 1) - 1, 0)
+  if size < 1024 then
+    return string.format("%dB", size)
+  elseif size < 1048576 then
+    return string.format("%.2fKB", size / 1024)
+  else
+    return string.format("%.2fMB", size / 1048576)
+  end
+end
+
+H.get_icon = function()
+  local devicons = require("nvim-web-devicons")
+  return devicons.get_icon(vim.fn.expand("%:t"), nil, { default = true })
+end
+
+M.section_fileinfo = function()
+  local args = { trunc_width = 120 }
+
+  local filetype = vim.bo.filetype
+  if filetype ~= "" then
+    filetype = H.get_icon() .. " " .. filetype
+  end
+
+  if MiniStatusline.is_truncated(args.trunc_width) or vim.bo.buftype ~= "" then
+    return filetype
+  end
+
+  local encoding = vim.bo.fileencoding or vim.bo.encoding
+  local size = H.get_filesize()
+
+  return string.format("%s%s%s %s", filetype, filetype == "" and "" or " ", encoding, size)
+end
+
 M.section_diff = function(hl)
   local args = { trunc_width = 75, icon = "" }
   local diff = require("mini.statusline").section_diff(args):sub(2)
