@@ -11,8 +11,9 @@ M.indentation = {
   excluded_filetypes = {
     "help",
     "lazy",
-    "snacks_dashboard",
     "log",
+    "noice",
+    "snacks_dashboard",
     "Outline",
   },
 }

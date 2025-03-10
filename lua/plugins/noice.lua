@@ -40,6 +40,18 @@ H.lsp_doc_border = {
   },
 }
 
+H.make_scroll_mapping = function(forward)
+  local key = forward and "<c-f>" or "<c-b>"
+  local scroll = function()
+    local offset = forward and 4 or -4
+    if not require("noice.lsp").scroll(offset) then
+      return key
+    end
+  end
+  local desc = "Scroll " .. (forward and "Forward" or "Backward")
+  return { key, scroll, silent = true, expr = true, desc = desc, mode = { "i", "n", "s" } }
+end
+
 return {
   "folke/noice.nvim",
   event = "VeryLazy",
@@ -54,5 +66,9 @@ return {
     presets = {
       lsp_doc_border = H.lsp_doc_border,
     },
+  },
+  keys = {
+    H.make_scroll_mapping(true),
+    H.make_scroll_mapping(false),
   },
 }
