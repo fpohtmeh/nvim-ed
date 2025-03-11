@@ -45,6 +45,9 @@ return {
       hl.FlashCurrent = { fg = c.fg, bg = c.blue0 }
       hl.FlashMatch = { fg = default_fg, bg = c.blue }
       hl.FlashLabel = { fg = default_fg, bg = c.yellow }
+      -- Cursor word
+      hl.MiniCursorword = { bg = c.bg_visual }
+      hl.MiniCursorwordCurrent = { bg = hl.CursorLine.bg }
     end,
   },
   init = function()
