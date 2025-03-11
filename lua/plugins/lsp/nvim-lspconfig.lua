@@ -1,5 +1,6 @@
 local H = {}
 local icons = require("core.icons")
+local clangd = require("plugins.lsp.clangd")
 
 H.signs_map = {
   [vim.diagnostic.severity.ERROR] = icons.diagnostics.error,
@@ -25,6 +26,7 @@ H.configure_servers = function()
   local config = require("lspconfig")
   config.lua_ls.setup({})
   config.pyright.setup({})
+  config.clangd.setup(clangd.opts)
 end
 
 return {
@@ -39,4 +41,5 @@ return {
     H.configure_servers()
     H.configure_diagnostic()
   end,
+  keys = clangd.keys,
 }

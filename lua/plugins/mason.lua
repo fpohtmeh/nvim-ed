@@ -15,6 +15,16 @@ H.auto_install = function(ensure_installed)
   end)
 end
 
+H.ensure_installed = {
+  "black", -- python formatter
+  "clang-format", -- cpp formatter
+  "clangd", -- cpp server
+  "lua-language-server", -- lua server
+  "pyright", -- python server
+  "shfmt", -- shell formatter
+  "stylua", -- lua formatter
+}
+
 H.ui_opts = {
   width = 0.7,
   height = 0.85,
@@ -34,14 +44,7 @@ return {
     { "<leader>M", "<cmd>Mason<cr>", desc = "Mason" },
   },
   opts = {
-    ensure_installed = {
-      "black", -- python formatter
-      "clang-format", -- cpp formatter
-      "lua-language-server", -- lua server
-      "pyright", -- python server
-      "shfmt", -- shell formatter
-      "stylua", -- lua formatter
-    },
+    ensure_installed = H.ensure_installed,
     ui = H.ui_opts,
   },
   config = function(_, opts)
