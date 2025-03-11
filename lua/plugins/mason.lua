@@ -35,8 +35,12 @@ return {
   },
   opts = {
     ensure_installed = {
-      "stylua",
-      "shfmt",
+      "black", -- python formatter
+      "clang-format", -- cpp formatter
+      "lua-language-server", -- lua server
+      "pyright", -- python server
+      "shfmt", -- shell formatter
+      "stylua", -- lua formatter
     },
     ui = H.ui_opts,
   },
