@@ -22,7 +22,9 @@ H.configure_diagnostic = function()
 end
 
 H.configure_servers = function()
-  require("lspconfig").lua_ls.setup({})
+  local config = require("lspconfig")
+  config.lua_ls.setup({})
+  config.pyright.setup({})
 end
 
 return {
