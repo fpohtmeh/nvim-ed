@@ -9,6 +9,10 @@ function M.setup()
   local format = require("core.format")
   format.toggle(false):map("<leader>uF")
   format.toggle(true):map("<leader>uf")
+
+  Snacks.toggle
+    .option("scrolloff", { off = 0, on = vim.o.scrolloff > 0 and vim.o.scrolloff or 2, name = "Scrolloff" })
+    :map("<leader>us")
 end
 
 return M

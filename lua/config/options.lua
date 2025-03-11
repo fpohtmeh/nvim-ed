@@ -32,6 +32,8 @@ opt.laststatus = 3
 opt.list = true
 opt.number = true
 opt.relativenumber = true
+opt.scrolloff = 2
+opt.sidescrolloff = 2
 opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
 opt.shortmess:append({ W = true, I = true, c = true, C = true })
 opt.splitbelow = true
