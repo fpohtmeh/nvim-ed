@@ -27,7 +27,8 @@ map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
 
 -- Quit, Close
 map("n", "<leader>q", "<cmd>qa<cr>", { desc = "Quit All" })
-map("n", "<leader>w", "<cmd>close<cr>", { desc = "Close" })
+map("n", "<leader>w", "<cmd>close<cr>", { desc = "Close Window" })
+map("n", "<leader>W", "<cmd>only<cr>", { desc = "Close Other Windows" })
 
 -- Lazy
 map("n", "<leader>L", "<cmd>Lazy<cr>", opts)
