@@ -43,11 +43,6 @@ return {
   H.make_keymap("q", "quickfix", "backward"),
   H.make_keymap("q", "quickfix", "forward"),
 
-  H.make_keymap("u", "undo", "first"),
-  H.make_keymap("u", "undo", "last"),
-  H.make_keymap("u", "undo", "backward"),
-  H.make_keymap("u", "undo", "forward"),
-
   H.make_keymap("g", "git", "first"),
   H.make_keymap("g", "git", "last"),
   H.make_keymap("g", "git", "backward"),
