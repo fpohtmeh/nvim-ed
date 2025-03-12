@@ -40,8 +40,7 @@ map("n", keys.next .. "b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 -- Delete buffer
 -- stylua: ignore start
 map("n", "<leader>x", function() Snacks.bufdelete() end, { desc = "Delete Buffer" })
-map("n", "<leader><A-x>", function() Snacks.bufdelete.other() end, { desc = "Delete Other Buffers" })
-map("n", "<leader>X", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
+map("n", "<leader>X", function() Snacks.bufdelete.other() end, { desc = "Delete Other Buffers" })
 -- stylua: ignore end
 
 -- Move Lines
