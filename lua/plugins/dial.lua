@@ -13,9 +13,8 @@ Dial.append = function(func, group)
 end
 
 Dial.call = function(increment, g)
-  local mode = vim.fn.mode(true)
-  local is_visual = mode == "v" or mode == "V" or mode == "\22"
-  local func = (increment and "inc" or "dec") .. (g and "_g" or "_") .. (is_visual and "visual" or "normal")
+  local fn = require("core.fn")
+  local func = (increment and "inc" or "dec") .. (g and "_g" or "_") .. (fn.is_visual_mode() and "visual" or "normal")
   local group = "default"
   return require("dial.map")[func](group)
 end

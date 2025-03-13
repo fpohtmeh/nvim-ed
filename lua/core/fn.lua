@@ -19,4 +19,9 @@ M.find_window_by_filetype = function(filetype)
   end
 end
 
+M.is_visual_mode = function(mode)
+  mode = mode or vim.fn.mode(true)
+  return mode == "v" or mode == "V" or mode == "\22"
+end
+
 return M

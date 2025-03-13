@@ -43,9 +43,8 @@ end
 function M.stage_lines()
   local cursor_pos = vim.api.nvim_win_get_cursor(0)
 
-  local mode = vim.api.nvim_get_mode()["mode"]
-  local is_visual = mode == "v" or mode == "V" or mode == "\22"
-  if is_visual then
+  local fn = require("core.fn")
+  if fn.is_visual_mode() then
     local startline = vim.fn.getpos("v")[2]
     local endline = vim.fn.getpos(".")[2]
     if startline > endline then
