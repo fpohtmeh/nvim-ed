@@ -24,6 +24,7 @@ opt.foldenable = false
 opt.foldexpr = "nvim_treesitter#foldexpr()"
 opt.foldlevel = 99
 opt.foldmethod = "expr"
+opt.formatoptions = "jnl"
 opt.formatexpr = "v:lua.require'conform'.formatexpr()"
 opt.grepformat = "%f:%l:%c:%m"
 opt.grepprg = "rg --vimgrep"
