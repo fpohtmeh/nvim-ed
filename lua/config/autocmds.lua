@@ -47,6 +47,14 @@ block_autocmd = vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- Set comment string
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "qmake", "http" },
+  callback = function()
+    vim.bo.commentstring = "# %s"
+  end,
+})
+
 -- Cursor word condition
 require("plugins.mini-cursorword.core").create_autocmd()
 
