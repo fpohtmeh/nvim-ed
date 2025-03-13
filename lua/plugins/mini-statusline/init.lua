@@ -10,7 +10,7 @@ H.active = function()
   local diagnostics = sections.section_diagnostics("MiniStatuslineFilename")
   local filename = sections.section_filename()
   local fileinfo = sections.section_fileinfo()
-  local location = this.section_location({ trunc_width = 75 })
+  local location = sections.section_location()
   local search = this.section_searchcount({ trunc_width = 75 })
 
   return this.combine_groups({

@@ -100,4 +100,14 @@ M.section_diagnostics = function(hl)
   })
 end
 
+M.section_location = function()
+  local args = { trunc_width = 75 }
+  local lines_str = tostring(vim.api.nvim_buf_line_count(0))
+  if MiniStatusline.is_truncated(args.trunc_width) then
+    return lines_str
+  end
+  local line = vim.fn.line(".")
+  return string.format("%" .. #lines_str .. "d:%s", line, lines_str)
+end
+
 return M
