@@ -15,8 +15,4 @@ return {
       },
     },
   },
-  keys = {
-    -- stylua: ignore
-    { "s", mode = "n", function() require("flash").jump() end, desc = "Flash" },
-  },
 }
