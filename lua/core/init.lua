@@ -5,6 +5,7 @@ M.border = "single"
 M.keys = {
   next = ";",
   prev = ",",
+  window = { "j", "k", "l", "h", ";" },
 }
 
 M.indentation = {

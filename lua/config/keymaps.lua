@@ -86,3 +86,13 @@ map("n", keys.prev .. "e", lsp.diagnostic.go_to(false, "ERROR"), { desc = "Prev 
 map("n", keys.next .. "e", lsp.diagnostic.go_to(true, "ERROR"), { desc = "Next Error" })
 map("n", keys.prev .. "w", lsp.diagnostic.go_to(false, "WARN"), { desc = "Prev Warning" })
 map("n", keys.next .. "w", lsp.diagnostic.go_to(true, "WARN"), { desc = "Next Warning" })
+
+-- Windows keys
+for i = 1, #keys.window do
+  local lhs = "<c-" .. keys.window[i] .. ">"
+  local rhs = function()
+    vim.cmd(tostring(i) .. " wincmd w")
+  end
+  local description = "Go to window " .. i
+  vim.keymap.set({ "n", "t" }, lhs, rhs, { desc = description, remap = true })
+end

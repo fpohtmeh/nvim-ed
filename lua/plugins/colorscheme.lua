@@ -48,6 +48,9 @@ return {
       -- Cursor word
       hl.MiniCursorword = { bg = c.bg_visual }
       hl.MiniCursorwordCurrent = { bg = hl.CursorLine.bg }
+      -- Incline
+      hl.InclineNormal = { bg = c.bg }
+      hl.InclineNormalNC = { bg = c.bg }
     end,
   },
   init = function()

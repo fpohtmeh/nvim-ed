@@ -49,3 +49,9 @@ block_autocmd = vim.api.nvim_create_autocmd("FileType", {
 
 -- Cursor word condition
 require("plugins.mini-cursorword.core").create_autocmd()
+
+-- Incline
+vim.api.nvim_create_autocmd("User", {
+  pattern = "PersistenceLoadPost",
+  callback = require("plugins.incline.core").defer_refresh,
+})

@@ -1,3 +1,8 @@
+local zoom = function()
+  Snacks.zen.zoom()
+  require("plugins.incline.core").toggle_zoom()
+end
+
 return {
   -- stylua: ignore start
   { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
@@ -12,7 +17,6 @@ return {
   { "<leader>sh", function() Snacks.picker.help() end, desc = "Help Pages" },
   { "<leader>ss", function() Snacks.picker.git_status() end, desc = "Git Status" },
   { "<leader>n", function() require("noice").cmd("all") end, desc = "Noice Messages" },
-
-  { "<A-t>", function() Snacks.zen.zoom() end, desc = "Toggle Zen", mode = { "n", "x", "i" } },
+  { "<A-t>", zoom, desc = "Toggle Zen", mode = { "n", "x", "i" } },
   -- stylua: ignore end
 }
