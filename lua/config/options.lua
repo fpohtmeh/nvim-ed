@@ -42,7 +42,6 @@ opt.splitkeep = "screen"
 opt.splitright = true
 opt.smartindent = true
 opt.softtabstop = 4
-opt.statuscolumn = [[%!v:lua.require'snacks.statuscolumn'.get()]]
 opt.tabstop = 4
 opt.termguicolors = true
 opt.timeoutlen = 300

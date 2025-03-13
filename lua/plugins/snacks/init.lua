@@ -15,6 +15,7 @@ return {
       style = styles.notification,
     },
     picker = require("plugins.snacks.picker"),
+    statuscolumn = {},
     styles = styles.config,
     terminal = {
       win = {
