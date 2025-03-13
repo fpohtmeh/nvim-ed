@@ -14,15 +14,7 @@ function M.setup()
     .option("scrolloff", { off = 0, on = vim.o.scrolloff > 0 and vim.o.scrolloff or 2, name = "Scrolloff" })
     :map("<leader>us")
 
-  Snacks.toggle({
-    name = "Cursor Word",
-    get = function()
-      return vim.g.minicursorword_disable == true
-    end,
-    set = function(state)
-      vim.g.minicursorword_disable = state or nil
-    end,
-  }):map("<leader>uh")
+  require("plugins.mini-cursorword.core").toggle():map("<leader>uh")
 end
 
 return M

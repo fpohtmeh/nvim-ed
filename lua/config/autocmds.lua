@@ -46,3 +46,6 @@ block_autocmd = vim.api.nvim_create_autocmd("FileType", {
     pcall(vim.api.nvim_del_autocmd, block_autocmd)
   end,
 })
+
+-- Cursor word condition
+require("plugins.mini-cursorword.core").create_autocmd()
