@@ -110,4 +110,10 @@ M.section_location = function()
   return string.format("%" .. #lines_str .. "d:%s", line, lines_str)
 end
 
+M.section_searchcount = function()
+  local args = { trunc_width = 75 }
+  local section = require("mini.statusline").section_searchcount(args)
+  return section ~= "" and (H.icons.search .. " " .. section) or ""
+end
+
 return M

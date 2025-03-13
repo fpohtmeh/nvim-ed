@@ -11,7 +11,7 @@ H.active = function()
   local filename = sections.section_filename()
   local fileinfo = sections.section_fileinfo()
   local location = sections.section_location()
-  local search = this.section_searchcount({ trunc_width = 75 })
+  local search = sections.section_searchcount()
 
   return this.combine_groups({
     { hl = mode_hl, strings = { mode } },
