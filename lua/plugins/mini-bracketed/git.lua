@@ -1,4 +1,5 @@
 local H = {}
+local engine = require("plugins.mini-bracketed.engine")
 
 H.git_opts = {}
 
@@ -7,7 +8,7 @@ H.get_git_data = function()
   local fs = require("core.fs")
 
   local list = vim.fn.systemlist({ "git", "status", "-u", "--porcelain=v1" })
-  for i, v in ipairs(list) do
+  for _, v in ipairs(list) do
     local status = string.sub(v, 1, 2)
     local is_staged = string.sub(status, 2) == " "
     if not is_staged then
@@ -26,14 +27,12 @@ H.get_git_data = function()
   }
 end
 
-local engine = require("plugins.mini-bracketed.engine")
-
 Bracketed.git = function(direction, opts)
   if engine.is_disabled() then
     return
   end
 
-  engine.validate_direction(direction, { "first", "backward", "forward", "last" }, "file")
+  engine.validate_direction(direction, { "first", "backward", "forward", "last" }, "git")
   opts = vim.tbl_deep_extend("force", { n_times = vim.v.count1, wrap = true }, H.git_opts, opts or {})
 
   local git_data = H.get_git_data()
@@ -42,50 +41,24 @@ Bracketed.git = function(direction, opts)
   end
   local file_basenames, directory = git_data.file_basenames, git_data.directory
 
-  local iterator = {}
-  local n_files = #file_basenames
-
-  iterator.next = function(ind)
-    if ind == nil then
-      return 1
-    end
-    if n_files <= ind then
-      return
-    end
-    return ind + 1
-  end
-
-  iterator.prev = function(ind)
-    if ind == nil then
-      return n_files
-    end
-    if ind <= 1 then
-      return
-    end
-    return ind - 1
-  end
+  local iterator = engine.make_iterator(#file_basenames)
 
   local fs = require("core.fs")
   local cur_filename = fs.buf_full_path()
-  local cur_basename_ind
-  if cur_basename ~= "" then
-    for i, f in ipairs(file_basenames) do
-      if cur_filename == fs.join(directory, f) then
-        cur_basename_ind = i
+  if cur_filename ~= "" then
+    for index, file_basename in ipairs(file_basenames) do
+      if cur_filename == fs.join(directory, file_basename) then
+        iterator.state = index
         break
       end
     end
   end
 
-  iterator.state = cur_basename_ind
-  iterator.start_edge = 0
-  iterator.end_edge = n_files + 1
-
-  local res_ind = MiniBracketed.advance(iterator, direction, opts)
-  if res_ind == iterator.state then
+  local res_index = MiniBracketed.advance(iterator, direction, opts)
+  if res_index == iterator.state then
     return
   end
 
-  local target_path = fs.join(directory, file_basenames[res_ind])
+  local target_path = fs.join(directory, file_basenames[res_index])
   engine.edit(target_path)
 end

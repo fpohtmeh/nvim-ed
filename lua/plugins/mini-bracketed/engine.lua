@@ -34,4 +34,34 @@ M.edit = function(path, win_id)
   return buf_id
 end
 
+M.make_iterator = function(n)
+  local iterator = {}
+
+  iterator.next = function(ind)
+    if ind == nil then
+      return 1
+    end
+    if n <= ind then
+      return
+    end
+    return ind + 1
+  end
+
+  iterator.prev = function(ind)
+    if ind == nil then
+      return n
+    end
+    if ind <= 1 then
+      return
+    end
+    return ind - 1
+  end
+
+  iterator.state = nil
+  iterator.start_edge = 0
+  iterator.end_edge = n + 1
+
+  return iterator
+end
+
 return M
