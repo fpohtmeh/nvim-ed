@@ -20,6 +20,7 @@ map({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = tru
 
 -- Tabs
 map("n", "gq", "<cmd>tabclose<cr>", { desc = "Close Tab" })
+map("n", "gQ", "<cmd>tabonly<cr>", { desc = "Close Other Tabs" })
 map("n", "<leader><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
 
 -- Save
