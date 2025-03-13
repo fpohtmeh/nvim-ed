@@ -3,6 +3,7 @@ local H = {}
 H.event = { "LazyFile", "VeryLazy" }
 
 H.ensure_installed = {
+  "bash",
   "c",
   "cpp",
   "diff",
@@ -10,10 +11,12 @@ H.ensure_installed = {
   "json5",
   "jsonc",
   "lua",
+  "luap",
   "luadoc",
   "markdown",
   "markdown_inline",
   "python",
+  "regex",
   "query",
   "toml",
   "vim",
