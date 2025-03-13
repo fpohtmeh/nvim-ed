@@ -1,5 +1,7 @@
 local H = {}
 
+H.event = { "LazyFile", "VeryLazy" }
+
 H.ensure_installed = {
   "c",
   "cpp",
@@ -41,10 +43,22 @@ H.opts = {
   },
 }
 
-return {
+local plugin = {
   "nvim-treesitter/nvim-treesitter",
+  event = H.event,
+  version = false,
   build = ":TSUpdate",
   config = function()
     require("nvim-treesitter.configs").setup(H.opts)
   end,
+}
+
+local text_objects = {
+  "nvim-treesitter/nvim-treesitter-textobjects",
+  event = H.event,
+}
+
+return {
+  plugin,
+  text_objects,
 }
