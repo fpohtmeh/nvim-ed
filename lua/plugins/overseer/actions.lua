@@ -72,7 +72,10 @@ M.toggle_recent_task_output = function()
   if task ~= nil then
     task:open_output("horizontal")
 
-    vim.cmd("resize 15")
+    vim.cmd([[
+      wincmd J
+      resize 15
+    ]])
     require("overseer.util").scroll_to_end(0)
   end
 end
