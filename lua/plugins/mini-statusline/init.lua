@@ -6,17 +6,19 @@ H.active = function()
 
   local mode, mode_hl = this.section_mode({ trunc_width = 120 })
   local git = this.section_git({ trunc_width = 40 })
-  local diff = sections.section_diff("MiniStatuslineFilename")
-  local diagnostics = sections.section_diagnostics("MiniStatuslineFilename")
-  local filename = sections.section_filename()
-  local fileinfo = sections.section_fileinfo()
-  local location = sections.section_location()
-  local search = sections.section_searchcount()
+  local diff = sections.diff()
+  local diagnostics = sections.diagnostics()
+  local buffer = sections.buffer()
+  local filename = sections.filename()
+  local fileinfo = sections.fileinfo()
+  local location = sections.location()
+  local search = sections.searchcount()
 
   return this.combine_groups({
     { hl = mode_hl, strings = { mode } },
     { hl = "MiniStatuslineDevinfo", strings = { git } },
     "%<",
+    { hl = "MiniStatuslineBuffer", strings = { buffer } },
     { hl = "MiniStatuslineFilename", strings = { filename, diff } },
     "%=",
     { strings = { diagnostics } },

@@ -31,7 +31,7 @@ H.replace_icons = function(str, hl, map)
   return res
 end
 
-M.section_filename = function()
+M.filename = function()
   local args = { trunc_width = 140 }
   if vim.bo.buftype == "terminal" then
     return "%t"
@@ -61,7 +61,7 @@ H.get_icon = function()
   return devicons.get_icon(vim.fn.expand("%:t"), nil, { default = true })
 end
 
-M.section_fileinfo = function()
+M.fileinfo = function()
   local args = { trunc_width = 120 }
 
   local filetype = vim.bo.filetype
@@ -79,20 +79,20 @@ M.section_fileinfo = function()
   return string.format("%s%s%s %s", filetype, filetype == "" and "" or " ", encoding, size)
 end
 
-M.section_diff = function(hl)
+M.diff = function()
   local args = { trunc_width = 75, icon = "" }
   local diff = require("mini.statusline").section_diff(args):sub(2)
-  return H.replace_icons(diff, hl, {
+  return H.replace_icons(diff, "MiniStatuslineFilename", {
     ["+"] = "%#MiniStatuslineGitAdded# " .. H.icons.git.added,
     ["~"] = "%#MiniStatuslineGitModified# " .. H.icons.git.modified,
     ["-"] = "%#MiniStatuslineGitRemoved# " .. H.icons.git.removed,
   })
 end
 
-M.section_diagnostics = function(hl)
+M.diagnostics = function()
   local args = { trunc_width = 75, icon = "" }
   local section = require("mini.statusline").section_diagnostics(args):sub(2)
-  return H.replace_icons(section, hl, {
+  return H.replace_icons(section, "MiniStatuslineFilename", {
     ["E"] = "%#MiniStatuslineDiagnosticError# " .. H.icons.diagnostics.error,
     ["W"] = "%#MiniStatuslineDiagnosticWarn# " .. H.icons.diagnostics.warn,
     ["I"] = "%#MiniStatuslineDiagnosticInfo# " .. H.icons.diagnostics.info,
@@ -100,7 +100,7 @@ M.section_diagnostics = function(hl)
   })
 end
 
-M.section_location = function()
+M.location = function()
   local args = { trunc_width = 75 }
   local lines_str = tostring(vim.api.nvim_buf_line_count(0))
   if MiniStatusline.is_truncated(args.trunc_width) then
@@ -110,10 +110,31 @@ M.section_location = function()
   return string.format("%" .. #lines_str .. "d:%s", line, lines_str)
 end
 
-M.section_searchcount = function()
+M.searchcount = function()
   local args = { trunc_width = 75 }
   local section = require("mini.statusline").section_searchcount(args)
   return section ~= "" and (H.icons.search .. " " .. section) or ""
+end
+
+M.buffer = function()
+  local current_buf_id = vim.api.nvim_get_current_buf()
+  local buf_list = vim.api.nvim_list_bufs()
+  local is_listed = function(buf_id)
+    return vim.api.nvim_buf_is_valid(buf_id) and vim.bo[buf_id].buflisted
+  end
+
+  local index = 0
+  local count = 0
+  for buf_id = 1, buf_list[#buf_list] do
+    if is_listed(buf_id) then
+      count = count + 1
+      if buf_id == current_buf_id then
+        index = count
+      end
+    end
+  end
+
+  return string.format("%d/%d", index, count)
 end
 
 return M

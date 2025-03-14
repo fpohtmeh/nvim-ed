@@ -32,6 +32,7 @@ return {
       hl.MiniStatuslineFilename = { fg = c.green, bg = c.bg }
       hl.MiniStatuslineFileinfo = { fg = c.blue, bg = c.bg_highlight }
       hl.MiniStatuslineInactive = { fg = c.green, bg = c.bg }
+      hl.MiniStatuslineBuffer = { fg = c.blue }
       hl.MiniStatuslineDiagnosticError = { fg = hl.DiagnosticError.fg }
       hl.MiniStatuslineDiagnosticWarn = { fg = hl.DiagnosticWarn.fg }
       hl.MiniStatuslineDiagnosticInfo = { fg = hl.DiagnosticInfo.fg }
