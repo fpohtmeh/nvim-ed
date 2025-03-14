@@ -27,7 +27,7 @@ map("n", "<leader><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
 map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
 
 -- Quit, Close
-map("n", "<leader>q", "<cmd>qa<cr>", { desc = "Quit All" })
+map("n", "<leader>Q", "<cmd>qa<cr>", { desc = "Quit All" })
 map("n", "<leader>w", "<cmd>close<cr>", { desc = "Close Window" })
 map("n", "<leader>W", "<cmd>only<cr>", { desc = "Close Other Windows" })
 
@@ -59,6 +59,10 @@ map("v", "<A-j>", ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv", { desc 
 map("v", "<A-k>", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv", { desc = "Move Up" })
 
 -- Quickfix
+local function toggle_quickfix()
+  pcall(vim.fn.getqflist({ winid = 0 }).winid ~= 0 and vim.cmd.cclose or vim.cmd("botright copen"))
+end
+map("n", "<leader>q", toggle_quickfix, { desc = "Toggle Quickfix list" })
 -- stylua: ignore start
 map("n", keys.prev .. "<A-q>", function() pcall(vim.cmd.colder) end, { desc = "Prev Quickfix list" })
 map("n", keys.next .. "<A-q>", function() pcall(vim.cmd.cnewer) end, { desc = "Next Quickfix list" })
