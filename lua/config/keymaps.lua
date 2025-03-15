@@ -44,11 +44,15 @@ map("n", keys.prev .. "b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 map("n", keys.next .. "b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 
 -- Delete buffer
+local function delete_buffers()
+  Snacks.bufdelete.all()
+  vim.cmd.only()
+end
 -- stylua: ignore start
 map("n", "<leader>x", function() Snacks.bufdelete() end, { desc = "Delete Buffer" })
 map("n", "<leader>X", function() Snacks.bufdelete.other() end, { desc = "Delete Other Buffers" })
-map("n", "<leader><c-x>", function() Snacks.bufdelete.all() end, { desc = "Delete All Buffers" })
 -- stylua: ignore end
+map("n", "<leader><c-x>", delete_buffers, { desc = "Delete All Buffers" })
 
 -- Move Lines
 map("n", "<A-j>", "<cmd>execute 'move .+' . v:count1<cr>==", { desc = "Move Down" })
