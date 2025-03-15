@@ -27,16 +27,18 @@ return {
       hl.SnacksPickerInputBorder = { fg = c.green, bg = c.bg_dark }
       hl.SnacksPickerSelected = { fg = c.green, bg = c.bg_dark }
       hl.SnacksZenIcon = { fg = default_fg, bg = c.green }
+      -- Diagnostic
+      hl.DiagnosticUnnecessary = { fg = c.comment }
+      hl.MiniStatuslineDiagnosticError = { fg = hl.DiagnosticError.fg }
+      hl.MiniStatuslineDiagnosticWarn = { fg = hl.DiagnosticWarn.fg }
+      hl.MiniStatuslineDiagnosticInfo = { fg = hl.DiagnosticInfo.fg }
+      hl.MiniStatuslineDiagnosticHint = { fg = hl.DiagnosticHint.fg }
       -- Statusline
       hl.MiniStatuslineDevinfo = { fg = c.blue, bg = c.bg_highlight }
       hl.MiniStatuslineFilename = { fg = c.green, bg = c.bg }
       hl.MiniStatuslineFileinfo = { fg = c.blue, bg = c.bg_highlight }
       hl.MiniStatuslineInactive = { fg = c.green, bg = c.bg }
       hl.MiniStatuslineBuffer = { fg = c.blue }
-      hl.MiniStatuslineDiagnosticError = { fg = hl.DiagnosticError.fg }
-      hl.MiniStatuslineDiagnosticWarn = { fg = hl.DiagnosticWarn.fg }
-      hl.MiniStatuslineDiagnosticInfo = { fg = hl.DiagnosticInfo.fg }
-      hl.MiniStatuslineDiagnosticHint = { fg = hl.DiagnosticHint.fg }
       hl.MiniStatuslineGitAdded = { fg = c.git.add }
       hl.MiniStatuslineGitModified = { fg = c.git.change }
       hl.MiniStatuslineGitRemoved = { fg = c.git.delete }
