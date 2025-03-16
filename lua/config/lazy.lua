@@ -49,9 +49,7 @@ require("lazy").setup({
     version = false,
   },
   install = {
-    colorscheme = {
-      require("core.colorscheme").default,
-    },
+    colorscheme = { Ed.colorscheme },
   },
   checker = {
     enabled = true,

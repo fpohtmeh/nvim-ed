@@ -1,6 +1,6 @@
 return {
   "alexxGmZ/e-ink.nvim",
-  lazy = require("core.colorscheme").default ~= "e-ink",
+  lazy = Ed.colorscheme ~= "e-ink",
   priority = 1000,
   config = function()
     require("e-ink").setup()

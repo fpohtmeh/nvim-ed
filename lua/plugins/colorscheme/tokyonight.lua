@@ -1,6 +1,6 @@
 return {
   "folke/tokyonight.nvim",
-  lazy = require("core.colorscheme").default ~= "tokyonight",
+  lazy = Ed.colorscheme ~= "tokyonight",
   priority = 1000,
   opts = {
     style = "moon",

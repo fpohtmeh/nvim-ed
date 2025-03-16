@@ -1,3 +1,7 @@
+Ed = {
+  colorscheme = "tokyonight",
+}
+
 require("config.options")
 require("config.lazy")
 require("config.autocmds")
