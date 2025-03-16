@@ -29,11 +29,11 @@ function M.nav_last_hunk()
 end
 
 function M.stage_hunk()
-  vim.cmd("Gitsigns stage_hunk")
+  gs().stage_hunk()
 end
 
 function M.reset_hunk()
-  vim.cmd("Gitsigns reset_hunk")
+  gs().reset_hunk()
 end
 
 function M.stage_buffer()
@@ -61,6 +61,7 @@ function M.stage_lines()
 end
 
 function M.undo_stage_hunk()
+  ---@diagnostic disable-next-line: deprecated
   gs().undo_stage_hunk()
 end
 
@@ -90,33 +91,6 @@ end
 
 function M.show_buffer_diff_prev_commit()
   gs().diffthis("~")
-end
-
-function M.send_hunks_to_qflist()
-  vim.cmd("Gitsigns setqflist")
-end
-
-function M.make_action(cmd, args)
-  return function()
-    local args_str = args and (" " .. table.concat(args, " ")) or ""
-    return vim.cmd("Git " .. cmd .. args_str)
-  end
-end
-
-function M.add_file()
-  vim.cmd("update | Git add %")
-end
-
-function M.add_all_files()
-  vim.cmd("wall | Git add .")
-end
-
-function M.show_log()
-  M.make_action("log")()
-end
-
-function M.show_diff()
-  M.make_action("diff")()
 end
 
 return M

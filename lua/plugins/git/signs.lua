@@ -20,6 +20,12 @@ local function add_buffer_mappings(buffer)
   map("n", "<leader>hR", actions.reset_buffer, "Reset Buffer")
   map("n", "<leader>hU", actions.unstage_buffer, "Unstage Buffer")
 
+  map("n", "<leader>hp", actions.preview_hunk_inline, "Preview Hunk Inline")
+  map("n", "<leader>hb", actions.show_line_blame, "Blame Line")
+  map("n", "<leader>hB", actions.show_buffer_blame, "Blame Buffer")
+  map("n", "<leader>hd", actions.show_buffer_diff, "Diff This")
+  map("n", "<leader>hD", actions.show_buffer_diff_prev_commit, "Diff This ~")
+
   map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "Select Hunk")
 end
 

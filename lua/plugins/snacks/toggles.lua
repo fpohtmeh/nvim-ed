@@ -15,6 +15,8 @@ function M.setup()
     :map("<leader>us")
 
   require("plugins.mini-cursorword.core").toggle():map("<leader>uh")
+
+  require("plugins.git.toggles").current_line_blame():map("<leader>ug")
 end
 
 return M
