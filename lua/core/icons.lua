@@ -10,6 +10,9 @@ M.search = ""
 M.modified = "●"
 M.mark = ""
 M.separator = ""
+M.file = ""
+M.directory = ""
+M.buffers = "󰪏"
 
 M.diagnostics = {
   error = " ",

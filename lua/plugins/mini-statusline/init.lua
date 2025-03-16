@@ -8,7 +8,7 @@ H.active = function()
   local git = this.section_git({ trunc_width = 40 })
   local diff = sections.diff()
   local diagnostics = sections.diagnostics()
-  local buffer = sections.buffer()
+  local buffers = sections.buffers()
   local filename = sections.filename()
   local fileinfo = sections.fileinfo()
   local location = sections.location()
@@ -18,7 +18,7 @@ H.active = function()
     { hl = mode_hl, strings = { mode } },
     { hl = "MiniStatuslineDevinfo", strings = { git } },
     "%<",
-    { hl = "MiniStatuslineBuffer", strings = { buffer } },
+    { hl = "MiniStatuslineBuffers", strings = { buffers } },
     { hl = "MiniStatuslineFilename", strings = { filename, diff } },
     "%=",
     { strings = { diagnostics } },

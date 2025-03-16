@@ -116,7 +116,7 @@ M.searchcount = function()
   return section ~= "" and (H.icons.search .. " " .. section) or ""
 end
 
-M.buffer = function()
+M.buffers = function()
   local current_buf_id = vim.api.nvim_get_current_buf()
   local buf_list = vim.api.nvim_list_bufs()
   local is_listed = function(buf_id)
@@ -134,7 +134,11 @@ M.buffer = function()
     end
   end
 
-  return string.format("%d/%d", index, count)
+  local status = H.icons.buffers .. " "
+  if index ~= 0 then
+    status = status .. tostring(index) .. "/"
+  end
+  return status .. tostring(math.max(count, 1))
 end
 
 return M

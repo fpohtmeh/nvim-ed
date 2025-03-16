@@ -38,7 +38,7 @@ return {
       hl.MiniStatuslineFilename = { fg = c.green, bg = c.bg }
       hl.MiniStatuslineFileinfo = { fg = c.blue, bg = c.bg_highlight }
       hl.MiniStatuslineInactive = { fg = c.green, bg = c.bg }
-      hl.MiniStatuslineBuffer = { fg = c.blue }
+      hl.MiniStatuslineBuffers = { fg = c.blue }
       hl.MiniStatuslineGitAdded = { fg = c.git.add }
       hl.MiniStatuslineGitModified = { fg = c.git.change }
       hl.MiniStatuslineGitRemoved = { fg = c.git.delete }
