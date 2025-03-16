@@ -1,5 +1,9 @@
 local M = {}
 
+_G.dd = function(...)
+  Snacks.debug.inspect(...)
+end
+
 M.border = "single"
 
 M.keys = {
