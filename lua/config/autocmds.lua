@@ -63,3 +63,11 @@ vim.api.nvim_create_autocmd("User", {
   pattern = "PersistenceLoadPost",
   callback = require("plugins.incline.core").defer_refresh,
 })
+
+-- Format options
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "*",
+  callback = function(event)
+    vim.bo.formatoptions = "jnl"
+  end,
+})
