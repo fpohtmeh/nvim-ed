@@ -23,13 +23,9 @@ H.make_keymap = function(letter, action, direction)
 end
 
 return {
-  H.make_keymap("b", "buffer", "first"),
-  H.make_keymap("b", "buffer", "last"),
   H.make_keymap("b", "buffer", "backward"),
   H.make_keymap("b", "buffer", "forward"),
 
-  H.make_keymap("f", "file", "first"),
-  H.make_keymap("f", "file", "last"),
   H.make_keymap("f", "file", "backward"),
   H.make_keymap("f", "file", "forward"),
 
@@ -43,8 +39,6 @@ return {
   H.make_keymap("q", "quickfix", "backward"),
   H.make_keymap("q", "quickfix", "forward"),
 
-  H.make_keymap("g", "git", "first"),
-  H.make_keymap("g", "git", "last"),
   H.make_keymap("g", "git", "backward"),
   H.make_keymap("g", "git", "forward"),
 }
