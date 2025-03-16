@@ -1,4 +1,4 @@
-Bracketed = {}
+Ed.bracketed = {}
 
 local M = {}
 

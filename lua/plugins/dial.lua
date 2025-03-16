@@ -1,18 +1,22 @@
-Dial = {
-  _groups = { default = {} },
+Ed.dial = {}
+
+local H = {
+  _groups = {
+    default = {},
+  },
 }
 
-Dial._config = function()
-  require("dial.config").augends:register_group(Dial._groups)
+H._config = function()
+  require("dial.config").augends:register_group(H._groups)
 end
 
-Dial.append = function(func, group)
+Ed.dial.append = function(func, group)
   local augend = require("dial.augend")
   group = group or "default"
-  vim.list_extend(Dial._groups[group], func(augend))
+  vim.list_extend(H._groups[group], func(augend))
 end
 
-Dial.call = function(increment, g)
+H.call = function(increment, g)
   local fn = require("core.fn")
   local func = (increment and "inc" or "dec") .. (g and "_g" or "_") .. (fn.is_visual_mode() and "visual" or "normal")
   local group = "default"
@@ -23,14 +27,14 @@ return {
   "monaqa/dial.nvim",
   keys = {
     -- stylua: ignore start
-    { "<C-a>", function() return Dial.call(true) end, expr = true, desc = "Increment", mode = {"n", "v"} },
-    { "<C-x>", function() return Dial.call(false) end, expr = true, desc = "Decrement", mode = {"n", "v"} },
-    { "g<C-a>", function() return Dial.call(true, true) end, expr = true, desc = "Increment", mode = {"n", "v"} },
-    { "g<C-x>", function() return Dial.call(false, true) end, expr = true, desc = "Decrement", mode = {"n", "v"} },
+    { "<C-a>", function() return H.call(true) end, expr = true, desc = "Increment", mode = {"n", "v"} },
+    { "<C-x>", function() return H.call(false) end, expr = true, desc = "Decrement", mode = {"n", "v"} },
+    { "g<C-a>", function() return H.call(true, true) end, expr = true, desc = "Increment", mode = {"n", "v"} },
+    { "g<C-x>", function() return H.call(false, true) end, expr = true, desc = "Decrement", mode = {"n", "v"} },
     -- stylua: ignore end
   },
   opts = function()
-    Dial.append(function(augend)
+    Ed.dial.append(function(augend)
       return {
         augend.integer.alias.decimal,
         augend.integer.alias.hex,
@@ -39,5 +43,5 @@ return {
       }
     end)
   end,
-  config = Dial._config,
+  config = H._config,
 }

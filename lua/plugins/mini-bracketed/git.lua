@@ -27,7 +27,7 @@ H.get_git_data = function()
   }
 end
 
-Bracketed.git = function(direction, opts)
+Ed.bracketed.git = function(direction, opts)
   if engine.is_disabled() then
     return
   end

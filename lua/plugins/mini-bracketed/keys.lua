@@ -3,7 +3,7 @@ local H = {}
 H.get_module = function(action)
   if action == "git" then
     require("plugins.mini-bracketed.git")
-    return "Bracketed"
+    return "Ed.bracketed"
   end
   return "MiniBracketed"
 end
