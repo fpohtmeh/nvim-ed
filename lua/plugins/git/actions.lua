@@ -104,7 +104,6 @@ end
 function M.create(cmd)
   return function()
     vim.cmd("vert Git " .. cmd)
-    vim.cmd("vert resize 80")
   end
 end
 

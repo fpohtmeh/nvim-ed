@@ -7,6 +7,7 @@ H.ensure_installed = {
   "c",
   "cpp",
   "diff",
+  "gitignore",
   "json",
   "json5",
   "jsonc",
