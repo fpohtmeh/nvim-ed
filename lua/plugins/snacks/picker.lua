@@ -3,6 +3,8 @@ local icons = require("core.icons")
 local overriden_keys = {
   ["<a-m>"] = false,
   ["<a-t>"] = { "toggle_maximize", mode = { "i", "n" } },
+  ["<c-j>"] = false,
+  ["<c-k>"] = false,
 }
 
 return {

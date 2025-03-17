@@ -14,6 +14,7 @@ return {
 
   { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
   { "<leader>sb", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
+  { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "Lsp Symbols" },
   { "<leader>sh", function() Snacks.picker.help() end, desc = "Help Pages" },
   { "<leader>n", function() require("noice").cmd("all") end, desc = "Noice Messages" },
   { "<A-t>", zoom, desc = "Toggle Zen", mode = { "n", "x", "i" } },
