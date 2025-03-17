@@ -16,4 +16,10 @@ return {
   -- Reset
   { "<leader>gr", actions.create("reset ."), desc = "Git: Reset Staged" },
   { "<leader>gR", actions.create("reset HEAD~1"), desc = "Git: Reset Last Commit" },
+  -- Commit
+  { "<leader>gc", actions.create("commit"), desc = "Git: Commit" },
+  { "<leader>gC", actions.create("commit --amend"), desc = "Git: Commit (amend)" },
+  -- Branch
+  { "<leader>gb", actions.create("branch"), desc = "Git: Branch" },
+  { "<leader>gB", actions.create("branch -a"), desc = "Git: Branch (all)" },
 }
