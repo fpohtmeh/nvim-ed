@@ -56,7 +56,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Cursor word condition
-require("plugins.mini-cursorword.core").create_autocmd()
+require("plugins.mini-cursorword.core").create_autocmds()
 
 -- Incline
 vim.api.nvim_create_autocmd("User", {
@@ -67,7 +67,10 @@ vim.api.nvim_create_autocmd("User", {
 -- Format options
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "*",
-  callback = function(event)
+  callback = function()
     vim.bo.formatoptions = "jnl"
   end,
 })
+
+-- Git
+require("plugins.git.sync").create_autocmds()

@@ -15,7 +15,7 @@ H.callback = function()
   vim.b.minicursorword_disable = fn.is_visual_mode() or vim.tbl_contains(H.excluded_filetypes, filetype)
 end
 
-M.create_autocmd = function()
+M.create_autocmds = function()
   vim.api.nvim_create_autocmd({ "CursorMoved", "ModeChanged" }, {
     pattern = "*",
     callback = H.callback,

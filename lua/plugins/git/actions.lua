@@ -1,4 +1,5 @@
 local M = {}
+local sync = require("plugins.git.sync")
 
 local function gs()
   return require("gitsigns")
@@ -30,14 +31,17 @@ end
 
 function M.stage_hunk()
   gs().stage_hunk()
+  sync.touch_hunks()
 end
 
 function M.reset_hunk()
   gs().reset_hunk()
+  sync.touch_hunks()
 end
 
 function M.stage_buffer()
   gs().stage_buffer()
+  sync.touch_hunks()
 end
 
 function M.stage_lines()
@@ -58,19 +62,23 @@ function M.stage_lines()
   end
 
   pcall(vim.api.nvim_win_set_cursor, 0, cursor_pos)
+  sync.touch_hunks()
 end
 
 function M.undo_stage_hunk()
   ---@diagnostic disable-next-line: deprecated
   gs().undo_stage_hunk()
+  sync.touch_hunks()
 end
 
 function M.reset_buffer()
   gs().reset_buffer()
+  sync.touch_hunks()
 end
 
 function M.unstage_buffer()
   gs().reset_buffer_index()
+  sync.touch_hunks()
 end
 
 function M.preview_hunk_inline()
