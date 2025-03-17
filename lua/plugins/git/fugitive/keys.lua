@@ -2,7 +2,7 @@ local actions = require("plugins.git.actions")
 
 return {
   -- Status
-  { "<leader>gs", actions.status, desc = "Git: Status" },
+  { "<leader>gg", actions.status, desc = "Git: Status" },
   -- Log
   { "<leader>gl", actions.create("log -n 100"), desc = "Git: Log (100)" },
   { "<leader>gL", actions.create("log"), desc = "Git: Log (full)" },
