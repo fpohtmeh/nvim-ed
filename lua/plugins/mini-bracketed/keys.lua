@@ -26,8 +26,8 @@ return {
   H.make_keymap("b", "buffer", "backward"),
   H.make_keymap("b", "buffer", "forward"),
 
-  H.make_keymap("f", "file", "backward"),
-  H.make_keymap("f", "file", "forward"),
+  H.make_keymap("F", "file", "backward"),
+  H.make_keymap("F", "file", "forward"),
 
   H.make_keymap("i", "indent", "first"),
   H.make_keymap("i", "indent", "last"),
