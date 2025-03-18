@@ -4,8 +4,8 @@ H.active = function()
   local this = require("mini.statusline")
   local sections = require("plugins.mini-statusline.sections")
 
-  local mode, mode_hl = this.section_mode({ trunc_width = 120 })
-  local git = this.section_git({ trunc_width = 40 })
+  local mode = sections.mode()
+  local git = sections.git()
   local diff = sections.diff()
   local diagnostics = sections.diagnostics()
   local buffers = sections.buffers()
@@ -15,7 +15,7 @@ H.active = function()
   local search = sections.searchcount()
 
   return this.combine_groups({
-    { hl = mode_hl, strings = { mode } },
+    mode,
     { hl = "MiniStatuslineDevinfo", strings = { git } },
     "%<",
     { hl = "MiniStatuslineBuffers", strings = { buffers } },
@@ -23,7 +23,7 @@ H.active = function()
     "%=",
     { strings = { diagnostics } },
     { hl = "MiniStatuslineFileinfo", strings = { fileinfo } },
-    { hl = mode_hl, strings = { search, location } },
+    { hl = mode.hl, strings = { search, location } },
   })
 end
 

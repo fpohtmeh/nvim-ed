@@ -31,6 +31,20 @@ H.replace_icons = function(str, hl, map)
   return res
 end
 
+M.mode = function()
+  local args = { trunc_width = 120 }
+  local mode, mode_hl = MiniStatusline.section_mode(args)
+  return {
+    hl = mode_hl,
+    strings = { mode },
+  }
+end
+
+M.git = function()
+  local args = { trunc_width = 40 }
+  return MiniStatusline.section_git(args)
+end
+
 M.filename = function()
   local args = { trunc_width = 140 }
   if vim.bo.buftype == "terminal" then
