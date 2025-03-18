@@ -63,8 +63,8 @@ local function toggle_quickfix()
 end
 map("n", "<leader>q", toggle_quickfix, { desc = "Toggle Quickfix list" })
 -- stylua: ignore start
-map("n", keys.prev .. "<A-q>", function() pcall(vim.cmd.colder) end, { desc = "Prev Quickfix list" })
-map("n", keys.next .. "<A-q>", function() pcall(vim.cmd.cnewer) end, { desc = "Next Quickfix list" })
+map("n", keys.prev .. "<c-q>", function() pcall(vim.cmd.colder) end, { desc = "Prev Quickfix list" })
+map("n", keys.next .. "<c-q>", function() pcall(vim.cmd.cnewer) end, { desc = "Next Quickfix list" })
 -- stylua: ignore end
 
 -- Terminal
