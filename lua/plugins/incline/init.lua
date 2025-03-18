@@ -31,7 +31,7 @@ H.opts = {
 
 return {
   "b0o/incline.nvim",
-  event = { "VeryLazy", "LazyFile" },
+  event = "LazyFile",
   opts = H.opts,
   dependencies = { "nvim-tree/nvim-web-devicons" },
 }

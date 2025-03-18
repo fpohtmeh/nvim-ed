@@ -1,7 +1,5 @@
 local H = {}
 
-H.event = { "LazyFile", "VeryLazy" }
-
 H.ensure_installed = {
   "bash",
   "c",
@@ -49,7 +47,7 @@ H.opts = {
 
 local plugin = {
   "nvim-treesitter/nvim-treesitter",
-  event = H.event,
+  event = "LazyFile",
   version = false,
   build = ":TSUpdate",
   config = function()
@@ -59,7 +57,7 @@ local plugin = {
 
 local text_objects = {
   "nvim-treesitter/nvim-treesitter-textobjects",
-  event = H.event,
+  event = "LazyFile",
 }
 
 return {
