@@ -18,10 +18,10 @@ H.active = function()
     mode,
     { hl = "MiniStatuslineDevinfo", strings = { git } },
     "%<",
-    { hl = "MiniStatuslineBuffers", strings = { buffers } },
-    { hl = "MiniStatuslineFilename", strings = { filename, diff } },
+    buffers,
+    { hl = "MiniStatuslineFilename", strings = { filename } },
     "%=",
-    { strings = { diagnostics } },
+    { strings = { diff, diagnostics } },
     fileinfo,
     { hl = mode.hl, strings = { search, location } },
   })

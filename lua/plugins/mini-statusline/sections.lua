@@ -51,11 +51,10 @@ M.filename = function()
     return "%t"
   end
 
-  local modified = vim.bo.modified and " " .. H.icons.modified or ""
   if MiniStatusline.is_truncated(args.trunc_width) then
-    return "%f%r" .. modified
+    return "%f%r"
   else
-    return "%F%r" .. modified
+    return "%F%r"
   end
 end
 
@@ -145,20 +144,33 @@ M.buffers = function()
 
   local index = 0
   local count = 0
+  local modified_count = 0
+  local is_current_modified = false
   for buf_id = 1, buf_list[#buf_list] do
     if is_listed(buf_id) then
       count = count + 1
       if buf_id == current_buf_id then
         index = count
       end
+      if vim.bo[buf_id].modified then
+        modified_count = modified_count + 1
+        is_current_modified = is_current_modified or index == count
+      end
     end
   end
 
-  local status = H.icons.buffers .. " "
-  if index ~= 0 then
-    status = status .. tostring(index) .. "/"
+  local is_unsaved = modified_count > 1 or modified_count == 1 and not is_current_modified
+  local icon_hl = modified_count == 0 and "MiniStatuslineBuffers"
+    or is_unsaved and "MiniStatuslineUnsaved"
+    or "MiniStatuslineModified"
+
+  local icon = "%#" .. icon_hl .. "# " .. H.icons.buffers
+  local count_str = tostring(math.max(count, 1))
+  if index == 0 then
+    return icon .. " " .. count_str
+  else
+    return icon .. " " .. tostring(index) .. "/" .. count_str
   end
-  return status .. tostring(math.max(count, 1))
 end
 
 return M
