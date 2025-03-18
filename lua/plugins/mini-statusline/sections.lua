@@ -51,11 +51,8 @@ M.filename = function()
     return "%t"
   end
 
-  if MiniStatusline.is_truncated(args.trunc_width) then
-    return "%f%r"
-  else
-    return "%F%r"
-  end
+  return (vim.bo.readonly and H.icons.readonly .. " " or "")
+    .. (MiniStatusline.is_truncated(args.trunc_width) and "%f" or "%F")
 end
 
 H.get_filesize = function()

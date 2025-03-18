@@ -13,6 +13,7 @@ M.separator = ""
 M.file = ""
 M.directory = ""
 M.buffers = "󰪏"
+M.readonly = "󰍁"
 
 M.diagnostics = {
   error = " ",
