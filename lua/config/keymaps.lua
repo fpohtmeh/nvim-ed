@@ -31,11 +31,6 @@ map("n", "<leader>Q", "<cmd>qa<cr>", { desc = "Quit All" })
 map("n", "<leader>w", "<cmd>close<cr>", { desc = "Close Window" })
 map("n", "<leader>W", "<cmd>only<cr>", { desc = "Close Other Windows" })
 
--- stylua: ignore start
-map("n", "n", function() return vim.fn.mode() == "s" and "n" or "*" end, { expr = true, desc = "Next Search Result" })
-map("n", "N", function() return vim.fn.mode() == "s" and "N" or "#" end, { expr = true, desc = "Prev Search Result" })
--- stylua: ignore end
-
 -- Lazy
 map("n", "<leader>L", "<cmd>Lazy<cr>", opts)
 
