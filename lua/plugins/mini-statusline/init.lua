@@ -22,7 +22,7 @@ H.active = function()
     { hl = "MiniStatuslineFilename", strings = { filename, diff } },
     "%=",
     { strings = { diagnostics } },
-    { hl = "MiniStatuslineFileinfo", strings = { fileinfo } },
+    fileinfo,
     { hl = mode.hl, strings = { search, location } },
   })
 end

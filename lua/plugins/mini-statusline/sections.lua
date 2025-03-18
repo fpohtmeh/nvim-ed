@@ -77,6 +77,9 @@ end
 
 M.fileinfo = function()
   local args = { trunc_width = 120 }
+  local wrap = function(text)
+    return "%#MiniStatuslineFileinfo# " .. text .. " "
+  end
 
   local filetype = vim.bo.filetype
   if filetype ~= "" then
@@ -84,13 +87,16 @@ M.fileinfo = function()
   end
 
   if MiniStatusline.is_truncated(args.trunc_width) or vim.bo.buftype ~= "" then
-    return filetype
+    return wrap(filetype)
   end
 
   local encoding = vim.bo.fileencoding or vim.bo.encoding
-  local size = H.get_filesize()
-
-  return string.format("%s%s%s %s", filetype, filetype == "" and "" or " ", encoding, size)
+  local info = filetype and (filetype .. " " .. encoding) or encoding
+  local filesize = H.get_filesize()
+  if filesize:sub(-2) == "MB" then
+    return wrap(info .. " %#MiniStatuslineBigFileinfo#" .. filesize)
+  end
+  return wrap(info .. " " .. filesize)
 end
 
 M.diff = function()
