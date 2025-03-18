@@ -20,7 +20,6 @@ M.indentation = {
     "OverseerForm",
     "OverseerList",
     "OverseerOutput",
-    "Outline",
   },
 }
 

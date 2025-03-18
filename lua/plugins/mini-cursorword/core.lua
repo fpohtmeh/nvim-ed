@@ -3,8 +3,9 @@ local H = {}
 
 H.excluded_filetypes = {
   "lazy",
+  "noice",
   "snacks_dashboard",
-  "Outline",
+  "snacks_terminal",
   "OverseerForm",
   "OverseerList",
 }
