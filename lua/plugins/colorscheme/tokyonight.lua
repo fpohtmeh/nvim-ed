@@ -35,12 +35,12 @@ return {
       hl.MiniStatuslineDiagnosticHint = { fg = hl.DiagnosticHint.fg }
       -- Statusline
       hl.MiniStatuslineDevinfo = { fg = c.blue, bg = c.bg_highlight }
-      hl.MiniStatuslineFilename = { fg = c.comment, bg = c.bg }
+      hl.MiniStatuslineFilename = { fg = c.blue, bg = c.bg }
       hl.MiniStatuslineFileinfo = { fg = c.blue, bg = c.bg_highlight }
-      hl.MiniStatuslineBigFileinfo = { fg = c.red, bg = c.bg_highlight }
-      hl.MiniStatuslineBuffers = { fg = c.blue }
-      hl.MiniStatuslineUnsaved = { fg = c.red }
-      hl.MiniStatuslineModified = { fg = c.green }
+      hl.MiniStatuslineBigFileinfo = { fg = c.red, bg = c.bg_highlight, bold = true }
+      hl.MiniStatuslineBuffers = { fg = c.fg }
+      hl.MiniStatuslineUnsaved = { fg = c.red, bold = true }
+      hl.MiniStatuslineModified = { fg = c.green, bold = true }
       hl.MiniStatuslineGitAdded = { fg = c.git.add }
       hl.MiniStatuslineGitModified = { fg = c.git.change }
       hl.MiniStatuslineGitRemoved = { fg = c.git.delete }
