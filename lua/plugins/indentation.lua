@@ -31,4 +31,13 @@ local blankline = {
   main = "ibl",
 }
 
-return { mini, blankline }
+local detect = {
+  "Darazaki/indent-o-matic",
+  event = "LazyFile",
+}
+
+return {
+  mini,
+  blankline,
+  detect,
+}

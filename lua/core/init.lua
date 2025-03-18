@@ -20,6 +20,7 @@ M.indentation = {
     "noice",
     "snacks_dashboard",
     "snacks_terminal",
+    "oil_preview",
     "OverseerForm",
     "OverseerList",
     "OverseerOutput",
