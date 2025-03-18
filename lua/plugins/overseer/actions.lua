@@ -1,10 +1,11 @@
 local M = {}
+local H = {}
 
 M.open_tasks_picker = function()
   vim.cmd("OverseerRun")
 end
 
-local function template_search_params()
+H.template_search_params = function()
   local dir = vim.fn.getcwd()
   if vim.bo.buftype == "" then
     local bufname = vim.api.nvim_buf_get_name(0)
@@ -15,7 +16,7 @@ local function template_search_params()
   return { dir = dir, filetype = vim.bo.filetype }
 end
 
-local function find_and_run_template(templates, task_name)
+H.find_and_run_template = function(templates, task_name)
   local found = false
   for _, template in ipairs(templates) do
     if found then
@@ -32,16 +33,7 @@ local function find_and_run_template(templates, task_name)
   end
 end
 
-M.run_by_name = function(task_name)
-  return function()
-    local function callback(templates)
-      find_and_run_template(templates, task_name)
-    end
-    require("overseer.template").list(template_search_params(), callback)
-  end
-end
-
-local find_recent_task = function()
+H.find_recent_task = function()
   local tasks = require("overseer").list_tasks({ recent_first = true })
   if vim.tbl_isempty(tasks) then
     vim.notify("No recent task found", vim.log.levels.WARN)
@@ -50,8 +42,17 @@ local find_recent_task = function()
   end
 end
 
+M.run_by_name = function(task_name)
+  return function()
+    local function callback(templates)
+      H.find_and_run_template(templates, task_name)
+    end
+    require("overseer.template").list(H.template_search_params(), callback)
+  end
+end
+
 M.restart_recent_task = function()
-  local task = find_recent_task()
+  local task = H.find_recent_task()
   if task ~= nil then
     require("overseer").run_action(task, "restart")
   end
@@ -68,7 +69,7 @@ M.toggle_recent_task_output = function()
     return
   end
 
-  local task = find_recent_task()
+  local task = H.find_recent_task()
   if task ~= nil then
     task:open_output("horizontal")
 
@@ -77,6 +78,13 @@ M.toggle_recent_task_output = function()
       resize 15
     ]])
     require("overseer.util").scroll_to_end(0)
+  end
+end
+
+M.stop_recent_task = function()
+  local task = H.find_recent_task()
+  if task ~= nil then
+    task:stop()
   end
 end
 

@@ -14,30 +14,16 @@ local function create_by_task_name(key, task_name)
 end
 
 M.keys = {
-  {
-    prefix .. "j",
-    actions.open_tasks_picker,
-    desc = "Select task",
-  },
-  {
-    prefix .. ".",
-    actions.restart_recent_task,
-    desc = "Restart last task",
-  },
-  {
-    prefix .. "l",
-    actions.toggle_tasks_list,
-    desc = "Toggle tasks list",
-  },
-  {
-    prefix .. "/",
-    actions.toggle_recent_task_output,
-    desc = "Toggle last task output",
-  },
+  -- stylua: ignore start
+  { prefix .. "j", actions.open_tasks_picker, desc = "Select task" },
+  { prefix .. ".", actions.restart_recent_task, desc = "Restart last task" },
+  { prefix .. "l", actions.toggle_tasks_list, desc = "Toggle tasks list" },
+  { "<leader>/", actions.toggle_recent_task_output, desc = "Toggle last task output" },
+  { prefix .. "x", actions.stop_recent_task, desc = "Stop last task" },
+  -- stylua: ignore end
   create_by_task_name("r", "run"),
   create_by_task_name("b", "build"),
   create_by_task_name("t", "test"),
-  create_by_task_name("x", "clean"),
 }
 
 M.add_by_task_name = function(key, task_name)
