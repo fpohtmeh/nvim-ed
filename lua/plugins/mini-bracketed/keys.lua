@@ -4,6 +4,9 @@ H.get_module = function(action)
   if action == "git" then
     require("plugins.mini-bracketed.git")
     return "Ed.bracketed"
+  elseif action == "todo" then
+    require("plugins.mini-bracketed.todo")
+    return "Ed.bracketed"
   end
   return "MiniBracketed"
 end
@@ -41,4 +44,7 @@ return {
 
   H.make_keymap("g", "git", "backward"),
   H.make_keymap("g", "git", "forward"),
+
+  H.make_keymap("t", "todo", "backward"),
+  H.make_keymap("t", "todo", "forward"),
 }
