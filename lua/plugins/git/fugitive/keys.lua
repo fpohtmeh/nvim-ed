@@ -28,7 +28,7 @@ return {
   -- commit
   H.map("c", "commit", "Commit"),
   H.map("C", "commit --amend", "Commit (ammend)"),
-  H.map("<c-c>", "commit --amend --no-edit", "Commit (ammend no-edit)"),
+  H.map("<a-c>", "commit --amend --no-edit", "Commit (ammend no-edit)"),
   -- reset
   H.map("r", "reset .", "Reset Staged"),
   H.map("R", "reset HEAD~1", "Reset Last Commit"),
