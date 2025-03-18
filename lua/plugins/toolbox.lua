@@ -21,6 +21,8 @@ local commands = {
   { name = "Remove trailing spaces", category = "Editor", execute = ":%s/\\s\\+$//e" },
   { name = "Sort selected lines", category = "Editor", execute = "sort" },
   { name = "Sort selected lines reverse", category = "Editor", execute = "sort!" },
+  -- Utils
+  { name = "Copy code image (Silicon)", category = "Utils", execute = "Silicon" },
 }
 
 return {
