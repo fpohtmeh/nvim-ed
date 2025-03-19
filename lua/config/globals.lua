@@ -1,5 +1,5 @@
 _G.Ed = {
-  colorscheme = "tokyonight",
+  colorscheme = vim.env.NVIM_COLORSCHEME or "tokyonight",
 }
 
 _G.dd = function(...)
