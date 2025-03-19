@@ -14,6 +14,8 @@ return {
       hl.Comment = { fg = c.comment, italic = false }
       hl.PmenuThumb = { bg = c.fg }
       hl.WinSeparator = { fg = c.blue }
+      -- Selection
+      hl.YankHighlight = { fg = default_fg, bg = c.yellow }
       -- Snacks
       hl.SnacksDashboardHeader = { fg = c.blue }
       hl.SnacksDashboardDesc = { fg = c.green }
