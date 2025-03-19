@@ -22,13 +22,14 @@ return {
   { "<leader><cr>", function() Snacks.picker.grep() end, desc = "Grep" },
   { "<leader>b", function() Snacks.picker.buffers() end, desc = "Buffers" },
   { "<leader>o", function() Snacks.picker.lsp_symbols(H.lsp_opts) end, desc = "Lsp Symbols" },
+  { "<leader>?", function() Snacks.picker.help() end, desc = "Help Pages" },
 
   { "<leader>S", function() Snacks.picker() end, desc = "All Pickers" },
   { "<leader>sr", function() Snacks.picker.resume() end, desc = "Resume" },
 
   { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
   { "<leader>sb", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
-  { "<leader>sh", function() Snacks.picker.help() end, desc = "Help Pages" },
+  { "<leader>sh", function() Snacks.picker.highlights() end, desc = "Highlights" },
   { "<leader>n", function() require("noice").cmd("all") end, desc = "Noice Messages" },
   { "<A-t>", H.zoom, desc = "Toggle Zen", mode = { "n", "x", "i" } },
   -- stylua: ignore end
