@@ -23,6 +23,7 @@ H.ensure_installed = {
   "pyright", -- python server
   "shfmt", -- shell formatter
   "stylua", -- lua formatter
+  "marksman", -- markdown server
 }
 
 H.ui_opts = {

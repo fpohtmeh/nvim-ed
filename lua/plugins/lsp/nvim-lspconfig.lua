@@ -7,6 +7,7 @@ H.configure_servers = function()
   config.lua_ls.setup({})
   config.pyright.setup({})
   config.clangd.setup(clangd.opts)
+  config.marksman.setup({})
 end
 
 return {
