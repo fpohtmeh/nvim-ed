@@ -31,6 +31,7 @@ opt.grepprg = "rg --vimgrep"
 opt.ignorecase = true
 opt.laststatus = 3
 opt.list = true
+opt.linebreak = true
 opt.number = true
 opt.relativenumber = true
 opt.scrolloff = 2
