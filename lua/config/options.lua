@@ -37,6 +37,7 @@ opt.scrolloff = 2
 opt.sidescrolloff = 2
 opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
 opt.shortmess:append({ W = true, I = true, c = true, C = true })
+opt.shiftwidth = 4
 opt.splitbelow = true
 opt.splitkeep = "screen"
 opt.splitright = true

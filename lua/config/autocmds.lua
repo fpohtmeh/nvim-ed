@@ -74,3 +74,13 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Git
 require("plugins.git.sync").create_autocmds()
+
+-- Tabs / indentation width
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "markdown", "lua" },
+  callback = function()
+    vim.bo.softtabstop = 2
+    vim.bo.tabstop = 2
+    vim.bo.shiftwidth = 2
+  end,
+})
