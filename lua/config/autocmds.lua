@@ -1,3 +1,6 @@
+-- LSP
+require("core.lsp").create_autocmds()
+
 -- Indentation
 
 local function disable_indentation()
@@ -17,7 +20,7 @@ vim.api.nvim_create_autocmd("FileType", {
 -- Yank
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
-    vim.highlight.on_yank({ higroup = "YankHighlight", timeout = 250 })
+    vim.hl.on_yank({ higroup = "YankHighlight", timeout = 250 })
   end,
 })
 

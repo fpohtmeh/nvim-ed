@@ -77,23 +77,6 @@ if vim.fn.executable("lazygit") == 1 then
   map("n", "<leader>G", terminal.lazy_git, { desc = "Lazygit" })
 end
 
--- LSP
-local lsp = require("core.lsp")
-map("n", "gr", lsp.rename, { expr = true, desc = "Rename" })
-map("n", "gd", lsp.pick.definition, { desc = "Goto Definition" })
-map("n", "gD", lsp.pick.declaration, { desc = "Goto Declaration" })
-map("n", "gR", lsp.pick.reference, { nowait = true, desc = "References" })
-map("n", "gI", lsp.pick.implementation, { desc = "Goto Implementation" })
-map("n", "gY", lsp.pick.type_definition, { desc = "Goto Type Definition" })
-
--- Diagnostic
-map("n", keys.prev .. "d", lsp.diagnostic.go_to(false), { desc = "Prev Diagnostic" })
-map("n", keys.next .. "d", lsp.diagnostic.go_to(true), { desc = "Next Diagnostic" })
-map("n", keys.prev .. "e", lsp.diagnostic.go_to(false, "ERROR"), { desc = "Prev Error" })
-map("n", keys.next .. "e", lsp.diagnostic.go_to(true, "ERROR"), { desc = "Next Error" })
-map("n", keys.prev .. "w", lsp.diagnostic.go_to(false, "WARN"), { desc = "Prev Warning" })
-map("n", keys.next .. "w", lsp.diagnostic.go_to(true, "WARN"), { desc = "Next Warning" })
-
 -- Windows keys
 for i = 1, #keys.window do
   local lhs = "<c-" .. keys.window[i] .. ">"

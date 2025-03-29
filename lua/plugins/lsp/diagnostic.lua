@@ -1,25 +1,31 @@
 local M = {}
 local H = {}
 
-local icons = require("core.icons")
-
-H.signs_map = {
-  [vim.diagnostic.severity.ERROR] = icons.diagnostics.error,
-  [vim.diagnostic.severity.WARN] = icons.diagnostics.warn,
-  [vim.diagnostic.severity.HINT] = icons.diagnostics.hint,
-  [vim.diagnostic.severity.INFO] = icons.diagnostics.info,
-}
+local icons = require("core.icons").diagnostics
+local severity = vim.diagnostic.severity
 
 H.diagnostic_opts = {
   float = { border = "single" },
+  virtual_lines = { current_line = true },
+  signs = {
+    text = {
+      [severity.ERROR] = icons.error,
+      [severity.WARN] = icons.warn,
+      [severity.HINT] = icons.hint,
+      [severity.INFO] = icons.info,
+    },
+    texthl = {
+      [severity.ERROR] = "DiagnosticSignError",
+      [severity.WARN] = "DiagnosticSignWarn",
+      [severity.HINT] = "DiagnosticSignHint",
+      [severity.INFO] = "DiagnosticSignInfo",
+    },
+    numhl = {},
+    linehl = {},
+  },
 }
 
 M.configure = function()
-  for severity, icon in pairs(H.signs_map) do
-    local name = vim.diagnostic.severity[severity]:lower():gsub("^%l", string.upper)
-    name = "DiagnosticSign" .. name
-    vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
-  end
   vim.diagnostic.config(H.diagnostic_opts)
 end
 
