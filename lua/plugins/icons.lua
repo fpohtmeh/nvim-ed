@@ -1,11 +1,3 @@
-vim.filetype.add({
-  extension = {
-    plist = "xml",
-    manifest = "xml",
-    log = "log",
-  },
-})
-
 return {
   "nvim-tree/nvim-web-devicons",
   event = "LazyFile",
