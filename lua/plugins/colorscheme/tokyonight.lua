@@ -55,6 +55,8 @@ return {
       -- Cursor word
       hl.MiniCursorword = { bg = c.bg_visual }
       hl.MiniCursorwordCurrent = { bg = hl.CursorLine.bg }
+      -- Trailspace
+      hl.MiniTrailspace = { bg = c.red1, fg = c.red1 }
       -- Incline
       hl.InclineNormal = { bg = c.bg }
       hl.InclineNormalNC = { bg = c.bg }
