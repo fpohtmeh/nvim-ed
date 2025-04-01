@@ -2,9 +2,9 @@ local H = {}
 
 H.opts = {
   mappings = {
-    add = "Sa",
-    delete = "Sd",
-    replace = "Sr",
+    add = "ys",
+    delete = "ds",
+    replace = "cs",
     find = "",
     find_left = "",
     highlight = "",
