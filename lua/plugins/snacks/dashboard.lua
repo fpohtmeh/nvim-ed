@@ -21,7 +21,7 @@ $  $$$    $$$$$$$$$$$$$$$$$$    $$$  $
 ]]
 
 M.keys = {
-  { action = ":ene | startinsert", desc = "New file", icon = "", key = "n" },
+  { action = ':lua require("core.fs").create_new_file()', desc = "New file", icon = "", key = "n" },
   { action = ':lua require("persistence").load()', desc = "Restore Session", icon = "", key = "s" },
   { action = ":qa", desc = "Quit", icon = "", key = "q" },
 }

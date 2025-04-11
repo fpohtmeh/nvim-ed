@@ -1,6 +1,7 @@
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 local keys = require("core").keys
+local fs = require("core.fs")
 
 -- Move cursor to non-blank character
 map({ "n", "o", "x" }, "<s-h>", "^", opts)
@@ -23,8 +24,10 @@ map("n", "gq", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 map("n", "gQ", "<cmd>tabonly<cr>", { desc = "Close Other Tabs" })
 map("n", "<leader><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
 
--- Save
+-- File
 map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
+map("n", "<leader>fn", fs.create_new_file, { desc = "New File" })
+map("n", "<leader>fx", fs.delete_current_file, { desc = "Delete Current File" })
 
 -- Quit, Close
 map("n", "<leader>Q", "<cmd>qa<cr>", { desc = "Quit All" })
