@@ -41,7 +41,7 @@ H.opts = {
     additional_vim_regex_highlighting = false,
   },
   indent = {
-    enabled = true,
+    enable = true,
   },
 }
 
