@@ -1,4 +1,5 @@
 local excluded_filetypes = require("core").indentation.excluded_filetypes
+local keys = require("core").keys
 
 local mini = {
   "echasnovski/mini.indentscope",
@@ -11,6 +12,10 @@ local mini = {
       animation = function()
         return 0
       end,
+    },
+    mappings = {
+      goto_top = keys.prev .. "i",
+      goto_bottom = keys.next .. "i",
     },
   },
 }
