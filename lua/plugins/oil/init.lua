@@ -7,6 +7,10 @@ return {
       view_options = { show_hidden = true },
       watch_for_changes = true,
       keymaps = actions.keymaps,
+      buf_options = {
+        buflisted = true,
+        bufhidden = "hide",
+      },
     }
     require("oil").setup(opts)
     actions.setup()
