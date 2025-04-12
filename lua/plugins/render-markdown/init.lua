@@ -26,5 +26,5 @@ H.opts = {
 return {
   "MeanderingProgrammer/render-markdown.nvim",
   opts = H.opts,
-  ft = { "markdown", "vimwiki" },
+  ft = { "markdown", "vimwiki", "codecompanion" },
 }
