@@ -21,4 +21,5 @@ return {
   { "<C-g>r", H.inline_action, desc = "CodeCompanion: Inline", mode = H.modes },
   { "<C-g>t", H.make_prompt("translate"), desc = "CodeCompanion: Translate", mode = H.modes },
   { "<C-g>h", H.make_prompt("help"), desc = "CodeCompanion: Help", mode = H.modes },
+  { "<C-g>f", H.make_prompt("fix_phrase"), desc = "CodeCompanion: Fix Phrase", mode = H.modes },
 }

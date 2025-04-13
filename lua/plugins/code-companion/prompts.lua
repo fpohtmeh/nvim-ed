@@ -56,6 +56,24 @@ M.library["Language Translator"] = {
   },
 }
 
+M.library["Fix Phrase"] = {
+  strategy = "inline",
+  description = "Fix the phrase",
+  opts = {
+    short_name = "fix_phrase",
+    placement = "replace",
+    ignore_system_prompt = true,
+    modes = { "v" },
+  },
+  prompts = {
+    { role = "system", content = H.prompts.fix_phrase },
+    {
+      role = "user",
+      content = H.prompts.fix_phrase_content,
+    },
+  },
+}
+
 M.library["Help"] = {
   strategy = "chat",
   description = "Help with any question",
