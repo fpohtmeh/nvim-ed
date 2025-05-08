@@ -61,11 +61,13 @@ M.delete_current_file = function()
     return
   end
 
-  Snacks.bufdelete()
-  if os.remove(full_path) then
-    Snacks.notify.info("File deleted: " .. short_path)
-  else
-    Snacks.notify.warn("Failed to delete file: " .. short_path)
+  Snacks.bufdelete({ force = true })
+  if M.path_exists(full_path) then
+    if os.remove(full_path) then
+      Snacks.notify.info("File deleted: " .. short_path)
+    else
+      Snacks.notify.warn("Failed to delete file: " .. short_path)
+    end
   end
 end
 
