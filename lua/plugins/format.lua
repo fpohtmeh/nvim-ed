@@ -7,7 +7,7 @@ return {
     formatters_by_ft = {
       lua = { "stylua" },
       cpp = { "clang-format" },
-      cmake = { "gersemi" },
+      cmake = { "cmake_format" },
       python = { "black" },
     },
     formatters = {
