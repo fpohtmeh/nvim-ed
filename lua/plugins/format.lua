@@ -9,6 +9,7 @@ return {
       cpp = { "clang-format" },
       cmake = { "cmake_format" },
       python = { "black" },
+      sh = { "shfmt" },
     },
     formatters = {
       injected = { options = { ignore_errors = true } },
