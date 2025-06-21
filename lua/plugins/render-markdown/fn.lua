@@ -36,10 +36,9 @@ M.setup_highlights = function(hl, colors)
   hl.RenderMarkdownDash = { fg = colors.fg }
   hl.RenderMarkdownBullet = { fg = colors.blue1 }
 
-  local code_bg = "#2d3b5f"
-  local code_fg = "#b4c2f0"
-  hl.RenderMarkdownCodeInline = { bg = code_bg, fg = code_fg }
-  hl.RenderMarkdownCode = { bg = code_bg, fg = code_fg }
+  local code_bg = "#303550"
+  hl.RenderMarkdownCodeInline = { bg = code_bg }
+  hl.RenderMarkdownCode = { bg = code_bg }
 end
 
 return M

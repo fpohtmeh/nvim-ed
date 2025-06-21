@@ -12,7 +12,6 @@ H.opts = {
   code = {
     sign = false,
     width = "block",
-    left_pad = 1,
     right_pad = 1,
     position = "right",
     language_pad = 1,
