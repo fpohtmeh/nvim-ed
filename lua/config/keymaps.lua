@@ -25,9 +25,10 @@ map("n", "gQ", "<cmd>tabonly<cr>", { desc = "Close Other Tabs" })
 map("n", "<leader><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
 
 -- File
-map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
+map({ "i", "x", "n", "s" }, "<C-s>", fs.save_current_file, { desc = "Save File" })
 map("n", "<leader>fn", fs.create_new_file, { desc = "New File" })
-map("n", "<leader>fx", fs.delete_current_file, { desc = "Delete Current File" })
+map("n", "<leader>fr", fs.rename_current_file, { desc = "Rename File" })
+map("n", "<leader>fx", fs.delete_current_file, { desc = "Delete File" })
 
 -- Quit, Close
 map("n", "<leader>Q", "<cmd>qa<cr>", { desc = "Quit All" })
