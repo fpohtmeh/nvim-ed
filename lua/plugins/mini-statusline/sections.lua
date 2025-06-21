@@ -1,6 +1,8 @@
 local M = {}
 local H = {}
 
+local fs = require("core.fs")
+
 H.icons = require("core.icons")
 
 ---@param str string -- input string
@@ -48,16 +50,41 @@ M.git = function()
   }
 end
 
+M.directory = function()
+  local args = { trunc_width = 140 }
+  if vim.bo.buftype == "terminal" or MiniStatusline.is_truncated(args.trunc_width) then
+    return { hl = "MiniStatuslineDirectory", strings = { "" } }
+  end
+
+  local directory = vim.fn.getcwd()
+  local filename = fs.buf_full_path()
+  if filename:sub(1, #directory) ~= directory then
+    return { hl = "MiniStatuslineDirectory", strings = { "" } }
+  end
+
+  local home = vim.env.HOME
+  if home and directory:sub(1, #home) == home then
+    directory = "~" .. directory:sub(#home + 1)
+  end
+  return { hl = "MiniStatuslineDirectory", strings = { directory } }
+end
+
 M.filename = function()
   local args = { trunc_width = 140 }
-  local filename = ""
-  if vim.bo.buftype == "terminal" then
-    filename = "%t"
-  else
-    filename = (vim.bo.readonly and H.icons.readonly .. " " or "")
-      .. (MiniStatusline.is_truncated(args.trunc_width) and "%f" or "%F")
+  if vim.fn.bufname() == "" then
+    return { hl = "MiniStatuslineFilename", strings = { "" } }
   end
-  return { hl = "MiniStatuslineFilename", strings = { filename } }
+  if vim.bo.buftype == "terminal" or MiniStatusline.is_truncated(args.trunc_width) then
+    return { hl = "MiniStatuslineFilename", strings = { "%t" } }
+  end
+
+  local directory = vim.fn.getcwd()
+  local filename = fs.buf_full_path()
+  if filename:sub(1, #directory) == directory then
+    filename = filename:sub(#directory + 2)
+  end
+  local prefix = vim.bo.readonly and H.icons.readonly .. " " or ""
+  return { hl = "MiniStatuslineFilename", strings = { prefix .. filename } }
 end
 
 H.get_filesize = function()

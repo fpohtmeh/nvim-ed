@@ -9,6 +9,7 @@ H.active = function()
   local diff = sections.diff()
   local diagnostics = sections.diagnostics()
   local buffers = sections.buffers()
+  local directory = sections.directory()
   local filename = sections.filename()
   local fileinfo = sections.fileinfo()
   local location = sections.location()
@@ -19,6 +20,7 @@ H.active = function()
     buffers,
     git,
     "%<", -- Mark general truncate point
+    directory,
     filename,
     "%=", -- End left alignment
     { strings = { diff, diagnostics } },

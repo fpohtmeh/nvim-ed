@@ -6,6 +6,7 @@ M.setup_highlights = function(hl, colors)
   hl.MiniStatuslineDiagnosticInfo = { fg = hl.DiagnosticInfo.fg }
   hl.MiniStatuslineDiagnosticHint = { fg = hl.DiagnosticHint.fg }
   hl.MiniStatuslineDevinfo = { fg = colors.blue, bg = colors.bg_highlight }
+  hl.MiniStatuslineDirectory = { fg = colors.magenta, bg = colors.bg }
   hl.MiniStatuslineFilename = { fg = colors.blue, bg = colors.bg }
   hl.MiniStatuslineFileinfo = { fg = colors.blue, bg = colors.bg_highlight }
   hl.MiniStatuslineBigFileinfo = { fg = colors.red, bg = colors.bg_highlight, bold = true }
