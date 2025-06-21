@@ -9,6 +9,9 @@ local overriden_keys = {
 
 return {
   layout = { preset = "ivy" },
+  formatters = {
+    file = { truncate = 80 },
+  },
   icons = {
     ui = {
       selected = icons.mark .. " ",
