@@ -2,6 +2,7 @@ local H = {}
 
 H.opts = {
   heading = {
+    icons = {},
     sign = true,
     signs = { "# " },
     left_pad = 1,
