@@ -16,11 +16,11 @@ H.active = function()
 
   return this.combine_groups({
     mode,
-    { hl = "MiniStatuslineDevinfo", strings = { git } },
-    "%<",
     buffers,
-    { hl = "MiniStatuslineFilename", strings = { filename } },
-    "%=",
+    git,
+    "%<", -- Mark general truncate point
+    filename,
+    "%=", -- End left alignment
     { strings = { diff, diagnostics } },
     fileinfo,
     { hl = mode.hl, strings = { search, location } },

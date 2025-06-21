@@ -42,17 +42,22 @@ end
 
 M.git = function()
   local args = { trunc_width = 40 }
-  return MiniStatusline.section_git(args)
+  return {
+    hl = "MiniStatuslineDevinfo",
+    strings = { MiniStatusline.section_git(args) },
+  }
 end
 
 M.filename = function()
   local args = { trunc_width = 140 }
+  local filename = ""
   if vim.bo.buftype == "terminal" then
-    return "%t"
+    filename = "%t"
+  else
+    filename = (vim.bo.readonly and H.icons.readonly .. " " or "")
+      .. (MiniStatusline.is_truncated(args.trunc_width) and "%f" or "%F")
   end
-
-  return (vim.bo.readonly and H.icons.readonly .. " " or "")
-    .. (MiniStatusline.is_truncated(args.trunc_width) and "%f" or "%F")
+  return { hl = "MiniStatuslineFilename", strings = { filename } }
 end
 
 H.get_filesize = function()
@@ -162,13 +167,15 @@ M.buffers = function()
     or is_unsaved and "MiniStatuslineUnsaved"
     or "MiniStatuslineModified"
 
-  local icon = "%#" .. icon_hl .. "# " .. H.icons.buffers
+  local icon = H.icons.buffers
   local count_str = tostring(math.max(count, 1))
+  local str = ""
   if index == 0 then
-    return icon .. " " .. count_str
+    str = icon .. " " .. count_str
   else
-    return icon .. " " .. tostring(index) .. "/" .. count_str
+    str = icon .. " " .. tostring(index) .. "/" .. count_str
   end
+  return { hl = icon_hl, strings = { str } }
 end
 
 return M

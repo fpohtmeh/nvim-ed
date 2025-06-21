@@ -31,21 +31,6 @@ return {
       hl.SnacksZenIcon = { fg = default_fg, bg = c.green }
       -- Diagnostic
       hl.DiagnosticUnnecessary = { fg = c.comment }
-      hl.MiniStatuslineDiagnosticError = { fg = hl.DiagnosticError.fg }
-      hl.MiniStatuslineDiagnosticWarn = { fg = hl.DiagnosticWarn.fg }
-      hl.MiniStatuslineDiagnosticInfo = { fg = hl.DiagnosticInfo.fg }
-      hl.MiniStatuslineDiagnosticHint = { fg = hl.DiagnosticHint.fg }
-      -- Statusline
-      hl.MiniStatuslineDevinfo = { fg = c.blue, bg = c.bg_highlight }
-      hl.MiniStatuslineFilename = { fg = c.blue, bg = c.bg }
-      hl.MiniStatuslineFileinfo = { fg = c.blue, bg = c.bg_highlight }
-      hl.MiniStatuslineBigFileinfo = { fg = c.red, bg = c.bg_highlight, bold = true }
-      hl.MiniStatuslineBuffers = { fg = c.fg }
-      hl.MiniStatuslineUnsaved = { fg = c.red, bold = true }
-      hl.MiniStatuslineModified = { fg = c.green, bold = true }
-      hl.MiniStatuslineGitAdded = { fg = c.git.add }
-      hl.MiniStatuslineGitModified = { fg = c.git.change }
-      hl.MiniStatuslineGitRemoved = { fg = c.git.delete }
       -- Indentation
       hl.MiniIndentscopeSymbol = { fg = c.green }
       -- Flash
@@ -60,8 +45,9 @@ return {
       -- Incline
       hl.InclineNormal = { bg = c.bg }
       hl.InclineNormalNC = { bg = c.bg }
-      -- Markdown
+      -- Plugins
       require("plugins.render-markdown.fn").setup_highlights(hl, c)
+      require("plugins.mini-statusline.fn").setup_highlights(hl, c)
     end,
   },
   init = function()
