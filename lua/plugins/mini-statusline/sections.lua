@@ -123,7 +123,8 @@ M.location = function()
     return lines_str
   end
   local line = vim.fn.line(".")
-  return string.format("%" .. #lines_str .. "d:%s", line, lines_str)
+  local col = vim.fn.charcol(".")
+  return string.format("%3d|%" .. #lines_str .. "d:%s", col, line, lines_str)
 end
 
 M.searchcount = function()
