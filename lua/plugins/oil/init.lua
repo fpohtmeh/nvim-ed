@@ -17,6 +17,7 @@ return {
   end,
   keys = {
     { "<leader>e", actions.open_oil, desc = "Open explorer" },
+    { "<leader>E", actions.open_oil_cwd, desc = "Open explorer (cwd)" },
   },
   dependencies = { "nvim-tree/nvim-web-devicons" },
   cmd = "Oil",

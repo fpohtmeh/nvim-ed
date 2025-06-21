@@ -1,6 +1,8 @@
 local M = {}
 local H = {}
 
+local fs = require("core.fs")
+
 H.show_all_columns = false
 
 H.toggle_columns = function()
@@ -14,9 +16,12 @@ H.toggle_columns = function()
 end
 
 M.open_oil = function(path)
-  local fs = require("core.fs")
   local cmd = "Oil" .. (path and " " .. fs.to_escaped(path) or "")
   vim.cmd(cmd)
+end
+
+M.open_oil_cwd = function()
+  vim.cmd("Oil " .. fs.to_escaped(vim.fn.getcwd()))
 end
 
 M.setup = function()
