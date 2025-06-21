@@ -61,7 +61,7 @@ return {
       hl.InclineNormal = { bg = c.bg }
       hl.InclineNormalNC = { bg = c.bg }
       -- Markdown
-      require("plugins.render-markdown.core").setup_highlights(hl, c)
+      require("plugins.render-markdown.fn").setup_highlights(hl, c)
     end,
   },
   init = function()

@@ -3,6 +3,7 @@ vim.filetype.add({
     plist = "xml",
     manifest = "xml",
     log = "log",
+    mdc = "markdown",
   },
 })
 
