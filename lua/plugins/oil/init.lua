@@ -8,7 +8,7 @@ return {
       watch_for_changes = true,
       keymaps = actions.keymaps,
       buf_options = {
-        buflisted = true,
+        buflisted = false,
         bufhidden = "hide",
       },
     }
