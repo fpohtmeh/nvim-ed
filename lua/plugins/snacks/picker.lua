@@ -5,6 +5,8 @@ local overriden_keys = {
   ["<a-t>"] = { "toggle_maximize", mode = { "i", "n" } },
   ["<c-j>"] = false,
   ["<c-k>"] = false,
+  ["<c-t>"] = false,
+  ["<c-e>"] = { "tab", mode = { "i", "n" } },
 }
 
 return {
