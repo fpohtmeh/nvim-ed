@@ -8,6 +8,7 @@ H.configure_servers = function()
   config.pyright.setup({})
   config.clangd.setup(clangd.opts)
   config.marksman.setup({})
+  config.yamlls.setup({})
 end
 
 return {
