@@ -9,8 +9,6 @@ local function toolbox()
 end
 
 local commands = {
-  -- Git
-  { name = "Toggle blame for current line", category = "Git", execute = "Gitsigns toggle_current_line_blame" },
   -- Clipboard
   { name = "Copy full path", category = "Clipboard", execute = ":let @+ = expand('%:p')" },
   { name = "Copy directory path", category = "Clipboard", execute = ":let @+ = expand('%:p:h')" },

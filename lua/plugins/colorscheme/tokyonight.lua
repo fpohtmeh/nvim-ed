@@ -45,6 +45,8 @@ return {
       -- Incline
       hl.InclineNormal = { bg = c.bg }
       hl.InclineNormalNC = { bg = c.bg }
+      -- Git
+      hl.GitSignsCurrentLineBlame = { fg = c.comment }
       -- Plugins
       require("plugins.render-markdown.fn").setup_highlights(hl, c)
       require("plugins.mini-statusline.fn").setup_highlights(hl, c)

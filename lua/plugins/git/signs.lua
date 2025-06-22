@@ -42,6 +42,7 @@ return {
       untracked = { text = "▎" },
     },
     signs_staged_enable = false,
+    current_line_blame_formatter = " <author_mail> (<author_time:%R>) | <summary>",
     on_attach = add_buffer_mappings,
   },
 }
