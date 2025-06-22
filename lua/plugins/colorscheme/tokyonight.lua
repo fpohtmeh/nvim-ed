@@ -50,6 +50,7 @@ return {
       -- Plugins
       require("plugins.render-markdown.fn").setup_highlights(hl, c)
       require("plugins.mini-statusline.fn").setup_highlights(hl, c)
+      require("plugins.grug-far.fn").setup_highlights(hl, c)
     end,
   },
   init = function()
