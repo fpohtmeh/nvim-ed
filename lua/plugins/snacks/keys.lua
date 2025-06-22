@@ -19,7 +19,7 @@ H.lsp_opts = {
 return {
   -- stylua: ignore start
   { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
-  { "<leader><cr>", function() Snacks.picker.grep() end, desc = "Grep" },
+  { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
   { "<leader>b", function() Snacks.picker.buffers() end, desc = "Buffers" },
   { "<leader>sl", function() Snacks.picker.lsp_symbols(H.lsp_opts) end, desc = "Lsp Symbols (Buffer)" },
   { "<leader>sh", function() Snacks.picker.help() end, desc = "Help Pages" },
