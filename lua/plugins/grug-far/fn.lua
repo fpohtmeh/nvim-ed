@@ -23,14 +23,20 @@ H.make_action = function(args)
       prefills.flags = "--fixed-strings"
     end
     args = args or {}
-    if args.word then
+    if args.cword then
       prefills.search = vim.fn.expand("<cword>")
+    elseif args.search then
+      prefills.search = args.search
+    else
+      prefills.search = ""
     end
 
     if args.file then
       prefills.paths = fs.to_native(vim.fn.expand("%"))
-    elseif args.dir then
+    elseif args.file_dir then
       prefills.paths = fs.to_native(vim.fn.expand("%:p:h"))
+    elseif args.path then
+      prefills.paths = fs.to_native(args.path)
     end
 
     require("grug-far").open({
@@ -41,9 +47,12 @@ H.make_action = function(args)
 end
 
 M.open = H.make_action()
-M.open_with_word = H.make_action({ word = true })
+M.open_with_word = H.make_action({ cword = true })
 M.open_with_file = H.make_action({ file = true })
-M.open_with_directory = H.make_action({ dir = true })
+M.open_with_directory = H.make_action({ file_dir = true })
+M.open_with_args = function(args)
+  H.make_action(args)()
+end
 
 -- TOGGLES
 

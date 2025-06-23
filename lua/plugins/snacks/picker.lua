@@ -1,12 +1,28 @@
 local icons = require("core.icons")
 
 local overriden_keys = {
-  ["<a-m>"] = false,
-  ["<a-t>"] = { "toggle_maximize", mode = { "i", "n" } },
-  ["<c-j>"] = false,
-  ["<c-k>"] = false,
-  ["<c-t>"] = false,
-  ["<c-e>"] = { "tab", mode = { "i", "n" } },
+  ["<A-m>"] = false,
+  ["<A-t>"] = { "toggle_maximize", mode = { "i", "n" } },
+  ["<C-j>"] = false,
+  ["<C-k>"] = false,
+  ["<C-t>"] = false,
+  ["<C-e>t"] = { "tab", mode = { "i", "n" } },
+  ["<C-e>r"] = { "search_and_replace", mode = { "i", "n" } },
+}
+
+---@class snacks.picker.Action
+local search_and_replace = {
+  name = "Search and Replace",
+  ---@diagnostic disable-next-line: unused-local
+  action = function(picker, item, action)
+    local source = picker.opts.source
+    local fn = require("plugins.grug-far.fn")
+    if source == "zoxide" then
+      fn.open_with_args({ path = item.file })
+    else
+      fn.open_with_args({ search = picker.finder.filter.search })
+    end
+  end,
 }
 
 return {
@@ -22,5 +38,8 @@ return {
   win = {
     input = { keys = overriden_keys },
     list = { keys = overriden_keys },
+  },
+  actions = {
+    search_and_replace = search_and_replace,
   },
 }
