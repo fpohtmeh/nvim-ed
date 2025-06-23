@@ -8,6 +8,7 @@ H.excluded_filetypes = {
   "snacks_terminal",
   "OverseerForm",
   "OverseerList",
+  "grug-far",
 }
 
 H.callback = function()
