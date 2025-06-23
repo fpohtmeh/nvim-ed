@@ -12,14 +12,14 @@ H.title = "Task"
 
 ---@diagnostic disable-next-line: unused-local
 H.on_start = function(self, task)
-  local spinner = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
+  local spinners = require("core.icons").spinners
   local message = "[RUNNING:] " .. H.get_display_task(task)
   vim.notify(message, vim.log.levels.INFO, {
     id = H.get_notification_id(task),
     title = H.title,
     timeout = 0,
     opts = function(notif)
-      notif.icon = spinner[math.floor(vim.uv.hrtime() / (1e6 * 80)) % #spinner + 1] .. " "
+      notif.icon = spinners[math.floor(vim.uv.hrtime() / (1e6 * 80)) % #spinners + 1] .. " "
     end,
   })
 end
