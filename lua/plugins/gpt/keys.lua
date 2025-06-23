@@ -1,12 +1,5 @@
 local H = {}
 
-H.modes = {
-  n = { "n" },
-  v = { "v" },
-  nv = { "n", "v" },
-  nivx = { "n", "i", "v", "x" },
-}
-
 H.create = function(keys, cmd, desc, mode)
   if mode == "v" then
     return { keys, ":<C-u>'<,'>" .. cmd .. "<cr>", desc = desc, mode = mode }
@@ -25,18 +18,18 @@ H.create_mappings = function()
     end
   end
 
-  -- chat
-  append("<c-g>t", "GpChatToggle vsplit", "AI Chat: Toggle", H.modes.nv)
-  append("<c-g>n", "GpChatNew vsplit", "AI Chat: New", H.modes.nv)
-  append("<c-g>f", "GpChatFinder", "AI Chat: Find", H.modes.nv)
-  append("<c-g>p", "GpChatPaste", "AI Chat: Paste", H.modes.v)
-  -- text
-  append("<c-g>r", "GpRewrite", "AI Text: Rewrite", H.modes.nv)
-  append("<c-g>j", "GpAppend", "AI Text: Append", H.modes.nv)
-  append("<c-g>k", "GpPrepend", "AI Text: Prepend", H.modes.nv)
-  -- context
-  append("<C-g>T", "GpTranslate vsplit", "AI Context: Translate", H.modes.nv)
-  append("<C-g>E", "GpExplain vsplit", "AI Context: Explain", H.modes.nv)
+  local modes = { "n", "v" }
+  -- Chat
+  append("<C-g>g", "GpChatToggle vsplit", "GP Chat: Toggle", modes)
+  append("<C-g>f", "GpChatFinder", "GP Chat: Find", modes)
+  -- Text
+  append("<C-g>r", "GpRewrite", "GP Buffer: Rewrite", modes)
+  append("<C-g>j", "GpAppend", "GP Buffer: Append", modes)
+  append("<C-g>k", "GpPrepend", "GP Buffer: Prepend", modes)
+  -- Context
+  append("<C-g>T", "GpTranslate vsplit", "GP Context: Translate", modes)
+  append("<C-g>E", "GpExplain vsplit", "GP Context: Explain", modes)
+  append("<C-g>F", "GpRewrite FixPhrase", "GP Context: Fix Phrase", modes)
 
   return mappings
 end

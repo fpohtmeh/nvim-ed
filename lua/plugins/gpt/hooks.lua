@@ -15,14 +15,24 @@ Answer only with the translation, don't print source or target language or other
 H.prompts.explain = [[
 You are an AI assistant helping developers.
 Provide concise, technical explanations.
-Aim for 20 words or less if it's clear enough.
+Aim for 40 words or less if it's clear enough.
 ]]
 
+H.prompts.fix_phrase = [[
+You are Writer. Please help me to fix the phrase in the provided language.
+Ensure that phrase sound natural for the language and for the native speakers.
+Please be brief, the output should not be much longer than input.
+Try to detect the area and use the corresponding phrasing.
+]]
+
+H.make_new_chat = function(prompt)
+  return function(plugin, params)
+    plugin.cmd.ChatNew(params, prompt)
+  end
+end
+
 return {
-  Translate = function(plugin, params)
-    plugin.cmd.ChatNew(params, H.prompts.translate)
-  end,
-  Explain = function(plugin, params)
-    plugin.cmd.ChatNew(params, H.prompts.explain)
-  end,
+  Translate = H.make_new_chat(H.prompts.translate),
+  Explain = H.make_new_chat(H.prompts.explain),
+  FixPhrase = H.make_new_chat(H.prompts.fix_phrase),
 }

@@ -5,10 +5,15 @@ return {
       openai = {},
       anthropic = { secret = os.getenv("ANTHROPIC_API_KEY") },
     },
-    chat_shortcut_respond = { shortcut = "<c-g><c-g>", modes = { "n", "i", "v", "x" } },
-    chat_shortcut_delete = { shortcut = "<c-g>d", modes = { "n" } },
-    chat_shortcut_stop = { shortcut = "<c-g>s", modes = { "n" } },
-    chat_shortcut_new = { shortcut = "<c-g>n", modes = { "n" } },
+    -- Title
+    chat_user_prefix = "## Me:",
+    chat_assistant_prefix = { "## GP ", "({{agent}})" },
+    -- Shortcuts
+    chat_shortcut_respond = { shortcut = "<C-s>", modes = { "n", "i", "v" } },
+    chat_shortcut_delete = { shortcut = "<C-e>d", modes = { "n" } },
+    chat_shortcut_stop = { shortcut = "<C-e>x", modes = { "n" } },
+    chat_shortcut_new = { shortcut = "<C-e>n", modes = { "n" } },
+    -- Misc
     template_selection = "{{selection}}",
     hooks = require("plugins.gpt.hooks"),
   },
