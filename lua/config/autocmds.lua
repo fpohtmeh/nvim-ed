@@ -78,6 +78,13 @@ vim.api.nvim_create_autocmd("FileType", {
 -- Git
 require("plugins.git.sync").create_autocmds()
 
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "gitcommit",
+  callback = function()
+    vim.cmd.startinsert()
+  end,
+})
+
 -- Tabs / indentation width
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "markdown", "lua" },
