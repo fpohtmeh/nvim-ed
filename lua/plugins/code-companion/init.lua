@@ -4,8 +4,7 @@ H.tools = {
   groups = {
     dev = {
       description = "Developer - Can run code, edit code and modify files",
-      system_prompt = "Describe what the developer should do",
-      tools = { "editor", "files", "cmd_runner" },
+      tools = { "create_file", "read_file", "insert_edit_into_file", "cmd_runner" },
     },
   },
 }
@@ -15,20 +14,14 @@ H.strategies = {
     adapter = "anthropic",
     tools = H.tools,
   },
-  inline = {
-    adapter = "anthropic",
-  },
-  cmd = {
-    adapter = "anthropic",
-  },
+  inline = { adapter = "anthropic" },
+  cmd = { adapter = "anthropic" },
 }
 
 H.adapters = {
   anthropic = function()
     return require("codecompanion.adapters").extend("anthropic", {
-      env = {
-        api_key = "ANTHROPIC_API_KEY",
-      },
+      env = { api_key = "ANTHROPIC_API_KEY" },
     })
   end,
 }
@@ -43,16 +36,11 @@ H.display = {
   },
 }
 
-H.prompt_library = require("plugins.code-companion.prompts").library
-
 H.opts = {
   strategies = H.strategies,
   adapters = H.adapters,
   display = H.display,
-  prompt_library = H.prompt_library,
 }
-
-H.keys = require("plugins.code-companion.keys")
 
 H.dependencies = {
   "nvim-lua/plenary.nvim",
@@ -63,7 +51,9 @@ H.dependencies = {
 return {
   "olimorris/codecompanion.nvim",
   opts = H.opts,
-  keys = H.keys,
+  keys = {
+    { "<C-g>t", "<cmd>CodeCompanionChat Toggle<cr>", desc = "CodeCompanion: Toggle", mode = { "n", "i", "v" } },
+  },
   dependencies = H.dependencies,
   cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionActions" },
 }
