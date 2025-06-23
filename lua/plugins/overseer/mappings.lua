@@ -18,7 +18,7 @@ M.keys = {
   { prefix .. "j", actions.open_tasks_picker, desc = "Select task" },
   { prefix .. ".", actions.restart_recent_task, desc = "Restart last task" },
   { prefix .. "l", actions.toggle_tasks_list, desc = "Toggle tasks list" },
-  { "<leader>/", actions.toggle_recent_task_output, desc = "Toggle last task output" },
+  { "<leader><CR>", actions.toggle_recent_task_output, desc = "Toggle last task output" },
   { prefix .. "x", actions.stop_recent_task, desc = "Stop last task" },
   -- stylua: ignore end
   create_by_task_name("r", "run"),

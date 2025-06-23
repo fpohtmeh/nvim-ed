@@ -42,8 +42,7 @@ M.setup = function()
 end
 
 M.keymaps = {
-  ["g?"] = false, -- "actions.show_help"
-  ["?"] = "actions.show_help",
+  ["g?"] = "actions.show_help",
   ["<CR>"] = "actions.select",
   ["<C-s>"] = false, -- "actions.select_vsplit",
   ["<C-w>v"] = "actions.select_vsplit",
