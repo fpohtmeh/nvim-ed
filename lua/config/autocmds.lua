@@ -2,7 +2,6 @@
 require("core.lsp").create_autocmds()
 
 -- Indentation
-
 local function disable_indentation()
   vim.b.miniindentscope_disable = true
 end
@@ -92,5 +91,13 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.bo.softtabstop = 2
     vim.bo.tabstop = 2
     vim.bo.shiftwidth = 2
+  end,
+})
+
+-- Close with q
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "query", "grug-far-history", "grug-far-help", "OverseerOutput" },
+  callback = function(event)
+    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
   end,
 })
