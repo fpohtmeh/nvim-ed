@@ -13,6 +13,7 @@ H.strategies = {
   chat = {
     adapter = "anthropic",
     tools = H.tools,
+    opts = {},
   },
   inline = { adapter = "anthropic" },
   cmd = { adapter = "anthropic" },
@@ -40,12 +41,16 @@ H.opts = {
   strategies = H.strategies,
   adapters = H.adapters,
   display = H.display,
+  extensions = {
+    history = { enabled = true },
+  },
 }
 
 H.dependencies = {
   "nvim-lua/plenary.nvim",
   "nvim-treesitter/nvim-treesitter",
   "echasnovski/mini.diff",
+  "ravitemer/codecompanion-history.nvim",
 }
 
 return {
@@ -55,5 +60,5 @@ return {
     { "<C-g>t", "<cmd>CodeCompanionChat Toggle<cr>", desc = "CodeCompanion: Toggle", mode = { "n", "i", "v" } },
   },
   dependencies = H.dependencies,
-  cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionActions" },
+  cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionActions", "CodeCompanionHistory" },
 }
