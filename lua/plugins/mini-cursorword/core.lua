@@ -8,6 +8,7 @@ H.excluded_filetypes = {
   "snacks_terminal",
   "OverseerForm",
   "OverseerList",
+  "OverseerOutput",
   "grug-far",
 }
 
