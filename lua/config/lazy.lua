@@ -48,6 +48,9 @@ require("lazy").setup({
     lazy = false,
     version = false,
   },
+  dev = {
+    path = vim.fn.expand("$HOME/Projects/Nvim") or "",
+  },
   install = {
     colorscheme = { Ed.colorscheme },
   },
