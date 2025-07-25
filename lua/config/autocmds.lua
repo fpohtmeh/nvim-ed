@@ -96,7 +96,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Close with q
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "query", "grug-far-history", "grug-far-help", "OverseerOutput" },
+  pattern = { "help", "query", "grug-far-history", "grug-far-help", "OverseerOutput" },
   callback = function(event)
     vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
   end,
