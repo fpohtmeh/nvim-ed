@@ -9,6 +9,9 @@ H.create_highlights = function()
   local hl = {}
   -- Selection
   hl.YankHighlight = { fg = default_fg, bg = mono[10] }
+  -- Tabline
+  hl.TabLineInactive = { fg = mono[10], bg = mono[1], bold = false }
+  hl.TabLineActive = { fg = mono[1], bg = mono[10], bold = true }
   -- Flash
   hl.FlashLabel = { fg = default_fg, bg = colors.green }
 

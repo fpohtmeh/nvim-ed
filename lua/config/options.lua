@@ -54,6 +54,9 @@ opt.virtualedit = "block"
 opt.winminwidth = 5
 opt.wrap = false
 
+-- Custom tabline formatting
+opt.tabline = "%!v:lua.require'config.tabline'.render()"
+
 if vim.fn.has("win32") == 1 then
   require("core.terminal").setup("pwsh")
 end

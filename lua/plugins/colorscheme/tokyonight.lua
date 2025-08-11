@@ -16,6 +16,9 @@ return {
       hl.WinSeparator = { fg = c.blue }
       -- Selection
       hl.YankHighlight = { fg = default_fg, bg = c.yellow }
+      -- Tabline
+      hl.TabLineInactive = { fg = c.blue, bg = c.bg, bold = false }
+      hl.TabLineActive = { fg = c.bg, bg = c.blue, bold = true }
       -- Snacks
       hl.SnacksDashboardHeader = { fg = c.blue }
       hl.SnacksDashboardDesc = { fg = c.green }
