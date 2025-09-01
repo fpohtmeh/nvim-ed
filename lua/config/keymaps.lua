@@ -93,5 +93,5 @@ for i = 1, #keys.window do
     vim.cmd(tostring(i) .. " wincmd w")
   end
   local description = "Go to window " .. i
-  vim.keymap.set({ "n", "t" }, lhs, rhs, { desc = description, remap = true })
+  vim.keymap.set({ "n", "v", "t" }, lhs, rhs, { desc = description, remap = true })
 end
