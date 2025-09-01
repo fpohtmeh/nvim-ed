@@ -1,4 +1,5 @@
 local M = {}
+local H = {}
 
 function M.setup(shell)
   vim.o.shell = shell or vim.o.shell
@@ -19,8 +20,43 @@ function M.setup(shell)
   end
 end
 
+H.keys = {
+  term_normal = {
+    "<S-esc>",
+    function(self)
+      return "<C-\\><C-n>"
+    end,
+    mode = "t",
+    expr = true,
+    desc = "Shift escape to normal mode",
+  },
+}
+
 function M.open()
-  Snacks.terminal()
+  local opts = {
+    cwd = Snacks.git.get_root(),
+    win = { keys = H.keys },
+    env = { terminal_style = "normal" }, -- for different terminal id
+  }
+  Snacks.terminal(nil, opts)
+end
+
+function M.open_float()
+  local opts = {
+    cwd = Snacks.git.get_root(),
+    win = { style = "max_float", title = "Terminal", keys = H.keys },
+    env = { terminal_style = "float" },
+  }
+  Snacks.terminal(nil, opts)
+end
+
+function M.open_vsplit()
+  local opts = {
+    cwd = Snacks.git.get_root(),
+    win = { position = "right", width = 80, keys = H.keys },
+    env = { terminal_style = "vsplit" },
+  }
+  Snacks.terminal(nil, opts)
 end
 
 function M.close()

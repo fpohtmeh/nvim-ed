@@ -11,6 +11,15 @@ return {
       backdrop = false,
     },
     zoom_indicator = { text = " 󰊓 zoom " },
+    max_float = {
+      position = "float",
+      height = function()
+        return vim.o.lines - 1
+      end,
+      width = 0,
+      zindex = 50,
+      border = "single",
+    },
   },
   notification = function(buf, notif, ctx)
     ctx.opts.border = "single"
