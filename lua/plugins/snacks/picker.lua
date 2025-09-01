@@ -26,7 +26,10 @@ local search_and_replace = {
 }
 
 return {
-  layout = { preset = "ivy" },
+  layout = {
+    preset = "ivy",
+    preview = false,
+  },
   formatters = {
     file = { truncate = 80 },
   },

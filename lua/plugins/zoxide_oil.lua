@@ -25,9 +25,6 @@ H.zoxide_oil = function()
   H.current_win = vim.api.nvim_get_current_win()
   Snacks.picker.pick("zoxide", {
     format = "file",
-    win = {
-      preview = { minimal = true },
-    },
     actions = {
       confirm = H.confirm,
     },
