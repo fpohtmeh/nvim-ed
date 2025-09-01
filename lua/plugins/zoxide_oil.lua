@@ -1,5 +1,7 @@
 local H = {}
 
+H.current_win = nil
+
 H.open_oil = function(item, cmd)
   local dir = item.file
   if not dir then
@@ -15,10 +17,12 @@ end
 
 H.confirm = function(picker, item, action)
   picker:close()
+  vim.api.nvim_set_current_win(H.current_win)
   H.open_oil(item, action.cmd)
 end
 
 H.zoxide_oil = function()
+  H.current_win = vim.api.nvim_get_current_win()
   Snacks.picker.pick("zoxide", {
     format = "file",
     win = {
@@ -33,6 +37,6 @@ end
 return {
   "folke/snacks.nvim",
   keys = {
-    { "<leader>z", H.zoxide_oil, desc = "Zoxide Oil" },
+    { "<leader>d", H.zoxide_oil, desc = "Zoxide Directory" },
   },
 }
