@@ -23,7 +23,7 @@ end
 H.keys = {
   term_normal = {
     "<S-esc>",
-    function(self)
+    function(_)
       return "<C-\\><C-n>"
     end,
     mode = "t",
@@ -36,7 +36,7 @@ function M.open()
   local opts = {
     cwd = Snacks.git.get_root(),
     win = { keys = H.keys },
-    env = { terminal_style = "normal" }, -- for different terminal id
+    env = { terminal_style = "normal" },
   }
   Snacks.terminal(nil, opts)
 end
@@ -64,9 +64,21 @@ function M.close()
 end
 
 function M.lazy_git()
-  --@type snacks.lazygit.Config
-  local lazygit_opts = { cwd = Snacks.git.get_root() }
-  Snacks.lazygit(lazygit_opts)
+  local opts = {
+    cwd = Snacks.git.get_root(),
+    win = { keys = H.keys },
+    env = { terminal_style = "lazygit" },
+  }
+  Snacks.lazygit(opts)
+end
+
+function M.toggle_aider()
+  local opts = {
+    cwd = Snacks.git.get_root(),
+    win = { keys = H.keys },
+    env = { terminal_style = "aider" },
+  }
+  require("nvim_aider").api.toggle_terminal(opts)
 end
 
 return M
