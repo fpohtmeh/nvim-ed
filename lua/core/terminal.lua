@@ -72,13 +72,10 @@ function M.lazy_git()
   Snacks.lazygit(opts)
 end
 
-function M.toggle_aider()
-  local opts = {
-    cwd = Snacks.git.get_root(),
-    win = { keys = H.keys },
-    env = { terminal_style = "aider" },
-  }
-  require("nvim_aider").api.toggle_terminal(opts)
-end
+M.aider_opts = {
+  cwd = Snacks.git.get_root(),
+  win = { keys = H.keys },
+  env = { terminal_style = "aider" },
+}
 
 return M
