@@ -42,6 +42,18 @@ H.find_recent_task = function()
   end
 end
 
+H.open_recent_task_output = function()
+  local task = H.find_recent_task()
+  if task == nil then
+    return
+  end
+
+  task:open_output("horizontal")
+  vim.cmd("wincmd J")
+  vim.cmd("resize 15")
+  require("overseer.util").scroll_to_end(0)
+end
+
 M.run_by_name = function(task_name)
   return function()
     local function callback(templates)
@@ -64,20 +76,24 @@ end
 
 M.toggle_recent_task_output = function()
   local win = require("core.fn").find_window_by_filetype("OverseerOutput")
-  if win ~= nil then
-    vim.api.nvim_win_close(win, false)
+  if win == nil then
+    H.open_recent_task_output()
     return
   end
 
-  local task = H.find_recent_task()
-  if task ~= nil then
-    task:open_output("horizontal")
+  local win_tab = vim.api.nvim_win_get_tabpage(win)
+  local current_tab = vim.api.nvim_get_current_tabpage()
+  if win_tab ~= current_tab then
+    vim.api.nvim_set_current_tabpage(win_tab)
+    vim.api.nvim_set_current_win(win)
+    return
+  end
 
-    vim.cmd([[
-      wincmd J
-      resize 15
-    ]])
-    require("overseer.util").scroll_to_end(0)
+  local windows = vim.api.nvim_tabpage_list_wins(current_tab)
+  if vim.fn.tabpagenr("$") > 1 or #windows > 1 then
+    vim.api.nvim_win_close(win, false)
+  else
+    Snacks.notify.error("Cannot close last window")
   end
 end
 
