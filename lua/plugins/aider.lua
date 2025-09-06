@@ -14,8 +14,10 @@ H.send_command = function(command, opts)
   require("nvim_aider.api").send_command(command, nil, opts)
 end
 
-H.make_drop_command = function(opts)
-  H.send_command("/drop", opts)
+H.make_send_command = function(command)
+  return function(opts)
+    H.send_command(command, opts)
+  end
 end
 
 H.session_prefix = ".aider.session-"
@@ -83,7 +85,7 @@ return {
     H.make_key("r", "add_read_only_file", "Add readonly file"),
     -- Drop/reset
     H.make_key("d", "drop_current_file", "Drop current file"),
-    H.make_key("D", H.make_drop_command, "Drop all"),
+    H.make_key("D", H.make_send_command("/drop"), "Drop all"),
     H.make_key("X", "reset_session", "Reset session"),
     -- Session
     H.make_key("s", H.make_save_command, "Save session"),
@@ -91,6 +93,9 @@ return {
     -- Send
     H.make_key("v", "send_to_terminal", "Send selection"),
     H.make_key("b", "send_buffer_with_prompt", "Send buffer"),
+    -- Commands
+    H.make_key("<CR>", H.make_send_command("/voice"), "Voice"),
+    H.make_key("c", H.make_send_command("/commit"), "Commit"),
   },
   opts = {
     aider_cmd = "uvx aider",
