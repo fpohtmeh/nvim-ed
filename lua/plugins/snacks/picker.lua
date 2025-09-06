@@ -6,7 +6,7 @@ local overriden_keys = {
   ["<C-j>"] = false,
   ["<C-k>"] = false,
   ["<C-t>"] = false,
-  ["<C-e>t"] = { "tab", mode = { "i", "n" } },
+  ["<C-e>T"] = { "tab", mode = { "i", "n" } },
   ["<C-e>r"] = { "search_and_replace", mode = { "i", "n" } },
 }
 
