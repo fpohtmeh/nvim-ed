@@ -1,5 +1,7 @@
 local H = {}
 
+local fn = require("plugins.aider.fn")
+
 H.make_key = function(letter, command, description)
   local cmd = function()
     local opts = require("core.terminal").aider_opts
@@ -10,13 +12,9 @@ H.make_key = function(letter, command, description)
   return { "<leader>a" .. letter, cmd, desc = "Aider: " .. description, mode = mode }
 end
 
-H.send_command = function(command, opts)
-  require("nvim_aider.api").send_command(command, nil, opts)
-end
-
 H.make_send_command = function(command)
   return function(opts)
-    H.send_command(command, opts)
+    fn.send_command(command, opts)
   end
 end
 
@@ -40,7 +38,7 @@ H.make_save_command = function(opts)
   end
 
   local session_name = H.session_prefix .. suffix .. H.session_suffix
-  H.send_command("/save " .. session_name, opts)
+  fn.send_command("/save " .. session_name, opts)
 end
 
 H.make_load_command = function(opts)
@@ -68,7 +66,7 @@ H.make_load_command = function(opts)
   local load = function(session_name)
     if session_name ~= nil then
       local full_name = H.session_prefix .. session_name .. H.session_suffix
-      H.send_command("/load " .. full_name, opts)
+      fn.send_command("/load " .. full_name, opts)
     end
   end
 
@@ -82,7 +80,7 @@ return {
     H.make_key("t", "toggle_terminal", "Toggle"),
     -- Add
     H.make_key("a", "add_current_file", "Add current file"),
-    H.make_key("r", "add_read_only_file", "Add readonly file"),
+    H.make_key("A", "add_read_only_file", "Add readonly file"),
     -- Drop/reset
     H.make_key("d", "drop_current_file", "Drop current file"),
     H.make_key("D", H.make_send_command("/drop"), "Drop all"),
