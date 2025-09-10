@@ -50,6 +50,10 @@ return {
       hl.InclineNormalNC = { bg = c.bg }
       -- Git
       hl.GitSignsCurrentLineBlame = { fg = c.comment }
+      hl.DiffAdd = { bg = "#6b8a52" }
+      hl.DiffChange = { bg = "#4a6ba3" }
+      hl.DiffDelete = { bg = "#8a4a52" }
+      hl.DiffText = { bg = c.bg_highlight }
       -- Plugins
       require("plugins.render-markdown.fn").setup_highlights(hl, c)
       require("plugins.mini-statusline.fn").setup_highlights(hl, c)
