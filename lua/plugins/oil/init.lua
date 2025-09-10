@@ -11,6 +11,11 @@ return {
         buflisted = false,
         bufhidden = "hide",
       },
+      float = { border = "single" },
+      keymaps_help = { border = "single" },
+      confirmation = { border = "single" },
+      progress = { border = "single", minimized_border = "single" },
+      ssh = { border = "single" },
     }
     require("oil").setup(opts)
     actions.setup()
