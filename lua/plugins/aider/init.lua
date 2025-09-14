@@ -91,6 +91,7 @@ return {
     -- Send
     H.make_key("v", "send_to_terminal", "Send selection"),
     H.make_key("b", "send_buffer_with_prompt", "Send buffer"),
+    H.make_key("q", "send_diagnostics_with_prompt", "Send buffer diagnostics"),
     -- Commands
     H.make_key("<CR>", H.make_send_command("/voice"), "Voice"),
     H.make_key("c", H.make_send_command("/commit"), "Commit"),
