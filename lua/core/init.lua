@@ -10,6 +10,7 @@ M.keys = {
 
 M.indentation = {
   excluded_filetypes = {
+    "git",
     "help",
     "lazy",
     "log",
