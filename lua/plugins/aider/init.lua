@@ -97,7 +97,7 @@ return {
     H.make_key("c", H.make_send_command("/commit"), "Commit"),
   },
   opts = {
-    aider_cmd = "uvx aider",
+    aider_cmd = "aider",
     auto_reload = true,
     picker_cfg = { preset = "ivy" },
   },
