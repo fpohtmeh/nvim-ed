@@ -8,7 +8,7 @@ return {
       { path = "snacks.nvim", words = { "Snacks" } },
       { path = "lazy.nvim", words = { "LazyVim" } },
       { path = "mini.bracketed", words = { "MiniBracketed" } },
-      { path = "plenary.nvim" },
+      { path = "gitar.nvim", words = { "Gitar" } },
     },
   },
 }
