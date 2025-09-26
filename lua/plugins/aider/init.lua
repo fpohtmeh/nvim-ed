@@ -23,7 +23,7 @@ H.session_suffix = ".md"
 
 H.make_save_command = function(opts)
   local suffix = vim.fn.input({
-    prompt = "Session name (letters, digits, spaces only): ",
+    prompt = "Session name (a-zA-Z0-9 _-): ",
     default = "main",
   })
 
@@ -32,7 +32,7 @@ H.make_save_command = function(opts)
     return nil
   end
 
-  if not suffix:match("^[%w%s]*$") then
+  if not suffix:match("^[%w_%-]*$") then
     Snacks.notify.warn("Invalid characters in session name")
     return nil
   end
