@@ -3,17 +3,13 @@ local clangd = require("plugins.lsp.clangd")
 
 local H = {}
 H.configure_servers = function()
-  local config = require("lspconfig")
-  config.lua_ls.setup({})
-  config.pyright.setup({})
-  config.clangd.setup(clangd.opts)
-  config.marksman.setup({})
-  config.yamlls.setup({})
+  vim.lsp.config("clangd", clangd.opts)
+  vim.lsp.enable({ "lua_ls", "pyright", "clangd", "marksman", "yamlls" })
 end
 
 return {
   "neovim/nvim-lspconfig",
-  event = "LazyFile",
+  event = "VeryLazy",
   dependencies = {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
