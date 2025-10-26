@@ -8,6 +8,8 @@ return {
       { path = "snacks.nvim", words = { "Snacks" } },
       { path = "lazy.nvim", words = { "LazyVim" } },
       { path = "mini.bracketed", words = { "MiniBracketed" } },
+      { path = "luassert-types/library", words = { "assert" } },
+      { path = "busted-types/library", words = { "describe" } },
       { path = "gitar.nvim", words = { "Gitar" } },
     },
   },
