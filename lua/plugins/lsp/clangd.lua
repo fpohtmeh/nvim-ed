@@ -15,7 +15,7 @@ M.opts = {
   },
   init_options = {
     usePlaceholders = true,
-    completeUnimported = true,
+    completeUnimported = false,
     clangdFileStatus = true,
   },
 }
