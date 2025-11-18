@@ -4,7 +4,7 @@ local clangd = require("plugins.lsp.clangd")
 local H = {}
 H.configure_servers = function()
   vim.lsp.config("clangd", clangd.opts)
-  vim.lsp.enable({ "lua_ls", "pyright", "clangd", "marksman", "yamlls" })
+  vim.lsp.enable({ "lua_ls", "pyright", "clangd", "marksman", "yamlls", "jsonls" })
 end
 
 return {
