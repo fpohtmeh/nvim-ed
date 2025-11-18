@@ -21,7 +21,7 @@ M.opts = {
 }
 
 M.keys = {
-  { "gh", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header (C/C++)" },
+  { "gh", "<cmd>LspClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header (C/C++)" },
 }
 
 return M
