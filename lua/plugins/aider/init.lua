@@ -99,6 +99,7 @@ return {
   opts = {
     aider_cmd = "aider",
     auto_reload = true,
+    notifications = false,
     picker_cfg = { preset = "ivy" },
   },
   dependencies = { "folke/snacks.nvim" },
