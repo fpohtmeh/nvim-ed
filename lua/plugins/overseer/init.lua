@@ -31,5 +31,6 @@ return {
     require("overseer").setup(options)
     set_filetypes()
   end,
+  version = "1.6.0",
   keys = require("plugins.overseer.mappings").keys,
 }
