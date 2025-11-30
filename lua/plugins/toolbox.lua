@@ -27,6 +27,9 @@ H.fill = function(items)
   category = "Diff"
   H.add(items, "Turn on diff mode", category, "windo diffthis")
   H.add(items, "Turn off diff mode", category, "windo diffoff")
+  category = "CSV"
+  H.add(items, "Toggle CSV mode ;", category, ":CsvViewToggle delimiter=; display_mode=border header_lnum=1")
+  H.add(items, "Toggle CSV mode ,", category, ":CsvViewToggle delimiter=, display_mode=border header_lnum=1")
 end
 
 H.items = function()
