@@ -1,0 +1,59 @@
+{
+    "todo": {
+        "prefix": "td",
+        "body": [
+            "-- TODO: ${1}"
+        ],
+        "description": "TODO comment"
+    },
+    "if": {
+        "prefix": "if",
+        "body": [
+            "if ${1:condition} then",
+            "\t${0}",
+            "end"
+        ],
+        "description": "If statement"
+    },
+    "require": {
+        "prefix": "req",
+        "body": [
+            "require(\"${1:module}\")"
+        ],
+        "description": "Require module"
+    },
+    "local": {
+        "prefix": "l",
+        "body": [
+            "local ${0}"
+        ],
+        "description": "Declare a variable"
+    },
+    "local function": {
+        "prefix": "lf",
+        "body": [
+            "local function ${1:name}(${2})",
+            "\t${0}",
+            "end"
+        ],
+        "description": "Local function"
+    },
+    "M function": {
+        "prefix": "Mf",
+        "body": [
+            "M.${1:name} = function(${2})",
+            "\t${0}",
+            "end"
+        ],
+        "description": "M function"
+    },
+    "H function": {
+        "prefix": "Hf",
+        "body": [
+            "H.${1:name} = function(${2})",
+            "\t${0}",
+            "end"
+        ],
+        "description": "H function"
+    }
+}

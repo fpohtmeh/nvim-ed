@@ -1,0 +1,92 @@
+{
+    "todo": {
+        "prefix": "td",
+        "body": [
+            "// TODO: ${1}"
+        ],
+        "description": "TODO comment"
+    },
+    "if": {
+        "prefix": "if",
+        "body": [
+            "if (${1:condition})",
+            "{",
+            "\t${0}",
+            "}"
+        ],
+        "description": "if statement"
+    },
+    "for": {
+        "prefix": "for",
+        "body": [
+            "for (${1:auto} ${2:i} = ${3:0}; ${2} < ${4:size}; ++${2})",
+            "{",
+            "\t${0}",
+            "}"
+        ],
+        "description": "for loop"
+    },
+    "foreach": {
+        "prefix": [
+            "fore",
+            "foreach"
+        ],
+        "body": [
+            "for (${1:const auto&} ${2:item} : ${3:container})",
+            "{",
+            "\t${0}",
+            "}"
+        ],
+        "description": "range-based for loop"
+    },
+    "class": {
+        "prefix": "class",
+        "body": [
+            "class ${1:ClassName}",
+            "{",
+            "public:",
+            "\t${1}();",
+            "\t~${1}();",
+            "",
+            "private:",
+            "\t${0}",
+            "};"
+        ],
+        "description": "class declaration"
+    },
+    "qclass": {
+        "prefix": "qclass",
+        "body": [
+            "class ${1:ClassName} : public QObject",
+            "{",
+            "\tQ_OBJECT",
+            "",
+            "public:",
+            "\texplicit ${1}(QObject* parent);",
+            "\t~${1}();",
+            "",
+            "signals:",
+            "\t${2}",
+            "",
+            "private:",
+            "\t${0}",
+            "};"
+        ],
+        "description": "Qt class with Q_OBJECT"
+    },
+    "#guard": {
+        "prefix": [
+            "#guard",
+            "#ifndef"
+        ],
+        "body": [
+            "#ifndef ${1}_H",
+            "#define ${1}_H",
+            "",
+            "$0",
+            "",
+            "#endif // ${1}_H"
+        ],
+        "description": "header guard with FILENAME_H format"
+    }
+}
