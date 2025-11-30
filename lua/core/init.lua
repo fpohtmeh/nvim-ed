@@ -24,4 +24,10 @@ M.indentation = {
   },
 }
 
+M.trailspace = {
+  excluded_filetypes = {
+    "dbout",
+  },
+}
+
 return M

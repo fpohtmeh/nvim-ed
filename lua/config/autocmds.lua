@@ -110,3 +110,13 @@ vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
     end
   end,
 })
+
+-- Trailspace
+local function disable_trailspace()
+  vim.b.minitrailspace_disable = true
+end
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = require("core").trailspace.excluded_filetypes,
+  callback = disable_trailspace,
+})

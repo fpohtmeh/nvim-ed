@@ -16,6 +16,7 @@ H.ensure_installed = {
   "markdown_inline",
   "python",
   "regex",
+  "sql",
   "query",
   "toml",
   "vim",
