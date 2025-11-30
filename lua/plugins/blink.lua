@@ -25,12 +25,28 @@ H.completion = {
 }
 
 H.sources = {
-  default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+  default = {
+    "snippets",
+    "buffer",
+    "lsp",
+    "ripgrep",
+    "lazydev",
+    "path",
+  },
   providers = {
     lazydev = {
       name = "LazyDev",
       module = "lazydev.integrations.blink",
       score_offset = 100, -- show at a higher priority than lsp
+    },
+    ripgrep = {
+      name = "Ripgrep",
+      module = "blink-ripgrep",
+      opts = {
+        backend = {
+          ripgrep = { max_filesize = "100K" },
+        },
+      },
     },
   },
 }
@@ -39,7 +55,10 @@ return {
   "saghen/blink.cmp",
   version = "*",
   event = "InsertEnter",
-  dependencies = {},
+  dependencies = {
+    "mikavilpas/blink-ripgrep.nvim",
+    version = "*",
+  },
   opts = {
     appearance = {
       use_nvim_cmp_as_default = false,
