@@ -7,7 +7,6 @@ vim.g.snacks_scroll = false
 
 local opt = vim.opt
 
-opt.clipboard = vim.env.SSH_TTY and "" or "unnamedplus"
 opt.cmdheight = 0
 opt.confirm = true
 opt.cursorline = true
@@ -53,6 +52,8 @@ opt.updatetime = 200
 opt.virtualedit = "block"
 opt.winminwidth = 5
 opt.wrap = false
+
+require("config.clipboard")
 
 -- Custom tabline formatting
 opt.tabline = "%!v:lua.require'config.tabline'.render()"
