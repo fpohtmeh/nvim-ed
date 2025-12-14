@@ -16,10 +16,6 @@ H.get_todo_rows = function()
 end
 
 Ed.bracketed.todo = function(direction, opts)
-  if engine.is_disabled() then
-    return
-  end
-
   engine.validate_direction(direction, { "first", "backward", "forward", "last" }, "todo")
   opts = vim.tbl_deep_extend("force", { n_times = vim.v.count1, wrap = true }, opts or {})
 

@@ -2,10 +2,6 @@ Ed.bracketed = {}
 
 local M = {}
 
-M.is_disabled = function()
-  return false
-end
-
 M.error = function(msg)
   error("(mini.bracketed) " .. msg, 0)
 end
