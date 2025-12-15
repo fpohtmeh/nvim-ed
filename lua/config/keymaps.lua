@@ -7,6 +7,10 @@ local fs = require("core.fs")
 map({ "n", "o", "x" }, "<s-h>", "^", opts)
 map({ "n", "o", "x" }, "<s-l>", "g_", opts)
 
+-- Paste
+map("n", ",p", "O<esc>p", { desc = "Paste on previous line" })
+map("n", ";p", "o<esc>p", { desc = "Paste on next line" })
+
 -- Escape
 map({ "i", "n", "s" }, "<esc>", function()
   vim.cmd("noh")

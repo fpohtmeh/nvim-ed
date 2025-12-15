@@ -37,6 +37,7 @@
 - ,f/;f - previous/next function
 - ,I/;I - previous/next indent
 - ,t/;t - previous/next todo item
+- ,p/;p - paste on previous/next line
 #### quickfix
 - ,q/;q - previous/next quickfix item
 - ,Q/;Q - first/last quickfix item
