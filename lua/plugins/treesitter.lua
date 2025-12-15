@@ -44,6 +44,17 @@ H.opts = {
   indent = {
     enable = true,
   },
+  textobjects = {
+    move = {
+      enable = true,
+      goto_previous_start = {
+        [",f"] = "@function.outer",
+      },
+      goto_next_start = {
+        [";f"] = "@function.outer",
+      },
+    },
+  },
 }
 
 local plugin = {

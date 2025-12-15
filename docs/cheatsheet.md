@@ -34,10 +34,13 @@
 #### general
 - ,b/;b - previous/next buffer
 - ,F/;F - previous/next file
+- ,f/;f - previous/next function
 - ,I/;I - previous/next indent
 - ,t/;t - previous/next todo item
+#### quickfix
 - ,q/;q - previous/next quickfix item
 - ,Q/;Q - first/last quickfix item
+- ,<c-q>/;<c-q> - previous/next quickfix list
 #### git
 - ,g/;g - previous/next unstage git file
 - ,h/;h - previous/next hunk
