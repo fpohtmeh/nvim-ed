@@ -28,10 +28,6 @@ H.get_git_data = function()
 end
 
 Ed.bracketed.git = function(direction, opts)
-  if engine.is_disabled() then
-    return
-  end
-
   engine.validate_direction(direction, { "first", "backward", "forward", "last" }, "git")
   opts = vim.tbl_deep_extend("force", { n_times = vim.v.count1, wrap = true }, H.git_opts, opts or {})
 
