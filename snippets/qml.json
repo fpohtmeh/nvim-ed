@@ -1,0 +1,9 @@
+{
+    "todo": {
+        "prefix": "td",
+        "body": [
+            "// TODO: ${1}"
+        ],
+        "description": "TODO comment"
+    }
+}
