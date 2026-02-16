@@ -7,7 +7,6 @@ return {
   },
   keys = {
     -- stylua: ignore start
-      { mode = { "o", "x" }, ";i", function() require("various-textobjs").restOfIndentation() end, desc = "Rest of indentation"  },
     { mode = { "o", "x" }, ";i", function() require("various-textobjs").restOfIndentation() end, desc = "Rest of indentation"  },
     { mode = { "o", "x" }, ";p", function() require("various-textobjs").restOfParagraph() end, desc = "Rest of paragraph"  },
     { mode = { "o", "x" }, ";b", function() require("various-textobjs").toNextClosingBracket() end, desc = "Next closing bracket"  },
