@@ -4,6 +4,7 @@ vim.filetype.add({
     manifest = "xml",
     log = "log",
     mdc = "markdown",
+    base = "yaml",
   },
 })
 
