@@ -24,7 +24,7 @@ H.opts.main_preview = {
 
 return {
   -- stylua: ignore start
-  { "<leader><space>", function() Snacks.picker.smart() end, desc = "Smart Find Files" },
+  { "<leader><space>", function() Snacks.picker.files() end, desc = "Files" },
   { "<leader>/", function() Snacks.picker.grep(H.opts.main_preview) end, desc = "Grep" },
   { "<leader>b", function() Snacks.picker.buffers(H.opts.main_preview) end, desc = "Buffers" },
   { "<leader>sl", function() Snacks.picker.lsp_symbols(H.opts.lsp) end, desc = "Lsp Symbols (Buffer)" },
@@ -33,6 +33,7 @@ return {
   { "<leader>sb", function() Snacks.picker.grep_buffers(H.opts.main_preview) end, desc = "Grep (Open Buffers)" },
   { "<leader>sH", function() Snacks.picker.highlights() end, desc = "Highlights" },
   { "<leader>sp", function() Snacks.picker.projects() end, desc = "Projects" },
+  { "<leader>sR", function() Snacks.picker.recent() end, desc = "Recent" },
 
   { "<leader>ss", function() Snacks.picker() end, desc = "All Pickers" },
   { "<leader>sr", function() Snacks.picker.resume() end, desc = "Resume" },
