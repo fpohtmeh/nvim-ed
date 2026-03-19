@@ -33,6 +33,10 @@ H.fill = function(items)
   category = "Database"
   H.add(items, "Toggle database UI", category, ":DBUIToggle")
   H.add(items, "Add database connection", category, ":DBUIAddConnection")
+  category = "Configs"
+  H.add(items, "chezmoi: add", category, ":!chezmoi add %")
+  H.add(items, "chezmoi: re-add", category, ":!chezmoi re-add %")
+  H.add(items, "chezmoi: forget", category, ":!chezmoi forget %")
 end
 
 H.items = function()
