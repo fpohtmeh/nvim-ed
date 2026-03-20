@@ -72,10 +72,4 @@ function M.lazy_git()
   Snacks.lazygit(opts)
 end
 
-M.aider_opts = {
-  cwd = Snacks.git.get_root(),
-  win = { keys = H.keys },
-  env = { terminal_style = "aider" },
-}
-
 return M
