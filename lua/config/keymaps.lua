@@ -85,6 +85,9 @@ map("t", "<c-_>", terminal.close, { desc = "which_key_ignore" })
 map("n", "<leader>tt", terminal.open_float, { desc = "Terminal (fullscreen)" })
 map("n", "<leader>tv", terminal.open_vsplit, { desc = "Terminal (vsplit)" })
 
+-- Claude
+map("n", "<leader>at", terminal.claude, { desc = "Toggle Claude" })
+
 -- Lazygit
 if vim.fn.executable("lazygit") == 1 then
   map("n", "<leader>G", terminal.lazy_git, { desc = "Lazygit" })

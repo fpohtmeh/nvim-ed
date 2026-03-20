@@ -63,6 +63,15 @@ function M.close()
   vim.cmd.close()
 end
 
+function M.claude()
+  local opts = {
+    cwd = Snacks.git.get_root(),
+    win = { position = "right", width = 80, keys = H.keys },
+    env = { terminal_style = "claude" },
+  }
+  Snacks.terminal("claude --continue", opts)
+end
+
 function M.lazy_git()
   local opts = {
     cwd = Snacks.git.get_root(),
