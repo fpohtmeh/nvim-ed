@@ -38,7 +38,8 @@ return {
   { "<leader>ss", function() Snacks.picker() end, desc = "All Pickers" },
   { "<leader>sr", function() Snacks.picker.resume() end, desc = "Resume" },
 
-  { "<leader>n", function() require("noice").cmd("all") end, desc = "Noice Messages" },
+  { "<leader>nn", function() require("noice").cmd("all") end, desc = "Noice Messages" },
+  { "<leader>nx", function() Snacks.notifier.hide() end, desc = "Hide Notifications" },
   { "<A-t>", H.zoom, desc = "Toggle Zen", mode = { "n", "x", "i" } },
   -- stylua: ignore end
 }
