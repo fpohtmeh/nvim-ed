@@ -45,9 +45,9 @@ return {
       hl.MiniCursorwordCurrent = { bg = hl.CursorLine.bg }
       -- Trailspace
       hl.MiniTrailspace = { bg = c.red1, fg = c.red1 }
-      -- Incline
-      hl.InclineNormal = { bg = c.bg }
-      hl.InclineNormalNC = { bg = c.bg }
+      -- Winbar
+      hl.WinBar = { fg = c.blue, bg = c.bg_dark }
+      hl.WinBarNC = { fg = c.comment, bg = c.bg_dark }
       -- Git
       hl.GitSignsCurrentLineBlame = { fg = c.comment }
       hl.DiffAdd = { bg = "#6b8a52" }

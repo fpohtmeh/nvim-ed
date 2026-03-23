@@ -2,7 +2,6 @@ local H = {}
 
 H.zoom = function()
   Snacks.zen.zoom()
-  require("plugins.incline.core").toggle_zoom()
 end
 
 H.opts = {}
