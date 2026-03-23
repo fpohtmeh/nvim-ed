@@ -111,6 +111,15 @@ vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
   end,
 })
 
+-- Claude prompt
+vim.api.nvim_create_autocmd("BufReadPost", {
+  pattern = "claude-prompt-*.md",
+  callback = function()
+    vim.cmd("normal! G$")
+    vim.cmd.startinsert({ bang = true })
+  end,
+})
+
 -- Trailspace
 local function disable_trailspace()
   vim.b.minitrailspace_disable = true
