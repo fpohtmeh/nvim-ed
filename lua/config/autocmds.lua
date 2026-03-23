@@ -57,6 +57,14 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- Disable winbar
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = require("core.winbar").ignored_filetypes,
+  callback = function()
+    vim.wo.winbar = ""
+  end,
+})
+
 -- Cursor word condition
 require("plugins.mini-cursorword.core").create_autocmds()
 
