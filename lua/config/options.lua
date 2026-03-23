@@ -50,7 +50,7 @@ opt.undofile = true
 opt.undolevels = 10000
 opt.updatetime = 200
 opt.virtualedit = "block"
-opt.winbar = "%{%v:lua.require('core.winbar').render()%}"
+opt.winbar = ""
 opt.winminwidth = 5
 opt.wrap = false
 

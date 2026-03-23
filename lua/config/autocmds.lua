@@ -57,11 +57,13 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Disable winbar
+-- Winbar
+local winbar = require("core.winbar")
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = require("core.winbar").ignored_filetypes,
   callback = function()
-    vim.wo.winbar = ""
+    if not vim.tbl_contains(winbar.ignored_filetypes, vim.bo.filetype) then
+      vim.wo.winbar = winbar.expression
+    end
   end,
 })
 
