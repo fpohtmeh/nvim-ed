@@ -27,6 +27,9 @@ map({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = tru
 map("n", "gq", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 map("n", "gQ", "<cmd>tabonly<cr>", { desc = "Close Other Tabs" })
 map("n", "<leader><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
+for i = 1, 9 do
+  map("n", "<leader>" .. i, "<cmd>" .. i .. "tabnext<cr>", { desc = "Go to tab " .. i })
+end
 
 -- File
 map({ "i", "x", "n", "s" }, "<C-s>", fs.save_current_file, { desc = "Save File" })
