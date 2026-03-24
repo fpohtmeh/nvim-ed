@@ -22,6 +22,8 @@ return {
       hl.TabLineActive = { fg = c.blue, bg = c.bg, bold = true }
       hl.TabLineInactiveNr = { fg = c.bg, bg = c.dark5, bold = false }
       hl.TabLineInactive = { fg = c.dark5, bg = c.bg, bold = false }
+      hl.TabLineDir = { fg = c.magenta, bg = c.bg, bold = true }
+      hl.TabLineDirInactive = { fg = c.dark5, bg = c.bg, bold = true }
       -- Snacks
       hl.SnacksDashboardHeader = { fg = c.blue }
       hl.SnacksDashboardDesc = { fg = c.green }

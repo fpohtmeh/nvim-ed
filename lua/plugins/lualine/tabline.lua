@@ -42,12 +42,14 @@ H.tab_display_name = function(tabid)
   return table.concat(parts, ":")
 end
 
-H.tab_name = function(tabnr, tabid)
-  local ok, custom = pcall(vim.api.nvim_tabpage_get_var, tabid, "tab_name")
-  if ok and custom and custom ~= "" then
-    return custom
+H.initial_cwd = vim.fn.getcwd()
+
+H.tab_dir = function(tabnr)
+  local tab_cwd = vim.fn.getcwd(-1, tabnr)
+  if tab_cwd == H.initial_cwd then
+    return nil
   end
-  return H.tab_display_name(tabid)
+  return vim.fn.fnamemodify(tab_cwd, ":t")
 end
 
 H.min_width = 10
@@ -55,10 +57,14 @@ H.min_width = 10
 H.cell = function(index, tabid, selected)
   local hl_nr = selected and "%#TabLineActiveNr#" or "%#TabLineInactiveNr#"
   local hl = selected and "%#TabLineActive#" or "%#TabLineInactive#"
-  local name = H.tab_name(index, tabid)
-  local len = vim.fn.strcharlen(name)
+  local name = H.tab_display_name(tabid)
+  local dir = H.tab_dir(index)
+  local hl_dir = selected and "%#TabLineDir#" or "%#TabLineDirInactive#"
+  local dir_part = dir and hl_dir .. "[" .. dir .. "] " .. hl or ""
+  local full = dir_part .. name
+  local len = vim.fn.strcharlen((dir or "") .. (dir and " " or "") .. name)
   local padding = len >= H.min_width and "  " or string.rep(" ", H.min_width - len)
-  return string.format("%%%dT%s %d %s %s%s", index, hl_nr, index, hl, name, padding)
+  return string.format("%%%dT%s %d %s %s%s", index, hl_nr, index, hl, full, padding)
 end
 
 H.tabline = function()

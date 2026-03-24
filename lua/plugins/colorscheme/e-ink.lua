@@ -14,6 +14,8 @@ H.create_highlights = function()
   hl.TabLineActive = { fg = mono[10], bg = mono[1], bold = true }
   hl.TabLineInactiveNr = { fg = mono[1], bg = mono[6], bold = false }
   hl.TabLineInactive = { fg = mono[6], bg = mono[1], bold = false }
+  hl.TabLineDir = { fg = mono[8], bg = mono[1], bold = true }
+  hl.TabLineDirInactive = { fg = mono[6], bg = mono[1], bold = true }
   -- Flash
   hl.FlashLabel = { fg = default_fg, bg = colors.green }
 
