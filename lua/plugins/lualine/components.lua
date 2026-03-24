@@ -155,45 +155,4 @@ M.searchcount = {
   end,
 }
 
-local winbar_aliases = {
-  help = "Help",
-  snacks_terminal = "Terminal",
-  fugitive = "Git",
-  git = "Git",
-  gitcommit = "Commit",
-  qf = "Quickfix",
-  OverseerList = "Tasks",
-  OverseerOutput = "Task output",
-}
-
-local function winbar_filename()
-  local ft = vim.bo.filetype
-  local alias = winbar_aliases[ft]
-  if alias then
-    return alias
-  end
-  local icon = require("nvim-web-devicons").get_icon(vim.fn.expand("%:t"), nil, { default = true })
-  local filename = vim.fn.expand("%:.")
-  if filename == "" then
-    filename = "[No Name]"
-  end
-  local modified = vim.bo.modified and " [+]" or ""
-  local readonly = vim.bo.readonly and " " .. icons.readonly or ""
-  return icon .. " " .. filename .. modified .. readonly
-end
-
-local function winbar_key()
-  local keys = require("core").keys.window
-  local key = keys[vim.api.nvim_win_get_number(0)] or ""
-  if key == "" then
-    return ""
-  end
-  return "#" .. key
-end
-
-M.winbar_filename = { winbar_filename, color = "WinBar" }
-M.winbar_filename_inactive = { winbar_filename, color = "WinBarNC" }
-M.winbar_key = { winbar_key, color = "WinBar" }
-M.winbar_key_inactive = { winbar_key, color = "WinBarNC" }
-
 return M

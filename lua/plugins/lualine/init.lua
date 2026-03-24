@@ -1,7 +1,10 @@
+local H = {}
+
 local components = require("plugins.lualine.components")
+local winbar = require("plugins.lualine.winbar")
 local icons = require("core.icons")
 
-local tabs = {
+H.tabs = {
   lualine_a = {
     {
       "tabs",
@@ -15,7 +18,7 @@ local tabs = {
   },
 }
 
-local sections = {
+H.sections = {
   lualine_a = {
     {
       "mode",
@@ -77,7 +80,7 @@ return {
         winbar = { "snacks_dashboard" },
       },
     },
-    sections = sections,
+    sections = H.sections,
     inactive_sections = {
       lualine_a = {},
       lualine_b = {},
@@ -87,13 +90,13 @@ return {
       lualine_z = {},
     },
     winbar = {
-      lualine_c = { components.winbar_filename },
-      lualine_z = { components.winbar_key },
+      lualine_c = { winbar.filename },
+      lualine_z = { winbar.key },
     },
     inactive_winbar = {
-      lualine_c = { components.winbar_filename_inactive },
-      lualine_z = { components.winbar_key_inactive },
+      lualine_c = { winbar.filename_inactive },
+      lualine_z = { winbar.key_inactive },
     },
-    tabline = tabs,
+    tabline = H.tabs,
   },
 }

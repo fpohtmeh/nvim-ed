@@ -25,6 +25,7 @@ Installed plugins at `~/.local/share/nvim-ed/lazy/` — read source directly whe
 
 ## Conventions
 
+- Local helpers/variables in `local H = {}`, not bare top-level locals
 - Lazy-load plugins (`event`, `cmd`, `keys`, `ft`). Use custom `LazyFile` event instead of `BufReadPost`/`BufNewFile`/`BufWritePre`
 - Leader=`<Space>`, local leader=`\`
 - Indentation: 4 spaces default, 2 for markdown/lua
