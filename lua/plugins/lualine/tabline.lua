@@ -2,9 +2,9 @@ local H = {}
 
 local fn = require("plugins.lualine.fn")
 
-H.tab_bufs = function(tabnr)
+H.tab_bufs = function(tabid)
   local bufs = {}
-  for _, win in ipairs(vim.api.nvim_tabpage_list_wins(tabnr)) do
+  for _, win in ipairs(vim.api.nvim_tabpage_list_wins(tabid)) do
     local is_float = vim.api.nvim_win_get_config(win).relative ~= ""
     if not is_float then
       local buf = vim.api.nvim_win_get_buf(win)
@@ -17,8 +17,8 @@ H.tab_bufs = function(tabnr)
   return bufs
 end
 
-H.tab_display_name = function(tabnr)
-  local bufs = H.tab_bufs(tabnr)
+H.tab_display_name = function(tabid)
+  local bufs = H.tab_bufs(tabid)
   local name = nil
   for _, buf in ipairs(bufs) do
     local title = fn.display_name(vim.bo[buf].filetype)
@@ -33,28 +33,34 @@ H.tab_display_name = function(tabnr)
   return name
 end
 
-H.tab_name = function(tabnr)
-  local ok, custom = pcall(vim.api.nvim_tabpage_get_var, vim.api.nvim_list_tabpages()[tabnr], "tab_name")
+H.tab_name = function(tabnr, tabid)
+  local ok, custom = pcall(vim.api.nvim_tabpage_get_var, tabid, "tab_name")
   if ok and custom and custom ~= "" then
     return custom
   end
   if tabnr == 1 then
     return "Main"
   end
-  return H.tab_display_name(tabnr) or "Tab"
+  return H.tab_display_name(tabid) or "Tab"
 end
 
-H.cell = function(index, selected)
+H.min_width = 10
+
+H.cell = function(index, tabid, selected)
+  local hl_nr = selected and "%#TabLineActiveNr#" or "%#TabLineInactiveNr#"
   local hl = selected and "%#TabLineActive#" or "%#TabLineInactive#"
-  local name = H.tab_name(index)
-  return string.format("%s%%%dT %d %s ", hl, index, index, name)
+  local name = H.tab_name(index, tabid)
+  local len = vim.fn.strcharlen(name)
+  local padding = len >= H.min_width and "  " or string.rep(" ", H.min_width - len)
+  return string.format("%%%dT%s %d %s %s%s", index, hl_nr, index, hl, name, padding)
 end
 
 H.tabline = function()
   local parts = {}
-  local tab_count = vim.fn.tabpagenr("$")
-  for i = 1, tab_count do
-    parts[#parts + 1] = H.cell(i, vim.fn.tabpagenr() == i)
+  local tabs = vim.api.nvim_list_tabpages()
+  local current = vim.api.nvim_get_current_tabpage()
+  for i, tabid in ipairs(tabs) do
+    parts[#parts + 1] = H.cell(i, tabid, tabid == current)
   end
   return table.concat(parts) .. "%#TabLineFill#%T"
 end

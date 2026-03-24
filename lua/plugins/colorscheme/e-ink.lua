@@ -10,8 +10,10 @@ H.create_highlights = function()
   -- Selection
   hl.YankHighlight = { fg = default_fg, bg = mono[10] }
   -- Tabline
-  hl.TabLineInactive = { fg = mono[10], bg = mono[1], bold = false }
-  hl.TabLineActive = { fg = mono[1], bg = mono[10], bold = true }
+  hl.TabLineActiveNr = { fg = mono[1], bg = mono[10], bold = true }
+  hl.TabLineActive = { fg = mono[10], bg = mono[1], bold = true }
+  hl.TabLineInactiveNr = { fg = mono[1], bg = mono[6], bold = false }
+  hl.TabLineInactive = { fg = mono[6], bg = mono[1], bold = false }
   -- Flash
   hl.FlashLabel = { fg = default_fg, bg = colors.green }
 

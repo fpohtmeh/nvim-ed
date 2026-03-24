@@ -17,8 +17,11 @@ return {
       -- Selection
       hl.YankHighlight = { fg = default_fg, bg = c.yellow }
       -- Tabline
-      hl.TabLineInactive = { fg = c.blue, bg = c.bg, bold = false }
-      hl.TabLineActive = { fg = c.bg, bg = c.blue, bold = true }
+      hl.TabLineFill = { bg = c.bg }
+      hl.TabLineActiveNr = { fg = c.bg, bg = c.blue, bold = true }
+      hl.TabLineActive = { fg = c.blue, bg = c.bg, bold = true }
+      hl.TabLineInactiveNr = { fg = c.bg, bg = c.dark5, bold = false }
+      hl.TabLineInactive = { fg = c.dark5, bg = c.bg, bold = false }
       -- Snacks
       hl.SnacksDashboardHeader = { fg = c.blue }
       hl.SnacksDashboardDesc = { fg = c.green }
