@@ -2,20 +2,32 @@ local M = {}
 local H = {}
 
 local icons = require("core.icons")
-local fn = require("plugins.lualine.fn")
+local titles = require("plugins.lualine.titles")
+
+H.predefined_filenames = {
+  oil = function()
+    return icons.directory .. " " .. vim.fn.expand("%:p"):gsub("^oil://", "")
+  end,
+}
 
 H.filename = function()
   local ft = vim.bo.filetype
-  local title = fn.display_name(ft)
+  local filename = H.predefined_filenames[ft]
+  if filename then
+    return filename()
+  end
+
+  local title = titles[ft]
   if title then
     return title
   end
-  local icon = require("nvim-web-devicons").get_icon(vim.fn.expand("%:t"), nil, { default = true })
-  local name = vim.fn.expand("%:.")
+  icon = require("nvim-web-devicons").get_icon(vim.fn.expand("%:t"), nil, { default = true })
+  name = vim.fn.expand("%:.")
   if name == "" then
     name = "[No Name]"
   end
-  local modified = vim.bo.modified and " [+]" or ""
+
+  local modified = vim.bo.modified and (" " .. core.modified) or ""
   local readonly = vim.bo.readonly and " " .. icons.readonly or ""
   return icon .. " " .. name .. modified .. readonly
 end

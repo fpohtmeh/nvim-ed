@@ -1,6 +1,6 @@
 local H = {}
 
-local fn = require("plugins.lualine.fn")
+local titles = require("plugins.lualine.titles")
 
 H.tab_bufs = function(tabid)
   local bufs = {}
@@ -21,7 +21,7 @@ H.tab_display_name = function(tabid)
   local bufs = H.tab_bufs(tabid)
   local name = nil
   for _, buf in ipairs(bufs) do
-    local title = fn.display_name(vim.bo[buf].filetype)
+    local title = titles[vim.bo[buf].filetype]
     if not title then
       return nil
     end
