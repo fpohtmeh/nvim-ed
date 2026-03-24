@@ -155,8 +155,6 @@ M.searchcount = {
   end,
 }
 
--- Winbar
-
 local winbar_aliases = {
   help = "Help",
   snacks_terminal = "Terminal",

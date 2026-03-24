@@ -55,9 +55,6 @@ opt.wrap = false
 
 require("config.clipboard")
 
--- Custom tabline formatting
-opt.tabline = "%!v:lua.require'config.tabline'.render()"
-
 if vim.fn.has("win32") == 1 then
   require("core.terminal").setup("pwsh")
 end

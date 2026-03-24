@@ -1,6 +1,20 @@
 local components = require("plugins.lualine.components")
 local icons = require("core.icons")
 
+local tabs = {
+  lualine_a = {
+    {
+      "tabs",
+      mode = 1,
+      max_length = vim.o.columns,
+      tabs_color = {
+        active = "TabLineActive",
+        inactive = "TabLineInactive",
+      },
+    },
+  },
+}
+
 local sections = {
   lualine_a = {
     {
@@ -79,5 +93,6 @@ return {
       lualine_c = { components.winbar_filename_inactive },
       lualine_z = { components.winbar_key_inactive },
     },
+    tabline = tabs,
   },
 }
