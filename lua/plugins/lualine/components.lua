@@ -123,10 +123,7 @@ M.filesize = {
   end,
   color = function()
     local size = math.max(vim.fn.line2byte(vim.fn.line("$") + 1) - 1, 0)
-    if size >= 1048576 then
-      return "LualineBigFileinfo"
-    end
-    return nil
+    return size >= 1048576 and "LualineBigFileinfo" or nil
   end,
   cond = function()
     return vim.bo.buftype == "" and vim.o.columns > 120
@@ -148,10 +145,7 @@ M.location = {
 M.searchcount = {
   "searchcount",
   fmt = function(str)
-    if str == "" then
-      return ""
-    end
-    return icons.search .. " " .. str
+    return str ~= "" and icons.search .. " " .. str or ""
   end,
 }
 

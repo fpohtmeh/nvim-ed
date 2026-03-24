@@ -4,20 +4,6 @@ local components = require("plugins.lualine.components")
 local winbar = require("plugins.lualine.winbar")
 local icons = require("core.icons")
 
-H.tabs = {
-  lualine_a = {
-    {
-      "tabs",
-      mode = 2,
-      max_length = vim.o.columns,
-      tabs_color = {
-        active = "TabLineActive",
-        inactive = "TabLineInactive",
-      },
-    },
-  },
-}
-
 H.sections = {
   lualine_a = {
     {
@@ -72,7 +58,6 @@ return {
     options = {
       theme = "tokyonight",
       globalstatus = true,
-      always_show_tabline = false,
       component_separators = "",
       section_separators = "",
       disabled_filetypes = {
@@ -97,6 +82,6 @@ return {
       lualine_c = { winbar.filename_inactive },
       lualine_z = { winbar.key_inactive },
     },
-    tabline = H.tabs,
+    tabline = nil,
   },
 }

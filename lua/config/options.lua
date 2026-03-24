@@ -35,9 +35,11 @@ opt.number = true
 opt.relativenumber = true
 opt.scrolloff = 2
 opt.sidescrolloff = 2
-opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
+opt.sessionoptions = { "buffers", "curdir", "winsize", "help", "globals", "skiprtp", "folds" }
 opt.shortmess:append({ W = true, I = true, c = true, C = true })
 opt.shiftwidth = 4
+opt.showtabline = 1
+opt.tabline = "%!v:lua.require('plugins.lualine.tabline')()"
 opt.splitbelow = true
 opt.splitkeep = "screen"
 opt.splitright = true

@@ -2,23 +2,13 @@ local M = {}
 local H = {}
 
 local icons = require("core.icons")
-
-H.aliases = {
-  help = "Help",
-  snacks_terminal = "Terminal",
-  fugitive = "Git",
-  git = "Git",
-  gitcommit = "Commit",
-  qf = "Quickfix",
-  OverseerList = "Tasks",
-  OverseerOutput = "Task output",
-}
+local fn = require("plugins.lualine.fn")
 
 H.filename = function()
   local ft = vim.bo.filetype
-  local alias = H.aliases[ft]
-  if alias then
-    return alias
+  local title = fn.display_name(ft)
+  if title then
+    return title
   end
   local icon = require("nvim-web-devicons").get_icon(vim.fn.expand("%:t"), nil, { default = true })
   local name = vim.fn.expand("%:.")
@@ -33,10 +23,7 @@ end
 H.key = function()
   local keys = require("core").keys.window
   local k = keys[vim.api.nvim_win_get_number(0)] or ""
-  if k == "" then
-    return ""
-  end
-  return "#" .. k
+  return k ~= "" and "#" .. k or ""
 end
 
 M.filename = { H.filename, color = "WinBar" }
