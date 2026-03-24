@@ -5,7 +5,7 @@ local tabs = {
   lualine_a = {
     {
       "tabs",
-      mode = 1,
+      mode = 2,
       max_length = vim.o.columns,
       tabs_color = {
         active = "TabLineActive",
@@ -69,6 +69,7 @@ return {
     options = {
       theme = "tokyonight",
       globalstatus = true,
+      always_show_tabline = false,
       component_separators = "",
       section_separators = "",
       disabled_filetypes = {

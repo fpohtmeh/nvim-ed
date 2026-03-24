@@ -161,7 +161,7 @@ local winbar_aliases = {
   fugitive = "Git",
   git = "Git",
   gitcommit = "Commit",
-  qf = "quickfix",
+  qf = "Quickfix",
   OverseerList = "Tasks",
   OverseerOutput = "Task output",
 }
