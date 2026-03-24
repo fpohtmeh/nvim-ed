@@ -73,7 +73,7 @@ M.directory = {
   end,
   padding = { left = 1, right = 0 },
   cond = function()
-    return vim.api.nvim_win_get_width(0) > 140
+    return vim.o.columns > 140
   end,
   color = "LualineDirectory",
 }
@@ -95,7 +95,7 @@ M.filename = {
     return prefix .. filename
   end,
   cond = function()
-    return vim.api.nvim_win_get_width(0) > 140
+    return vim.o.columns > 140
   end,
   color = "LualineFilename",
 }
@@ -105,7 +105,7 @@ M.filename_short = {
   path = 0,
   symbols = { readonly = icons.readonly },
   cond = function()
-    return vim.api.nvim_win_get_width(0) <= 140
+    return vim.o.columns <= 140
   end,
   color = "LualineFilename",
 }
@@ -129,14 +129,14 @@ M.filesize = {
     return nil
   end,
   cond = function()
-    return vim.bo.buftype == "" and vim.api.nvim_win_get_width(0) > 120
+    return vim.bo.buftype == "" and vim.o.columns > 120
   end,
 }
 
 M.location = {
   function()
     local lines_str = tostring(vim.api.nvim_buf_line_count(0))
-    if vim.api.nvim_win_get_width(0) <= 75 then
+    if vim.o.columns <= 75 then
       return lines_str
     end
     local line = vim.fn.line(".")
