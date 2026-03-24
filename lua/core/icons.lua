@@ -6,6 +6,7 @@ M.package = {
   uninstalled = "󰚌",
 }
 
+M.branch = ""
 M.search = ""
 M.modified = "●"
 M.mark = ""

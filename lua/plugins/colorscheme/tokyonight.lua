@@ -54,9 +54,15 @@ return {
       hl.DiffChange = { bg = "#4a6ba3" }
       hl.DiffDelete = { bg = "#8a4a52" }
       hl.DiffText = { bg = c.bg_highlight }
+      -- Lualine
+      hl.LualineDirectory = { fg = c.magenta, bg = c.bg }
+      hl.LualineFilename = { fg = c.blue, bg = c.bg }
+      hl.LualineBigFileinfo = { fg = c.red, bg = c.bg_highlight, bold = true }
+      hl.LualineBuffers = { fg = c.blue, bg = c.bg_highlight }
+      hl.LualineUnsaved = { fg = c.red, bg = c.bg_highlight, bold = true }
+      hl.LualineModified = { fg = c.green, bg = c.bg_highlight, bold = true }
       -- Plugins
       require("plugins.render-markdown.fn").setup_highlights(hl, c)
-      require("plugins.mini-statusline.fn").setup_highlights(hl, c)
       require("plugins.grug-far.fn").setup_highlights(hl, c)
     end,
   },
