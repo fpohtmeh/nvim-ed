@@ -48,6 +48,7 @@ return {
       -- Winbar
       hl.WinBar = { fg = c.blue, bg = c.bg_dark }
       hl.WinBarNC = { fg = c.comment, bg = c.bg_dark }
+      hl.SnacksWinBarNC = { fg = c.comment, bg = c.bg_dark }
       -- Git
       hl.GitSignsCurrentLineBlame = { fg = c.comment }
       hl.DiffAdd = { bg = "#6b8a52" }
