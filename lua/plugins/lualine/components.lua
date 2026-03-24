@@ -3,7 +3,6 @@ local M = {}
 local icons = require("core.icons")
 local fs = require("core.fs")
 
---- Buffers counter: icon + index/count with color based on modified state
 M.buffers = {
   function()
     local current_buf_id = vim.api.nvim_get_current_buf()
@@ -56,7 +55,6 @@ M.buffers = {
   end,
 }
 
---- Directory: show cwd shortened with ~
 M.directory = {
   function()
     if vim.bo.buftype == "terminal" then
@@ -80,7 +78,6 @@ M.directory = {
   color = "LualineDirectory",
 }
 
---- Filename: relative path from cwd
 M.filename = {
   function()
     if vim.fn.bufname() == "" then
@@ -103,7 +100,6 @@ M.filename = {
   color = "LualineFilename",
 }
 
---- Filename short: just tail name (for narrow windows)
 M.filename_short = {
   "filename",
   path = 0,
@@ -114,7 +110,6 @@ M.filename_short = {
   color = "LualineFilename",
 }
 
---- Filesize
 M.filesize = {
   function()
     local size = math.max(vim.fn.line2byte(vim.fn.line("$") + 1) - 1, 0)
@@ -138,7 +133,6 @@ M.filesize = {
   end,
 }
 
---- Location: col|line:total
 M.location = {
   function()
     local lines_str = tostring(vim.api.nvim_buf_line_count(0))
@@ -151,7 +145,6 @@ M.location = {
   end,
 }
 
---- Searchcount with icon
 M.searchcount = {
   "searchcount",
   fmt = function(str)
@@ -161,5 +154,48 @@ M.searchcount = {
     return icons.search .. " " .. str
   end,
 }
+
+-- Winbar
+
+local winbar_aliases = {
+  help = "Help",
+  snacks_terminal = "Terminal",
+  fugitive = "Git",
+  git = "Git",
+  gitcommit = "Commit",
+  qf = "quickfix",
+  OverseerList = "Tasks",
+  OverseerOutput = "Task output",
+}
+
+local function winbar_filename()
+  local ft = vim.bo.filetype
+  local alias = winbar_aliases[ft]
+  if alias then
+    return alias
+  end
+  local icon = require("nvim-web-devicons").get_icon(vim.fn.expand("%:t"), nil, { default = true })
+  local filename = vim.fn.expand("%:.")
+  if filename == "" then
+    filename = "[No Name]"
+  end
+  local modified = vim.bo.modified and " [+]" or ""
+  local readonly = vim.bo.readonly and " " .. icons.readonly or ""
+  return icon .. " " .. filename .. modified .. readonly
+end
+
+local function winbar_key()
+  local keys = require("core").keys.window
+  local key = keys[vim.api.nvim_win_get_number(0)] or ""
+  if key == "" then
+    return ""
+  end
+  return "#" .. key
+end
+
+M.winbar_filename = { winbar_filename, color = "WinBar" }
+M.winbar_filename_inactive = { winbar_filename, color = "WinBarNC" }
+M.winbar_key = { winbar_key, color = "WinBar" }
+M.winbar_key_inactive = { winbar_key, color = "WinBarNC" }
 
 return M

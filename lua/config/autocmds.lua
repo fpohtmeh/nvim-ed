@@ -57,15 +57,6 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Winbar
-local winbar = require("core.winbar")
-vim.api.nvim_create_autocmd("FileType", {
-  callback = function()
-    if not vim.tbl_contains(winbar.ignored_filetypes, vim.bo.filetype) then
-      vim.wo.winbar = winbar.expression
-    end
-  end,
-})
 
 -- Cursor word condition
 require("plugins.mini-cursorword.core").create_autocmds()

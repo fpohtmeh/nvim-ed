@@ -1,5 +1,4 @@
 local styles = require("plugins.snacks.styles")
-local winbar = require("core.winbar")
 
 return {
   "folke/snacks.nvim",
@@ -21,7 +20,6 @@ return {
     terminal = {
       win = {
         keys = { nav_h = false, nav_j = false, nav_k = false, nav_l = false },
-        wo = { winbar = winbar.expression },
       },
     },
     zen = {

@@ -59,6 +59,7 @@ return {
       section_separators = "",
       disabled_filetypes = {
         statusline = { "snacks_dashboard" },
+        winbar = { "snacks_dashboard" },
       },
     },
     sections = sections,
@@ -69,6 +70,14 @@ return {
       lualine_x = {},
       lualine_y = {},
       lualine_z = {},
+    },
+    winbar = {
+      lualine_c = { components.winbar_filename },
+      lualine_z = { components.winbar_key },
+    },
+    inactive_winbar = {
+      lualine_c = { components.winbar_filename_inactive },
+      lualine_z = { components.winbar_key_inactive },
     },
   },
 }
