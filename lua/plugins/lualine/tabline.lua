@@ -19,18 +19,27 @@ end
 
 H.tab_display_name = function(tabid)
   local bufs = H.tab_bufs(tabid)
-  local name = nil
+  local seen = {}
+  local parts = {}
+  local has_editor = false
   for _, buf in ipairs(bufs) do
     local title = titles[vim.bo[buf].filetype]
-    if not title then
-      return nil
+    if title then
+      if not seen[title] then
+        seen[title] = true
+        parts[#parts + 1] = title
+      end
+    else
+      has_editor = true
     end
-    if name and name ~= title then
-      return nil
-    end
-    name = title
   end
-  return name
+  if has_editor then
+    table.insert(parts, 1, "Editor")
+  end
+  if #parts == 0 then
+    return "Editor"
+  end
+  return table.concat(parts, ":")
 end
 
 H.tab_name = function(tabnr, tabid)
@@ -38,10 +47,7 @@ H.tab_name = function(tabnr, tabid)
   if ok and custom and custom ~= "" then
     return custom
   end
-  if tabnr == 1 then
-    return "Main"
-  end
-  return H.tab_display_name(tabid) or "Tab"
+  return H.tab_display_name(tabid)
 end
 
 H.min_width = 10
