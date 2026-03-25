@@ -1,5 +1,6 @@
 local H = {}
 
+local fs = require("core.fs")
 local titles = require("plugins.lualine.titles")
 
 H.tab_bufs = function(tabid)
@@ -45,7 +46,7 @@ end
 H.initial_cwd = vim.fn.getcwd()
 
 H.tab_dir = function(tabnr)
-  local tab_cwd = vim.fn.getcwd(-1, tabnr)
+  local tab_cwd = fs.tab_cwd(tabnr)
   if tab_cwd == H.initial_cwd then
     return nil
   end

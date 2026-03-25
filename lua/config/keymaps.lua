@@ -89,7 +89,8 @@ map("n", "<leader>tt", terminal.open_float, { desc = "Terminal (fullscreen)" })
 map("n", "<leader>tv", terminal.open_vsplit, { desc = "Terminal (vsplit)" })
 
 -- Claude
-map("n", "<leader>at", terminal.claude, { desc = "Toggle Claude" })
+map("n", "<leader>at", terminal.claude_continue, { desc = "Toggle Claude (continue)" })
+map("n", "<leader>an", terminal.claude_new, { desc = "Toggle Claude (new)" })
 
 -- Lazygit
 if vim.fn.executable("lazygit") == 1 then

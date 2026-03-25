@@ -6,6 +6,10 @@ M.cwd = function()
   return vim.fn.getcwd()
 end
 
+M.tab_cwd = function(tabnr)
+  return vim.fn.getcwd(-1, tabnr or 0)
+end
+
 M.path_exists = function(path)
   return vim.uv.fs_stat(path) and true or false
 end

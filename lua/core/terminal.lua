@@ -1,5 +1,6 @@
 local M = {}
 local H = {}
+local fs = require("core.fs")
 
 function M.setup(shell)
   vim.o.shell = shell or vim.o.shell
@@ -63,13 +64,20 @@ function M.close()
   vim.cmd.close()
 end
 
-function M.claude()
-  local opts = {
-    cwd = Snacks.git.get_root(),
+H.claude_opts = function()
+  return {
+    cwd = fs.tab_cwd(),
     win = { position = "right", width = 80, keys = H.keys },
     env = { terminal_style = "claude" },
   }
-  Snacks.terminal("claude --continue", opts)
+end
+
+function M.claude_continue()
+  Snacks.terminal("claude --continue", H.claude_opts())
+end
+
+function M.claude_new()
+  Snacks.terminal("claude", H.claude_opts())
 end
 
 function M.lazy_git()
