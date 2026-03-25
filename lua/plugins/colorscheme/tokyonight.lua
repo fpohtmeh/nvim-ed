@@ -36,7 +36,7 @@ return {
       hl.SnacksPickerInputTitle = { fg = c.green, bg = c.bg_dark }
       hl.SnacksPickerInputBorder = { fg = c.green, bg = c.bg_dark }
       hl.SnacksPickerSelected = { fg = c.green, bg = c.bg_dark }
-      hl.SnacksZenIcon = { fg = default_fg, bg = c.green }
+      hl.SnacksZenIcon = { fg = c.green, bg = c.bg_dark }
       -- Diagnostic
       hl.DiagnosticUnnecessary = { fg = c.comment }
       -- Indentation

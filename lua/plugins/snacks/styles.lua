@@ -10,7 +10,10 @@ return {
       end,
       backdrop = false,
     },
-    zoom_indicator = { text = " 󰊓 zoom " },
+    zoom_indicator = {
+      text = " 󰊓 zoom mode ",
+      border = "single",
+    },
     max_float = {
       position = "float",
       height = function()
