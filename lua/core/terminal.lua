@@ -82,7 +82,7 @@ end
 
 function M.lazy_git()
   local opts = {
-    cwd = Snacks.git.get_root(),
+    cwd = fs.tab_cwd(),
     win = { keys = H.keys, wo = { winbar = "" } },
     env = { terminal_style = "lazygit" },
   }
