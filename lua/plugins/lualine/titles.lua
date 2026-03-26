@@ -22,7 +22,7 @@ H.bufname = {
       return icons.directory .. " " .. bufname:gsub("^oil://", "")
     end,
   },
-  { "^claude%-prompt%-.*%.md$", icons.prompt .. " Claude Prompt" },
+  { "claude%-prompt%-.*%.md$", icons.prompt .. " Claude Prompt" },
 }
 
 M.by_filetype = function(ft)

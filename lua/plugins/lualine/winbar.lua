@@ -28,6 +28,9 @@ H.filename = function()
 end
 
 H.key = function()
+  if Ed.is_nested then
+    return "[term]"
+  end
   local keys = require("core").keys.window
   local k = keys[vim.api.nvim_win_get_number(0)] or ""
   return k ~= "" and "#" .. k or ""
