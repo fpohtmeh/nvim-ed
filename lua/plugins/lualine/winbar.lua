@@ -8,7 +8,8 @@ H.filename = function()
   local bufname = vim.api.nvim_buf_get_name(0)
   local title = titles.by_bufname(bufname)
   if title then
-    return title
+    local is_term = bufname:match("^term://")
+    return is_term and icons.prompt .. " " .. title or title
   end
   title = titles.by_filetype(vim.bo.filetype)
   if title then

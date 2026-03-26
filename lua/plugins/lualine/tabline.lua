@@ -24,7 +24,7 @@ H.tab_display_name = function(tabid)
   local parts = {}
   local has_editor = false
   for _, buf in ipairs(bufs) do
-    local label = titles.by_filetype(vim.bo[buf].filetype)
+    local label = titles.by_bufname(vim.fn.bufname(buf)) or titles.by_filetype(vim.bo[buf].filetype)
     if label then
       if not seen[label] then
         seen[label] = true

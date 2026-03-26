@@ -23,6 +23,7 @@ H.bufname = {
     end,
   },
   { "claude%-prompt%-.*%.md$", icons.prompt .. " Claude Prompt" },
+  { "^term://.-//[%d]*:claude%f[%A]", "Claude" },
 }
 
 M.by_filetype = function(ft)
