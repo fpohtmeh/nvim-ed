@@ -4,24 +4,19 @@ local H = {}
 local icons = require("core.icons")
 local titles = require("plugins.lualine.titles")
 
-H.predefined_filenames = {
-  oil = function()
-    return icons.directory .. " " .. vim.fn.expand("%:p"):gsub("^oil://", "")
-  end,
-}
-
 H.filename = function()
-  local ft = vim.bo.filetype
-  local filename = H.predefined_filenames[ft]
-  if filename then
-    return filename()
-  end
-
-  local title = titles[ft]
+  local bufname = vim.api.nvim_buf_get_name(0)
+  local title = titles.by_bufname(bufname)
   if title then
     return title
   end
-  icon = require("nvim-web-devicons").get_icon(vim.fn.expand("%:t"), nil, { default = true })
+  title = titles.by_filetype(vim.bo.filetype)
+  if title then
+    return title
+  end
+
+  bufname = vim.fn.expand("%:t")
+  icon = require("nvim-web-devicons").get_icon(bufname, nil, { default = true })
   name = vim.fn.expand("%:.")
   if name == "" then
     name = "[No Name]"

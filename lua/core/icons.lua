@@ -15,6 +15,7 @@ M.file = ""
 M.directory = ""
 M.buffers = "󰪏"
 M.readonly = "󰍁"
+M.prompt = "❯"
 
 M.diagnostics = {
   error = " ",
@@ -24,6 +25,7 @@ M.diagnostics = {
 }
 
 M.git = {
+  icon = "󰊢",
   added = " ",
   modified = " ",
   removed = " ",
