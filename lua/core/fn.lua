@@ -24,4 +24,10 @@ M.is_visual_mode = function(mode)
   return mode == "v" or mode == "V" or mode == "\22"
 end
 
+M.go_to_win = function(i)
+  if i <= vim.fn.winnr("$") then
+    vim.cmd(tostring(i) .. " wincmd w")
+  end
+end
+
 return M

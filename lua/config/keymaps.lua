@@ -101,7 +101,7 @@ end
 for i = 1, #keys.window do
   local lhs = "<c-" .. keys.window[i] .. ">"
   local rhs = function()
-    vim.cmd(tostring(i) .. " wincmd w")
+    require("core.fn").go_to_win(i)
   end
   local description = "Go to window " .. i
   vim.keymap.set({ "n", "v", "t" }, lhs, rhs, { desc = description, remap = true })

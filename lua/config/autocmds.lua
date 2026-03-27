@@ -73,6 +73,13 @@ vim.api.nvim_create_autocmd("FileType", {
 require("plugins.git.sync").create_autocmds()
 
 vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "fugitive", "fugitiveblame", "git" },
+  callback = function(ev)
+    vim.bo[ev.buf].buflisted = false
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
   pattern = "gitcommit",
   callback = function()
     vim.cmd.startinsert()
