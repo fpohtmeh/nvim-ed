@@ -142,6 +142,11 @@ M.location = {
   end,
 }
 
+M.claude = {
+  require("core.claude").component,
+  color = require("core.claude").color,
+}
+
 M.searchcount = {
   "searchcount",
   fmt = function(str)

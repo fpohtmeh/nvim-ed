@@ -16,6 +16,7 @@ H.sections = {
   lualine_b = { components.buffers, { "branch", icon = icons.branch } },
   lualine_c = { components.directory, components.filename, components.filename_short },
   lualine_x = {
+    components.claude,
     {
       "diff",
       symbols = {

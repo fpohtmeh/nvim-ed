@@ -64,20 +64,23 @@ function M.close()
   vim.cmd.close()
 end
 
-H.claude_opts = function()
-  return {
+H.claude_settings = vim.fn.stdpath("config") .. "/scripts/claude-hooks.json"
+
+H.claude_run = function(args)
+  local cmd = "claude --settings " .. H.claude_settings .. (args and " " .. args or "")
+  Snacks.terminal(cmd, {
     cwd = fs.tab_cwd(),
     win = { position = "right", width = 80, keys = H.keys },
     env = { terminal_style = "claude" },
-  }
+  })
 end
 
 function M.claude_continue()
-  Snacks.terminal("claude --continue", H.claude_opts())
+  H.claude_run("--continue")
 end
 
 function M.claude_new()
-  Snacks.terminal("claude", H.claude_opts())
+  H.claude_run()
 end
 
 function M.lazy_git()
