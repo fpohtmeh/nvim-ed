@@ -13,6 +13,15 @@ H.filename = function()
   end
   title = titles.by_filetype(vim.bo.filetype)
   if title then
+    if vim.bo.filetype == "OverseerOutput" then
+      local task_id = vim.b.overseer_task
+      if task_id then
+        local task = require("overseer.task_list").get(task_id)
+        if task then
+          return title .. ": " .. task.name
+        end
+      end
+    end
     return title
   end
 
