@@ -10,12 +10,21 @@ end
 local options = {
   templates = { "builtin" },
   task_list = {
-    default_detail = 2,
+    default_detail = 1,
     bindings = {
       ["<C-h>"] = false,
       ["<C-j>"] = false,
       ["<C-k>"] = false,
       ["<C-l>"] = false,
+      ["d"] = "Dispose",
+      ["s"] = "Stop",
+      ["r"] = "<Cmd>lua require('plugins.overseer.actions').restart_task()<CR>",
+      ["S"] = "<Cmd>lua require('plugins.overseer.actions').stop_all_tasks()<CR>",
+      ["<CR>"] = "<Cmd>lua require('plugins.overseer.actions').open_task_output()<CR>",
+      ["a"] = "RunAction",
+      [",,"] = "PrevTask",
+      [";;"] = "NextTask",
+      ["p"] = "<Cmd>lua require('plugins.overseer.actions').toggle_pin()<CR>",
     },
   },
   form = { border = "single" },

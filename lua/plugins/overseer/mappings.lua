@@ -20,6 +20,8 @@ M.keys = {
   { prefix .. "l", actions.toggle_tasks_list, desc = "Toggle tasks list" },
   { "<leader><CR>", actions.toggle_recent_task_output, desc = "Toggle last task output" },
   { prefix .. "x", actions.stop_recent_task, desc = "Stop last task" },
+  { ",j", actions.show_adjacent_task_output(-1), desc = "Prev task output" },
+  { ";j", actions.show_adjacent_task_output(1), desc = "Next task output" },
   -- stylua: ignore end
   create_by_task_name("r", "run"),
   create_by_task_name("b", "build"),
