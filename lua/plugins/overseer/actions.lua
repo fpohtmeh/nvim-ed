@@ -64,11 +64,36 @@ H.setup_pin_autocmd = function(bufnr)
   })
 end
 
+H.last_task_id = nil
+
 vim.api.nvim_create_autocmd("FileType", {
   group = H.pin_augroup,
   pattern = "OverseerList",
   callback = function(ev)
     H.setup_pin_autocmd(ev.buf)
+  end,
+})
+
+vim.api.nvim_create_autocmd("User", {
+  group = H.pin_augroup,
+  pattern = "OverseerListUpdate",
+  callback = function()
+    if not H.find_output_win() then
+      return
+    end
+    local tasks = require("overseer").list_tasks({ recent_first = true })
+    if vim.tbl_isempty(tasks) then
+      return
+    end
+    local latest = tasks[1]
+    if latest.id == H.last_task_id then
+      return
+    end
+    if not latest:get_bufnr() then
+      return
+    end
+    H.last_task_id = latest.id
+    H.show_task_output(latest)
   end,
 })
 
