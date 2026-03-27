@@ -92,7 +92,12 @@ map("n", "<leader>tv", terminal.open_vsplit, { desc = "Terminal (vsplit)" })
 -- Claude
 map("n", "<leader>ar", claude.resume, { desc = "Toggle Claude (resume)" })
 map("n", "<leader>an", claude.new, { desc = "Toggle Claude (new)" })
-map("n", "<leader>ai", claude.input, { desc = "Send text to Claude" })
+-- stylua: ignore start
+map("n", "<leader>at", function() claude.input(false) end, { desc = "Send text" })
+map("n", "<leader>as", function() claude.input(true) end, { desc = "Submit text" })
+map("n", "<leader>aq", function() claude.send_qf(true) end, { desc = "Send qf list" })
+map("n", "<leader>ac", claude.commit, { desc = "Commit" })
+-- stylua: ignore end
 
 -- Lazygit
 if vim.fn.executable("lazygit") == 1 then

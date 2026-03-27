@@ -6,6 +6,7 @@ local terminal = require("core.terminal")
 
 H.state = "inactive"
 H.term = nil
+H.enter = vim.fn.has("win32") == 1 and "\r\n" or "\r"
 
 function M.set_state(state)
   H.state = state
@@ -44,19 +45,40 @@ function M.new()
   H.run()
 end
 
-function M.send(text)
+function M.send(text, submit)
   local buf = H.term and H.term.buf
   if not buf or not vim.api.nvim_buf_is_valid(buf) then
     vim.notify("No Claude terminal running", vim.log.levels.WARN)
     return
   end
-  vim.fn.chansend(vim.b[buf].terminal_job_id, text .. "\n")
+  vim.fn.chansend(vim.b[buf].terminal_job_id, submit and text .. H.enter or text)
 end
 
-function M.input()
+function M.input(submit)
   vim.ui.input({ prompt = "Claude: " }, function(input)
     if input then
-      M.send(input)
+      M.send(input, submit)
+    end
+  end)
+end
+
+function M.commit()
+  M.send("commit", true)
+end
+
+function M.send_qf(submit)
+  local items = vim.fn.getqflist()
+  if #items == 0 then
+    vim.notify("Quickfix list is empty", vim.log.levels.WARN)
+    return
+  end
+  local lines = vim.tbl_map(function(item)
+    local fname = item.bufnr > 0 and vim.api.nvim_buf_get_name(item.bufnr) or ""
+    return fname .. ":" .. item.lnum .. ": " .. item.text
+  end, items)
+  vim.ui.input({ prompt = "Claude: " }, function(input)
+    if input then
+      M.send(input .. H.enter .. table.concat(lines, H.enter), submit)
     end
   end)
 end
