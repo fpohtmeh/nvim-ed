@@ -21,7 +21,7 @@ function M.setup(shell)
   end
 end
 
-H.keys = {
+M.keys = {
   term_normal = {
     "<S-esc>",
     function(_)
@@ -36,7 +36,7 @@ H.keys = {
 function M.open()
   local opts = {
     cwd = Snacks.git.get_root(),
-    win = { keys = H.keys },
+    win = { keys = M.keys },
     env = { terminal_style = "normal" },
   }
   Snacks.terminal(nil, opts)
@@ -45,7 +45,7 @@ end
 function M.open_float()
   local opts = {
     cwd = Snacks.git.get_root(),
-    win = { style = "max_float", title = "Terminal", keys = H.keys },
+    win = { style = "max_float", title = "Terminal", keys = M.keys },
     env = { terminal_style = "float" },
   }
   Snacks.terminal(nil, opts)
@@ -54,7 +54,7 @@ end
 function M.open_vsplit()
   local opts = {
     cwd = Snacks.git.get_root(),
-    win = { position = "right", width = 80, keys = H.keys },
+    win = { position = "right", width = 80, keys = M.keys },
     env = { terminal_style = "vsplit" },
   }
   Snacks.terminal(nil, opts)
@@ -64,29 +64,10 @@ function M.close()
   vim.cmd.close()
 end
 
-H.claude_settings = vim.fn.stdpath("config") .. "/scripts/claude-hooks.json"
-
-H.claude_run = function(args)
-  local cmd = "claude --settings " .. H.claude_settings .. (args and " " .. args or "")
-  Snacks.terminal(cmd, {
-    cwd = fs.tab_cwd(),
-    win = { position = "right", width = 80, keys = H.keys },
-    env = { terminal_style = "claude" },
-  })
-end
-
-function M.claude_continue()
-  H.claude_run("--continue")
-end
-
-function M.claude_new()
-  H.claude_run()
-end
-
 function M.lazy_git()
   local opts = {
     cwd = fs.tab_cwd(),
-    win = { keys = H.keys, wo = { winbar = "" } },
+    win = { keys = M.keys, wo = { winbar = "" } },
     env = { terminal_style = "lazygit" },
   }
   Snacks.lazygit(opts)

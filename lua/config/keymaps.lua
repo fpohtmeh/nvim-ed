@@ -80,6 +80,7 @@ map("n", keys.next .. "<c-q>", function() pcall(vim.cmd.cnewer) end, { desc = "N
 
 -- Terminal
 local terminal = require("core.terminal")
+local claude = require("core.claude")
 map("n", "<c-/>", terminal.open, { desc = "Terminal" })
 map("n", "<c-_>", terminal.open, { desc = "which_key_ignore" })
 map("t", "<c-/>", terminal.close, { desc = "Hide Terminal" })
@@ -89,8 +90,9 @@ map("n", "<leader>tt", terminal.open_float, { desc = "Terminal (fullscreen)" })
 map("n", "<leader>tv", terminal.open_vsplit, { desc = "Terminal (vsplit)" })
 
 -- Claude
-map("n", "<leader>at", terminal.claude_continue, { desc = "Toggle Claude (continue)" })
-map("n", "<leader>an", terminal.claude_new, { desc = "Toggle Claude (new)" })
+map("n", "<leader>ar", claude.resume, { desc = "Toggle Claude (resume)" })
+map("n", "<leader>an", claude.new, { desc = "Toggle Claude (new)" })
+map("n", "<leader>ai", claude.input, { desc = "Send text to Claude" })
 
 -- Lazygit
 if vim.fn.executable("lazygit") == 1 then
