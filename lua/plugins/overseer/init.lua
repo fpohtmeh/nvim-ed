@@ -22,8 +22,6 @@ local options = {
       ["S"] = "<Cmd>lua require('plugins.overseer.actions').stop_all_tasks()<CR>",
       ["<CR>"] = "<Cmd>lua require('plugins.overseer.actions').open_task_output()<CR>",
       ["a"] = "RunAction",
-      [",,"] = "PrevTask",
-      [";;"] = "NextTask",
       ["p"] = "<Cmd>lua require('plugins.overseer.actions').toggle_pin()<CR>",
     },
   },

@@ -95,26 +95,25 @@ H.show_task_output = function(task)
   require("overseer.util").scroll_to_end(win)
 end
 
-H.find_task_index = function(task, tasks)
-  for i, t in ipairs(tasks) do
-    if t.id == task.id then
-      return i
-    end
-  end
-end
-
-H.output_win_task = function()
+H.current_task_index = function(tasks)
   local win = H.find_output_win()
   if not win then
     return
   end
   local bufnr = vim.api.nvim_win_get_buf(win)
-  local tasks = require("overseer").list_tasks({ recent_first = true })
-  for _, task in ipairs(tasks) do
+  for i, task in ipairs(tasks) do
     if task:get_bufnr() == bufnr then
-      return task, tasks
+      return i
     end
   end
+end
+
+H.focus_sidebar_task = function(task)
+  local sidebar = require("overseer.task_list.sidebar").get()
+  if not sidebar then
+    return
+  end
+  sidebar:focus_task_id(task.id)
 end
 
 -- Run / pick tasks
@@ -176,20 +175,19 @@ end
 
 M.show_adjacent_task_output = function(direction)
   return function()
-    local current, tasks = H.output_win_task()
-    if not current then
-      H.show_task_output(H.find_recent_task())
+    local tasks = require("overseer").list_tasks({ recent_first = true })
+    if vim.tbl_isempty(tasks) then
       return
     end
-    local idx = H.find_task_index(current, tasks)
+    local idx = H.current_task_index(tasks)
     if not idx then
+      H.show_task_output(tasks[1])
+      H.focus_sidebar_task(tasks[1])
       return
     end
-    local next_idx = idx + direction
-    if next_idx < 1 or next_idx > #tasks then
-      return
-    end
+    local next_idx = ((idx - 1 + direction) % #tasks) + 1
     H.show_task_output(tasks[next_idx])
+    H.focus_sidebar_task(tasks[next_idx])
   end
 end
 
