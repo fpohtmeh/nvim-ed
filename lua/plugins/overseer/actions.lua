@@ -54,6 +54,9 @@ H.setup_pin_autocmd = function(bufnr)
       if not H.pinned then
         return
       end
+      if not H.find_output_win() then
+        return
+      end
       local t = H.get_sidebar_task()
       if not t or t.id == H.pinned_task_id then
         return
@@ -185,6 +188,20 @@ M.stop_all_tasks = function()
   local tasks = require("overseer").list_tasks({ status = "RUNNING" })
   for _, task in ipairs(tasks) do
     task:stop()
+  end
+end
+
+M.restart_all_tasks = function()
+  local tasks = require("overseer").list_tasks({ recent_first = true })
+  for i = #tasks, 1, -1 do
+    require("overseer").run_action(tasks[i], "restart")
+  end
+end
+
+M.dispose_all_tasks = function()
+  local tasks = require("overseer").list_tasks()
+  for _, task in ipairs(tasks) do
+    task:dispose(true)
   end
 end
 
