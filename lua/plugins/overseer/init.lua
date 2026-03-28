@@ -1,27 +1,26 @@
+local actions = require("plugins.overseer.actions")
+
 local options = {
-  templates = { "builtin" },
   task_list = {
-    default_detail = 1,
-    bindings = {
+    keymaps = {
       ["<C-h>"] = false,
       ["<C-j>"] = false,
       ["<C-k>"] = false,
       ["<C-l>"] = false,
-      ["d"] = "Dispose",
-      ["D"] = "<Cmd>lua require('plugins.overseer.actions').dispose_all_tasks()<CR>",
-      ["s"] = "Stop",
-      ["S"] = "<Cmd>lua require('plugins.overseer.actions').stop_all_tasks()<CR>",
-      ["r"] = "<Cmd>lua require('plugins.overseer.actions').restart_task()<CR>",
-      ["R"] = "<Cmd>lua require('plugins.overseer.actions').restart_all_tasks()<CR>",
-      ["<CR>"] = "<Cmd>lua require('plugins.overseer.actions').open_task_output()<CR>",
-      ["a"] = "RunAction",
-      ["p"] = "<Cmd>lua require('plugins.overseer.actions').toggle_pin()<CR>",
+      ["d"] = { "keymap.run_action", opts = { action = "dispose" }, desc = "Dispose task" },
+      ["D"] = { actions.dispose_all_tasks, desc = "Dispose all tasks" },
+      ["s"] = { "keymap.run_action", opts = { action = "stop" }, desc = "Stop task" },
+      ["S"] = { actions.stop_all_tasks, desc = "Stop all tasks" },
+      ["r"] = { actions.restart_task, desc = "Restart task" },
+      ["R"] = { actions.restart_all_tasks, desc = "Restart all tasks" },
+      ["<CR>"] = { actions.open_task_output, desc = "Open task output" },
+      ["a"] = "keymap.run_action",
+      ["p"] = { actions.toggle_pin, desc = "Toggle pin" },
     },
   },
   form = { border = "single" },
   confirm = { border = "single" },
   task_win = { border = "single", padding = 0 },
-  help_win = { border = "single" },
   component_aliases = require("plugins.overseer.components").aliases,
 }
 
