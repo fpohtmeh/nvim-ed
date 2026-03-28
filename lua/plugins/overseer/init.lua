@@ -1,12 +1,3 @@
-local function set_filetypes()
-  local strategy = require("overseer.strategy.terminal")
-  local start = strategy.start
-  strategy.start = function(self, task)
-    start(self, task)
-    vim.bo[self.bufnr].filetype = "OverseerOutput"
-  end
-end
-
 local options = {
   templates = { "builtin" },
   task_list = {
@@ -38,8 +29,6 @@ return {
   "stevearc/overseer.nvim",
   config = function()
     require("overseer").setup(options)
-    set_filetypes()
   end,
-  version = "1.6.0",
   keys = require("plugins.overseer.mappings").keys,
 }
