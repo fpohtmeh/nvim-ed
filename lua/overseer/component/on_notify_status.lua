@@ -38,11 +38,6 @@ H.on_complete = function(self, task, status, result)
   })
 end
 
----@diagnostic disable-next-line: unused-local
-H.render = function(self, task, lines, highlights, detail)
-  table.insert(lines, require("plugins.overseer.parsers").info)
-end
-
 return {
   "Report task progress",
   params = {},
@@ -50,7 +45,6 @@ return {
     return {
       on_start = H.on_start,
       on_complete = H.on_complete,
-      render = H.render,
     }
   end,
 }
