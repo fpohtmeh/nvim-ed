@@ -20,15 +20,30 @@ $  $$$    $$$$$$$$$$$$$$$$$$    $$$  $
       $                        $      
 ]]
 
-H.next_color = function()
-  local color = require("core.palette").random_color("dashboard")
-  vim.api.nvim_set_hl(0, "SnacksDashboardHeader", { fg = color })
+H.pick_color = function()
+  local colors = require("core.colors")
+  Snacks.picker({
+    title = colors.picker.title,
+    sort = colors.picker.sort,
+    finder = colors.picker.finder,
+    format = colors.picker.format,
+    layout = { preset = "ivy" },
+    confirm = function(picker, item)
+      picker:close()
+      if not item then
+        return
+      end
+      local hex = item.color.hex
+      vim.api.nvim_set_hl(0, "SnacksDashboardHeader", { fg = hex })
+      require("core.palette").set_color("dashboard", hex)
+    end,
+  })
 end
 
 H.keys = {
   { action = ':lua require("core.fs").create_new_file()', desc = "New file", icon = "", key = "n" },
   { action = ':lua require("persistence").load()', desc = "Restore Session", icon = "", key = "s" },
-  { action = H.next_color, desc = "Change color", icon = "󰸌", key = "c" },
+  { action = H.pick_color, desc = "Pick color", icon = "󰸌", key = "c" },
   { action = ":qa", desc = "Quit", icon = "", key = "q" },
 }
 

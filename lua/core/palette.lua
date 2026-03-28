@@ -39,6 +39,13 @@ function M.color(key)
   return data[cwd] and data[cwd].color or M.random_color(key)
 end
 
+function M.set_color(key, color)
+  local cwd = vim.fn.getcwd()
+  local data = H.load(key)
+  data[cwd] = { color = color }
+  H.save(key, data)
+end
+
 function M.random_color(key)
   math.randomseed(os.time())
   local color = H.colors[math.random(1, #H.colors)]
