@@ -25,6 +25,36 @@ H.copy = {
   },
 }
 
+H.chezmoi_commands = {
+  { text = "add %", command = ":!chezmoi add %" },
+  { text = "forget %", command = ":!chezmoi forget %" },
+  { text = "apply", command = ":!chezmoi apply" },
+  { text = "apply -R", command = ":!chezmoi apply -R" },
+  { text = "edit %", command = ":!chezmoi edit %" },
+  { text = "update", command = ":!chezmoi update" },
+}
+
+H.chezmoi = function()
+  local items = {}
+  for i, entry in ipairs(H.chezmoi_commands) do
+    items[i] = { idx = i, text = entry.text, command = entry.command }
+  end
+  require("snacks").picker({
+    items = items,
+    title = "Chezmoi",
+    format = function(item)
+      return { { item.text, "SnacksPickerFile" } }
+    end,
+    layout = { preset = "select" },
+    actions = {
+      confirm = function(picker, item)
+        picker:close()
+        vim.cmd(item.command)
+      end,
+    },
+  })
+end
+
 H.ctx = {}
 
 H.clipboard = function(name)
@@ -64,10 +94,8 @@ H.fill = function(items)
   category = "Database"
   H.add(items, "Toggle database UI", category, ":DBUIToggle")
   H.add(items, "Add database connection", category, ":DBUIAddConnection")
-  category = "Configs"
-  H.add(items, "chezmoi: add", category, ":!chezmoi add %")
-  H.add(items, "chezmoi: re-add", category, ":!chezmoi re-add %")
-  H.add(items, "chezmoi: forget", category, ":!chezmoi forget %")
+  category = "Tools"
+  H.add(items, "Chezmoi", category, H.chezmoi)
 end
 
 H.items = function()
