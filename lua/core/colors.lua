@@ -184,12 +184,14 @@ end
 
 M.picker = {
   title = "HTML Colors",
+  sort = { fields = { "score:desc", "#name", "idx" } },
   finder = function()
     local items = {}
     for _, c in ipairs(H.colors) do
       items[#items + 1] = {
         text = ("%s %s %s %s"):format(c.name, c.group, c.hex, c.rgb),
         color = c,
+        name = c.name,
       }
     end
     return items
