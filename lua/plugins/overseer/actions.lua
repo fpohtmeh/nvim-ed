@@ -16,6 +16,25 @@ H.get_sidebar_task = function()
   end
 end
 
+H.get_sidebar_tasks_in_range = function()
+  local sidebar = require("overseer.task_list.sidebar").get()
+  if not sidebar then
+    return {}
+  end
+  local start_line = vim.fn.line("'<")
+  local end_line = vim.fn.line("'>")
+  local seen = {}
+  local tasks = {}
+  for lnum = start_line, end_line do
+    local task = sidebar:get_task_from_line(lnum)
+    if task and not seen[task.id] then
+      seen[task.id] = true
+      tasks[#tasks + 1] = task
+    end
+  end
+  return tasks
+end
+
 H.template_search_params = function()
   local dir = vim.fn.getcwd()
   if vim.bo.buftype == "" then
@@ -202,6 +221,25 @@ M.dispose_all_tasks = function()
   local tasks = require("overseer").list_tasks()
   for _, task in ipairs(tasks) do
     task:dispose(true)
+  end
+end
+
+M.dispose_selected_tasks = function()
+  for _, task in ipairs(H.get_sidebar_tasks_in_range()) do
+    task:dispose(true)
+  end
+end
+
+M.stop_selected_tasks = function()
+  for _, task in ipairs(H.get_sidebar_tasks_in_range()) do
+    task:stop()
+  end
+end
+
+M.restart_selected_tasks = function()
+  local tasks = H.get_sidebar_tasks_in_range()
+  for i = #tasks, 1, -1 do
+    require("overseer").run_action(tasks[i], "restart")
   end
 end
 
