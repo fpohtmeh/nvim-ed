@@ -3,10 +3,11 @@ local actions = require("plugins.overseer.actions")
 local options = {
   task_list = {
     keymaps = {
-      ["<C-h>"] = false,
-      ["<C-j>"] = false,
-      ["<C-k>"] = false,
-      ["<C-l>"] = false,
+      ["<C-h>"] = "<Nop>",
+      ["<C-j>"] = "<Nop>",
+      ["<C-k>"] = "<Nop>",
+      ["<C-l>"] = "<Nop>",
+      ["dd"] = false,
       ["d"] = { "keymap.run_action", opts = { action = "dispose" }, desc = "Dispose task" },
       ["D"] = { actions.dispose_all_tasks, desc = "Dispose all tasks" },
       ["s"] = { "keymap.run_action", opts = { action = "stop" }, desc = "Stop task" },
