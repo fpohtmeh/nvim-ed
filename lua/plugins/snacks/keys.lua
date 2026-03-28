@@ -31,6 +31,7 @@ return {
   { "<leader>sw", function() Snacks.picker.grep_word(H.opts.main_preview) end, desc = "Word (Visual Selection)", mode = { "n", "x" } },
   { "<leader>sb", function() Snacks.picker.grep_buffers(H.opts.main_preview) end, desc = "Grep (Open Buffers)" },
   { "<leader>sH", function() Snacks.picker.highlights() end, desc = "Highlights" },
+  { "<leader>sc", function() Snacks.picker.html_colors() end, desc = "HTML Colors" },
   { "<leader>sp", function() Snacks.picker.projects() end, desc = "Projects" },
   { "<leader>sR", function() Snacks.picker.recent() end, desc = "Recent" },
 

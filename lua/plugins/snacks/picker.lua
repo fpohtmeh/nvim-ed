@@ -47,4 +47,7 @@ return {
   actions = {
     search_and_replace = H.search_and_replace,
   },
+  sources = {
+    html_colors = require("core.colors").picker,
+  },
 }
