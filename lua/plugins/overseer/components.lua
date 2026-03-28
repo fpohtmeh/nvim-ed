@@ -39,7 +39,6 @@ end
 
 M.aliases = {
   default = {
-    "on_output_summarize",
     "on_exit_set_status",
     { "on_output_parse", parser = { diagnostics = load_nodes() } },
     { "on_result_diagnostics_quickfix", open = true },
