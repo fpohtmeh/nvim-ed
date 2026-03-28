@@ -22,6 +22,10 @@ M.to_escaped = function(path)
   return path:gsub(" ", "\\ ")
 end
 
+M.to_unix = function(path)
+  return path:gsub("\\", "/")
+end
+
 M.to_native = function(path)
   if M.path_sep == "\\" then
     return path:gsub("/", "\\")

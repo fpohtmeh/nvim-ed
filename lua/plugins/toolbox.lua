@@ -10,13 +10,44 @@ H.add = function(items, text, category, command)
   }
 end
 
+H.copy = {
+  file = {
+    full_path = function(p) return p end,
+    dir_path = function(p) return vim.fn.fnamemodify(p, ":h") .. "/" end,
+    filename = function(p) return vim.fn.fnamemodify(p, ":t") end,
+    relative_path = function(p) return vim.fn.fnamemodify(p, ":.") end,
+  },
+  oil = {
+    full_path = function(dir, entry) return dir .. (entry and entry.name or "") end,
+    dir_path = function(dir, _) return dir end,
+    filename = function(_, entry) return entry and entry.name or "" end,
+    relative_path = function(dir, entry) return vim.fn.fnamemodify(dir .. (entry and entry.name or ""), ":.") end,
+  },
+}
+
+H.ctx = {}
+
+H.clipboard = function(name)
+  return function()
+    local value
+    if H.ctx.oil then
+      value = H.copy.oil[name](H.ctx.oil.dir, H.ctx.oil.entry)
+    else
+      value = H.copy.file[name](H.ctx.path)
+    end
+    if value then
+      vim.fn.setreg("+", value)
+    end
+  end
+end
+
 H.fill = function(items)
   local category
   category = "Clipboard"
-  H.add(items, "Copy full path", category, ":let @+ = expand('%:p')")
-  H.add(items, "Copy directory path", category, ":let @+ = expand('%:p:h')")
-  H.add(items, "Copy filename", category, ":let @+ = expand('%:t')")
-  H.add(items, "Copy relative path", category, ":let @+ = expand('%:.')")
+  H.add(items, "Copy full path", category, H.clipboard("full_path"))
+  H.add(items, "Copy directory path", category, H.clipboard("dir_path"))
+  H.add(items, "Copy filename", category, H.clipboard("filename"))
+  H.add(items, "Copy relative path", category, H.clipboard("relative_path"))
   category = "Editor"
   H.add(items, "Remove empty lines", category, ":g/^$/d")
   H.add(items, "Remove trailing spaces", category, ":%s/\\s\\+$//e")
@@ -88,6 +119,15 @@ end
 
 H.toolbox = function()
   H.is_visual_mode = require("core.fn").is_visual_mode()
+  if vim.bo.filetype == "oil" then
+    local oil = require("oil")
+    local fs = require("core.fs")
+    local dir = oil.get_current_dir()
+    local entry = oil.get_cursor_entry()
+    H.ctx = { oil = { dir = fs.to_unix(dir), entry = entry } }
+  else
+    H.ctx = { path = vim.fn.expand("%:p") }
+  end
 
   require("snacks").picker({
     items = H.items(),
