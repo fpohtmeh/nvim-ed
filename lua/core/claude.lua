@@ -8,6 +8,21 @@ H.state = "inactive"
 H.term = nil
 H.enter = vim.fn.has("win32") == 1 and "\r\n" or "\r"
 
+H.event_states = {
+  UserPromptSubmit = "busy",
+  Stop = "idle",
+  SessionStart = "idle",
+  SessionEnd = "inactive",
+}
+
+function M.process_event(event)
+  local state = H.event_states[event]
+  if state then
+    M.set_state(state)
+  end
+  return ""
+end
+
 function M.set_state(state)
   H.state = state
   vim.cmd.redrawstatus()
@@ -26,7 +41,23 @@ function M.color()
   return highlight_map[H.state] or highlight_map.inactive
 end
 
-H.settings = vim.fn.stdpath("config") .. "/scripts/claude-hooks.json"
+H.settings = (function()
+  local base = vim.fn.stdpath("config"):gsub("\\", "/") .. "/scripts"
+  if vim.fn.has("win32") == 1 then
+    local hook = base .. "/claude-hook.ps1"
+    local path = base .. "/claude-hooks-win.json"
+    local entry = { type = "command", command = "pwsh -NoProfile -NonInteractive -ExecutionPolicy Bypass -File " .. hook, async = true }
+    local config = { hooks = {} }
+    for _, event in ipairs({ "UserPromptSubmit", "Stop", "SessionStart", "SessionEnd" }) do
+      config.hooks[event] = { { matcher = "", hooks = { entry } } }
+    end
+    local f = assert(io.open(path, "w"))
+    f:write(vim.json.encode(config))
+    f:close()
+    return path
+  end
+  return base .. "/claude-hooks.json"
+end)()
 
 H.run = function(args)
   local cmd = "claude --settings " .. H.settings .. (args and " " .. args or "")

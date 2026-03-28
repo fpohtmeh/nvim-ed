@@ -6,31 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.config/nvim-ed/scripts/claude-hook.sh",
-            "async": true
-          }
-        ]
-      }
-    ],
-    "SessionEnd": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.config/nvim-ed/scripts/claude-hook.sh",
-            "async": true
-          }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.config/nvim-ed/scripts/claude-hook.sh",
+            "command": "pwsh -NoProfile -NonInteractive -ExecutionPolicy Bypass -File C:/Users/fpohtmeh/AppData/Local/nvim-ed/scripts/claude-hook.ps1",
             "async": true
           }
         ]
@@ -42,7 +18,31 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.config/nvim-ed/scripts/claude-hook.sh",
+            "command": "pwsh -NoProfile -NonInteractive -ExecutionPolicy Bypass -File C:/Users/fpohtmeh/AppData/Local/nvim-ed/scripts/claude-hook.ps1",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pwsh -NoProfile -NonInteractive -ExecutionPolicy Bypass -File C:/Users/fpohtmeh/AppData/Local/nvim-ed/scripts/claude-hook.ps1",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pwsh -NoProfile -NonInteractive -ExecutionPolicy Bypass -File C:/Users/fpohtmeh/AppData/Local/nvim-ed/scripts/claude-hook.ps1",
             "async": true
           }
         ]

@@ -10,6 +10,7 @@ return {
       cmake = { "cmake_format" },
       python = { "black" },
       sh = { "shfmt" },
+      json = { "prettier" },
     },
     formatters = {
       injected = { options = { ignore_errors = true } },

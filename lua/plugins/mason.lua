@@ -24,6 +24,7 @@ H.ensure_installed = {
   "shfmt", -- shell formatter
   "stylua", -- lua formatter
   "marksman", -- markdown server
+  "prettier", -- json formatter
 }
 
 H.ui_opts = {
