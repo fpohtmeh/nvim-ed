@@ -74,7 +74,9 @@ M.yank_git_short_commit = function()
 end
 M.yank_git_remote_branch = function()
   local branch = H.git_output("git branch --show-current")
-  if not branch then return H.yank("not a git repo") end
+  if not branch then
+    return H.yank("not a git repo")
+  end
   local remote = H.git_output("git config branch." .. branch .. ".remote") or "origin"
   H.yank(remote .. "/" .. branch)
 end

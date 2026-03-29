@@ -1,9 +1,7 @@
 {
-    "todo": {
-        "prefix": "td",
-        "body": [
-            "// TODO: ${1}"
-        ],
-        "description": "TODO comment"
-    }
+  "todo": {
+    "prefix": "td",
+    "body": ["// TODO: ${1}"],
+    "description": "TODO comment"
+  }
 }

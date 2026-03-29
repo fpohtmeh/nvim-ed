@@ -30,4 +30,3 @@ Installed plugins at `~/.local/share/nvim-ed/lazy/` — read source directly whe
 - Leader=`<Space>`, local leader=`\`
 - Indentation: 4 spaces default, 2 for markdown/lua
 - Border: `"single"`
-

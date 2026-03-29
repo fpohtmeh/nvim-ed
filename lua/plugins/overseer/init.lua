@@ -32,7 +32,9 @@ return {
     vim.api.nvim_create_autocmd("FileType", {
       pattern = "OverseerList",
       callback = function(ev)
-        local opts = function(desc) return { buffer = ev.buf, desc = desc } end
+        local opts = function(desc)
+          return { buffer = ev.buf, desc = desc }
+        end
         vim.keymap.set("x", "d", actions.dispose_selected_tasks, opts("Dispose selected tasks"))
         vim.keymap.set("x", "s", actions.stop_selected_tasks, opts("Stop selected tasks"))
         vim.keymap.set("x", "r", actions.restart_selected_tasks, opts("Restart selected tasks"))
