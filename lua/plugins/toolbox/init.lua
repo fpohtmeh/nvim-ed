@@ -10,21 +10,6 @@ H.add = function(items, text, category, command)
   }
 end
 
-H.copy = {
-  file = {
-    full_path = function(p) return p end,
-    dir_path = function(p) return vim.fn.fnamemodify(p, ":h") .. "/" end,
-    filename = function(p) return vim.fn.fnamemodify(p, ":t") end,
-    relative_path = function(p) return vim.fn.fnamemodify(p, ":.") end,
-  },
-  oil = {
-    full_path = function(dir, entry) return dir .. (entry and entry.name or "") end,
-    dir_path = function(dir, _) return dir end,
-    filename = function(_, entry) return entry and entry.name or "" end,
-    relative_path = function(dir, entry) return vim.fn.fnamemodify(dir .. (entry and entry.name or ""), ":.") end,
-  },
-}
-
 H.subpicker = function(title, spec)
   local items = {}
   for i, entry in ipairs(spec.commands) do
@@ -48,27 +33,10 @@ end
 
 H.ctx = {}
 
-H.clipboard = function(name)
-  return function()
-    local value
-    if H.ctx.oil then
-      value = H.copy.oil[name](H.ctx.oil.dir, H.ctx.oil.entry)
-    else
-      value = H.copy.file[name](H.ctx.path)
-    end
-    if value then
-      vim.fn.setreg("+", value)
-    end
-  end
-end
-
 H.fill = function(items)
+  local add = function(text, category, command) H.add(items, text, category, command) end
+  require("plugins.toolbox.clipboard").fill(add, H.ctx)
   local category
-  category = "Clipboard"
-  H.add(items, "Copy full path", category, H.clipboard("full_path"))
-  H.add(items, "Copy directory path", category, H.clipboard("dir_path"))
-  H.add(items, "Copy filename", category, H.clipboard("filename"))
-  H.add(items, "Copy relative path", category, H.clipboard("relative_path"))
   category = "Editor"
   H.add(items, "Remove empty lines", category, ":g/^$/d")
   H.add(items, "Remove trailing spaces", category, ":%s/\\s\\+$//e")
