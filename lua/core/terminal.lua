@@ -34,7 +34,7 @@ M.keys = {
 
 function M.open()
   local opts = {
-    cwd = Snacks.git.get_root(),
+    cwd = fs.tab_cwd(),
     win = { keys = M.keys },
     env = { terminal_style = "normal" },
   }

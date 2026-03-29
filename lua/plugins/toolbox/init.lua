@@ -1,5 +1,7 @@
 local H = {}
 
+local fs = require("core.fs")
+
 H.add = function(items, text, category, command)
   local id = #items + 1
   items[id] = {
@@ -22,7 +24,7 @@ H.exec_terminal = function(cmd)
   local terminal = require("core.terminal")
   Snacks.terminal(cmd, {
     interactive = false,
-    cwd = Snacks.git.get_root(),
+    cwd = fs.tab_cwd(),
     win = { style = "terminal", position = "bottom", keys = terminal.keys },
     env = { terminal_style = "normal" },
   })
@@ -82,7 +84,9 @@ end
 H.ctx = {}
 
 H.fill = function(items)
-  local add = function(text, category, command) H.add(items, text, category, command) end
+  local add = function(text, category, command)
+    H.add(items, text, category, command)
+  end
   require("plugins.toolbox.clipboard").fill(add, H.ctx)
   local category
   category = "Editor"
