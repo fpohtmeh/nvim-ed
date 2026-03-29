@@ -10,25 +10,51 @@ H.add = function(items, text, category, command)
   }
 end
 
+H.expand = function(cmd)
+  return cmd:gsub("%%", vim.fn.expand("%:p"))
+end
+
+H.subpicker_confirm = function(spec)
+  return function(picker, item)
+    picker:close()
+    local cmd = H.expand(item.command)
+    if spec.terminal then
+      local terminal = require("core.terminal")
+      Snacks.terminal(cmd, {
+        interactive = false,
+        cwd = Snacks.git.get_root(),
+        win = { style = "terminal", position = "bottom", keys = terminal.keys },
+        env = { terminal_style = "normal" },
+      })
+    else
+      H.run(item)
+    end
+  end
+end
+
+H.subpicker_format = function(item)
+  local parts = { { item.text, "SnacksPickerFile" } }
+  if type(item.command) == "string" then
+    parts[#parts + 1] = { " " }
+    parts[#parts + 1] = { item.command, "SnacksPickerComment" }
+  end
+  return parts
+end
+
 H.subpicker = function(title, spec)
   local items = {}
   for i, entry in ipairs(spec.commands) do
     items[i] = { idx = i, text = entry.text, command = entry.command }
   end
-  require("snacks").picker({
-    items = items,
-    title = title,
-    format = function(item)
-      return { { item.text, "SnacksPickerFile" } }
-    end,
-    layout = { preset = "select" },
-    actions = {
-      confirm = function(picker, item)
-        picker:close()
-        H.run(item)
-      end,
-    },
-  })
+  vim.schedule(function()
+    require("snacks").picker({
+      items = items,
+      title = title,
+      format = H.subpicker_format,
+      layout = { preset = "select" },
+      actions = { confirm = H.subpicker_confirm(spec) },
+    })
+  end)
 end
 
 H.ctx = {}

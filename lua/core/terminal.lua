@@ -44,7 +44,7 @@ end
 
 function M.open_float()
   local opts = {
-    cwd = Snacks.git.get_root(),
+    cwd = fs.tab_cwd(),
     win = { style = "max_float", title = "Terminal", keys = M.keys },
     env = { terminal_style = "float" },
   }
@@ -53,7 +53,7 @@ end
 
 function M.open_vsplit()
   local opts = {
-    cwd = Snacks.git.get_root(),
+    cwd = fs.tab_cwd(),
     win = { position = "right", width = 80, keys = M.keys },
     env = { terminal_style = "vsplit" },
   }
