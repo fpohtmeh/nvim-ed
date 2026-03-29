@@ -60,6 +60,17 @@ function M.open_vsplit()
   Snacks.terminal(nil, opts)
 end
 
+function M.open_here()
+  local position = #vim.api.nvim_tabpage_list_wins(0) == 1 and "bottom" or "current"
+  local opts = {
+    cwd = fs.tab_cwd(),
+    count = vim.uv.hrtime(),
+    win = { position = position, keys = M.keys },
+    env = { terminal_style = "current" },
+  }
+  Snacks.terminal.open(nil, opts)
+end
+
 function M.close()
   vim.cmd.close()
 end

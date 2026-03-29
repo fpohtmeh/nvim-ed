@@ -82,12 +82,11 @@ map("n", keys.next .. "<c-q>", function() pcall(vim.cmd.cnewer) end, { desc = "N
 -- Terminal
 local terminal = require("core.terminal")
 local claude = require("core.claude")
-map("n", "<c-/>", terminal.open, { desc = "Terminal" })
-map("n", "<c-_>", terminal.open, { desc = "which_key_ignore" })
 map("t", "<c-/>", terminal.close, { desc = "Hide Terminal" })
 map("t", "<c-_>", terminal.close, { desc = "which_key_ignore" })
 
-map("n", "<leader>tt", terminal.open_float, { desc = "Terminal (fullscreen)" })
+map("n", "<leader>tt", terminal.open_here, { desc = "Terminal (window)" })
+map("n", "<leader>tf", terminal.open_float, { desc = "Terminal (fullscreen)" })
 map("n", "<leader>tv", terminal.open_vsplit, { desc = "Terminal (vsplit)" })
 
 -- Claude
