@@ -57,7 +57,6 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-
 -- Cursor word condition
 require("plugins.mini-cursorword.core").create_autocmds()
 
@@ -121,6 +120,14 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     vim.cmd.startinsert({ bang = true })
   end,
 })
+
+if Ed.is_nested then
+  vim.api.nvim_create_autocmd("BufWritePost", {
+    callback = function()
+      vim.cmd("quit")
+    end,
+  })
+end
 
 -- Trailspace
 local function disable_trailspace()

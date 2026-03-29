@@ -33,13 +33,7 @@ for i = 1, 9 do
 end
 
 -- File
-map({ "i", "x", "n", "s" }, "<C-s>", function()
-  if Ed.is_nested then
-    vim.cmd("x")
-  else
-    fs.save_current_file()
-  end
-end, { desc = "Save File" })
+map({ "i", "x", "n", "s" }, "<C-s>", fs.save_current_file, { desc = "Save File" })
 map("n", "<leader>fn", fs.create_new_file, { desc = "New File" })
 map("n", "<leader>fr", fs.rename_current_file, { desc = "Rename File" })
 map("n", "<leader>fx", fs.delete_current_file, { desc = "Delete File" })
