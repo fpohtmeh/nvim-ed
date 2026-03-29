@@ -11,6 +11,7 @@ return {
       python = { "black" },
       sh = { "shfmt" },
       json = { "prettier" },
+      markdown = { "prettier" },
     },
     formatters = {
       injected = { options = { ignore_errors = true } },
