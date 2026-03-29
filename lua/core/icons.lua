@@ -15,7 +15,9 @@ M.file = ""
 M.directory = ""
 M.buffers = "󰪏"
 M.readonly = "󰍁"
+M.terminal = "󰘧"
 M.prompt = "❯"
+M.claude = "󱚟"
 
 M.diagnostics = {
   error = " ",

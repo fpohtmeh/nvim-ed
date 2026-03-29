@@ -5,7 +5,7 @@ local icons = require("core.icons")
 
 H.filetype = {
   help = { "Help" },
-  snacks_terminal = { "Terminal" },
+  snacks_terminal = { "Terminal", icons.terminal },
   fugitive = { "Git", icons.git.icon },
   git = { "Git", icons.git.icon },
   gitcommit = { "Commit", icons.git.icon },
@@ -22,8 +22,8 @@ H.bufname = {
       return icons.directory .. " " .. bufname:gsub("^oil://", "")
     end,
   },
-  { "claude%-prompt%-.*%.md$", icons.prompt .. " Claude Prompt" },
-  { "^term://.-//[%d]*:claude%f[%A]", "Claude" },
+  { "claude%-prompt%-.*%.md$", icons.prompt .. " Prompt Editor" },
+  { "^term://.-//[%d]*:claude%f[%A]", icons.claude .. " Claude" },
 }
 
 M.by_filetype = function(ft, opts)

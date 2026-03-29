@@ -9,7 +9,11 @@ H.filename = function()
   local title = titles.by_bufname(bufname)
   if title then
     local is_term = bufname:match("^term://")
-    return is_term and icons.prompt .. " " .. title or title
+    if not is_term then
+      return title
+    end
+    local is_claude = bufname:match("claude%f[%A]")
+    return is_claude and title or icons.terminal .. " " .. title
   end
   title = titles.by_filetype(vim.bo.filetype)
   if title then
