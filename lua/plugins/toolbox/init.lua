@@ -10,22 +10,44 @@ H.add = function(items, text, category, command)
   }
 end
 
-H.expand = function(cmd)
-  return cmd:gsub("%%", vim.fn.expand("%:p"))
+H.expand = function(cmd, input)
+  cmd = cmd:gsub("{file}", vim.fn.expand("%:p"))
+  if input then
+    cmd = cmd:gsub("{input}", input)
+  end
+  return cmd
+end
+
+H.exec_terminal = function(cmd)
+  local terminal = require("core.terminal")
+  Snacks.terminal(cmd, {
+    interactive = false,
+    cwd = Snacks.git.get_root(),
+    win = { style = "terminal", position = "bottom", keys = terminal.keys },
+    env = { terminal_style = "normal" },
+  })
 end
 
 H.subpicker_confirm = function(spec)
   return function(picker, item)
     picker:close()
+    if item.input then
+      vim.ui.input({ prompt = item.input }, function(value)
+        if not value or value == "" then
+          return
+        end
+        local cmd = H.expand(item.command, value)
+        if spec.terminal then
+          H.exec_terminal(cmd)
+        else
+          H.run({ command = cmd })
+        end
+      end)
+      return
+    end
     local cmd = H.expand(item.command)
     if spec.terminal then
-      local terminal = require("core.terminal")
-      Snacks.terminal(cmd, {
-        interactive = false,
-        cwd = Snacks.git.get_root(),
-        win = { style = "terminal", position = "bottom", keys = terminal.keys },
-        env = { terminal_style = "normal" },
-      })
+      H.exec_terminal(cmd)
     else
       H.run(item)
     end
@@ -44,7 +66,7 @@ end
 H.subpicker = function(title, spec)
   local items = {}
   for i, entry in ipairs(spec.commands) do
-    items[i] = { idx = i, text = entry.text, command = entry.command }
+    items[i] = { idx = i, text = entry.text, command = entry.command, input = entry.input }
   end
   vim.schedule(function()
     require("snacks").picker({
@@ -81,6 +103,7 @@ H.fill = function(items)
   H.add(items, "Add database connection", category, ":DBUIAddConnection")
   category = "Tools"
   H.add(items, "Chezmoi", category, require("plugins.toolbox.chezmoi"))
+  H.add(items, "GitLab", category, require("plugins.toolbox.gitlab"))
 end
 
 H.items = function()
