@@ -10,6 +10,7 @@ map({ "n", "o", "x" }, "<s-l>", "g_", opts)
 -- Paste
 map("n", ",p", "O<esc>p", { desc = "Paste on previous line" })
 map("n", ";p", "o<esc>p", { desc = "Paste on next line" })
+map("i", "<C-r><C-r>", "<C-r>*", { desc = "Paste from clipboard" })
 
 -- Escape
 map({ "i", "n", "s" }, "<esc>", function()
