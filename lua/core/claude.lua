@@ -46,7 +46,11 @@ H.settings = (function()
   if vim.fn.has("win32") == 1 then
     local hook = base .. "/claude-hook.ps1"
     local path = base .. "/claude-hooks-win.json"
-    local entry = { type = "command", command = "pwsh -NoProfile -NonInteractive -ExecutionPolicy Bypass -File " .. hook, async = true }
+    local entry = {
+      type = "command",
+      command = "pwsh -NoProfile -NonInteractive -ExecutionPolicy Bypass -File " .. hook,
+      async = true,
+    }
     local config = { hooks = {} }
     for _, event in ipairs({ "UserPromptSubmit", "Stop", "SessionStart", "SessionEnd" }) do
       config.hooks[event] = { { matcher = "", hooks = { entry } } }
@@ -95,6 +99,10 @@ end
 
 function M.commit()
   M.send("commit", true)
+end
+
+function M.clear()
+  M.send("/clear", true)
 end
 
 function M.send_qf(submit)

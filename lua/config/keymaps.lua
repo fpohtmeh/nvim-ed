@@ -97,6 +97,7 @@ map("n", "<leader>at", function() claude.input(false) end, { desc = "Send text" 
 map("n", "<leader>as", function() claude.input(true) end, { desc = "Submit text" })
 map("n", "<leader>aq", function() claude.send_qf(true) end, { desc = "Send qf list" })
 map("n", "<leader>ac", claude.commit, { desc = "Commit" })
+map("n", "<leader>ax", claude.clear, { desc = "Clear" })
 -- stylua: ignore end
 
 -- Lazygit
