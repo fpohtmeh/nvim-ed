@@ -25,23 +25,14 @@ H.copy = {
   },
 }
 
-H.chezmoi_commands = {
-  { text = "add %", command = ":!chezmoi add %" },
-  { text = "forget %", command = ":!chezmoi forget %" },
-  { text = "apply", command = ":!chezmoi apply" },
-  { text = "apply -R", command = ":!chezmoi apply -R" },
-  { text = "edit %", command = ":!chezmoi edit %" },
-  { text = "update", command = ":!chezmoi update" },
-}
-
-H.chezmoi = function()
+H.subpicker = function(title, spec)
   local items = {}
-  for i, entry in ipairs(H.chezmoi_commands) do
+  for i, entry in ipairs(spec.commands) do
     items[i] = { idx = i, text = entry.text, command = entry.command }
   end
   require("snacks").picker({
     items = items,
-    title = "Chezmoi",
+    title = title,
     format = function(item)
       return { { item.text, "SnacksPickerFile" } }
     end,
@@ -49,7 +40,7 @@ H.chezmoi = function()
     actions = {
       confirm = function(picker, item)
         picker:close()
-        vim.cmd(item.command)
+        H.run(item)
       end,
     },
   })
@@ -95,7 +86,7 @@ H.fill = function(items)
   H.add(items, "Toggle database UI", category, ":DBUIToggle")
   H.add(items, "Add database connection", category, ":DBUIAddConnection")
   category = "Tools"
-  H.add(items, "Chezmoi", category, H.chezmoi)
+  H.add(items, "Chezmoi", category, require("plugins.toolbox.chezmoi"))
 end
 
 H.items = function()
@@ -117,6 +108,11 @@ H.is_visual_mode = false
 H.run = function(item)
   local command = item.command
   if command == nil then
+    return
+  end
+
+  if type(command) == "table" and command.commands then
+    H.subpicker(item.text, command)
     return
   end
 
