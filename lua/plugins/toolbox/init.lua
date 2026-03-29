@@ -81,13 +81,7 @@ H.subpicker = function(title, spec)
   end)
 end
 
-H.ctx = {}
-
 H.fill = function(items)
-  local add = function(text, category, command)
-    H.add(items, text, category, command)
-  end
-  require("plugins.toolbox.clipboard").fill(add, H.ctx)
   local category
   category = "Editor"
   H.add(items, "Remove empty lines", category, ":g/^$/d")
@@ -164,16 +158,6 @@ end
 
 H.toolbox = function()
   H.is_visual_mode = require("core.fn").is_visual_mode()
-  if vim.bo.filetype == "oil" then
-    local oil = require("oil")
-    local fs = require("core.fs")
-    local dir = oil.get_current_dir()
-    local entry = oil.get_cursor_entry()
-    H.ctx = { oil = { dir = fs.to_unix(dir), entry = entry } }
-  else
-    H.ctx = { path = vim.fn.expand("%:p") }
-  end
-
   require("snacks").picker({
     items = H.items(),
     title = "Toolbox",

@@ -105,6 +105,20 @@ if vim.fn.executable("lazygit") == 1 then
   map("n", "<leader>G", terminal.lazy_git, { desc = "Lazygit" })
 end
 
+-- Yank to clipboard
+local clipboard = require("core.clipboard")
+-- stylua: ignore start
+map("n", "<leader>yf", clipboard.yank_filepath, { desc = "Yank filepath" })
+map("n", "<leader>yn", clipboard.yank_filename, { desc = "Yank filename" })
+map("n", "<leader>yr", clipboard.yank_relative_path, { desc = "Yank relative path" })
+map("n", "<leader>yd", clipboard.yank_directory, { desc = "Yank directory" })
+map("n", "<leader>yb", clipboard.yank_git_branch, { desc = "Yank git branch" })
+map("n", "<leader>yB", clipboard.yank_git_remote_branch, { desc = "Yank remote branch" })
+map("n", "<leader>yc", clipboard.yank_git_commit, { desc = "Yank git commit" })
+map("n", "<leader>yC", clipboard.yank_git_short_commit, { desc = "Yank short commit" })
+map("n", "<leader>yo", clipboard.yank_git_origin, { desc = "Yank git origin" })
+-- stylua: ignore end
+
 -- Windows keys
 for i = 1, #keys.window do
   local lhs = "<c-" .. keys.window[i] .. ">"
