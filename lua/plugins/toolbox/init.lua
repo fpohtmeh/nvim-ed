@@ -88,8 +88,6 @@ H.fill = function(items)
   H.add(items, "Remove trailing spaces", category, ":%s/\\s\\+$//e")
   H.add(items, "Sort selected lines", category, "sort")
   H.add(items, "Sort selected lines reverse", category, "sort!")
-  category = "Utils"
-  H.add(items, "Copy code image (Silicon)", category, "Silicon")
   category = "Diff"
   H.add(items, "Turn on diff mode", category, "windo diffthis")
   H.add(items, "Turn off diff mode", category, "windo diffoff")
