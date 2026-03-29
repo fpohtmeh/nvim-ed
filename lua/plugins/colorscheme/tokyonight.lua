@@ -69,8 +69,8 @@ return {
       hl.LualineBuffers = { fg = c.blue, bg = c.bg_highlight }
       hl.LualineUnsaved = { fg = c.red, bg = c.bg_highlight, bold = true }
       hl.LualineModified = { fg = c.green, bg = c.bg_highlight, bold = true }
-      hl.LualineClaudeIdle = { fg = c.comment, bg = c.bg }
-      hl.LualineClaudeBusy = { fg = c.green, bg = c.bg, bold = true }
+      hl.LualineClaudeIdle = { fg = c.comment }
+      hl.LualineClaudeBusy = { fg = c.orange, bold = true }
       -- Plugins
       require("plugins.render-markdown.fn").setup_highlights(hl, c)
       require("plugins.grug-far.fn").setup_highlights(hl, c)

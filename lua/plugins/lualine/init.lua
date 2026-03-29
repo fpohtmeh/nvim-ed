@@ -4,6 +4,16 @@ local components = require("plugins.lualine.components")
 local winbar = require("plugins.lualine.winbar")
 local icons = require("core.icons")
 
+function H.theme()
+  local theme = require("lualine.themes.tokyonight")
+  local term_color = require("tokyonight.colors").setup().orange
+  theme.terminal = {
+    a = { bg = term_color, fg = theme.normal.a.fg },
+    b = { bg = theme.normal.b.bg, fg = term_color },
+  }
+  return theme
+end
+
 H.sections = {
   lualine_a = {
     {
@@ -57,7 +67,7 @@ return {
   dependencies = { "nvim-tree/nvim-web-devicons" },
   opts = {
     options = {
-      theme = "tokyonight",
+      theme = H.theme(),
       globalstatus = true,
       component_separators = "",
       section_separators = "",
