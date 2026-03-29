@@ -57,7 +57,7 @@ H.find_and_run_template = function(templates, task_name)
 end
 
 H.find_output_win = function()
-  return require("core.fn").find_window_by_filetype("OverseerOutput")
+  return require("core.windows").find_by_filetype("OverseerOutput")
 end
 
 H.pin_augroup = vim.api.nvim_create_augroup("OverseerPin", { clear = true })

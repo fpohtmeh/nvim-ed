@@ -1,5 +1,4 @@
 local M = {}
-local H = {}
 local fs = require("core.fs")
 
 function M.setup(shell)

@@ -81,7 +81,6 @@ map("n", keys.next .. "<c-q>", function() pcall(vim.cmd.cnewer) end, { desc = "N
 
 -- Terminal
 local terminal = require("core.terminal")
-local claude = require("core.claude")
 map("t", "<c-/>", terminal.close, { desc = "Hide Terminal" })
 map("t", "<c-_>", terminal.close, { desc = "which_key_ignore" })
 
@@ -90,6 +89,7 @@ map("n", "<leader>tf", terminal.open_float, { desc = "Terminal (fullscreen)" })
 map("n", "<leader>tv", terminal.open_vsplit, { desc = "Terminal (vsplit)" })
 
 -- Claude
+local claude = require("core.claude")
 map("n", "<leader>ar", claude.resume, { desc = "Toggle Claude (resume)" })
 map("n", "<leader>an", claude.new, { desc = "Toggle Claude (new)" })
 -- stylua: ignore start
@@ -108,7 +108,7 @@ end
 for i = 1, #keys.window do
   local lhs = "<c-" .. keys.window[i] .. ">"
   local rhs = function()
-    require("core.fn").go_to_win(i)
+    require("core.windows").go_to(i)
   end
   local description = "Go to window " .. i
   vim.keymap.set({ "n", "v", "t" }, lhs, rhs, { desc = description, remap = true })
