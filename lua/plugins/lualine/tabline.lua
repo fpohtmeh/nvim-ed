@@ -27,7 +27,7 @@ H.tab_display_name = function(tabid)
     local bufname = vim.fn.bufname(buf)
     local label = titles.by_filetype(vim.bo[buf].filetype, { icons = false })
     if bufname:match("^term://") then
-      label = titles.by_bufname(bufname) or label
+      label = titles.by_bufname(bufname, { icons = false }) or label
     end
     if label then
       if not seen[label] then

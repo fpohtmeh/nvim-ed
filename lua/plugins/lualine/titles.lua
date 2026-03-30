@@ -15,15 +15,19 @@ H.filetype = {
   OverseerOutput = { "Output" },
 }
 
+-- Each entry: { pattern, label_or_fn, icon? }
+-- label_or_fn: string label or function(bufname) -> string label (no icon)
+-- icon: optional icon string
 H.bufname = {
   {
     "^oil://",
     function(bufname)
-      return icons.directory .. " " .. bufname:gsub("^oil://", "")
+      return bufname:gsub("^oil://", "")
     end,
+    icons.directory,
   },
-  { "claude%-prompt%-.*%.md$", icons.prompt .. " Prompt Editor" },
-  { "^term://.-//[%d]*:claude%f[%A]", icons.claude .. " Claude" },
+  { "claude%-prompt%-.*%.md$", "Prompt Editor", icons.prompt },
+  { "^term://.-//[%d]*:claude%f[%A]", "Claude", icons.claude },
 }
 
 M.by_filetype = function(ft, opts)
@@ -38,14 +42,15 @@ M.by_filetype = function(ft, opts)
   return label
 end
 
-M.by_bufname = function(bufname)
+M.by_bufname = function(bufname, opts)
   for _, entry in ipairs(H.bufname) do
     if bufname:match(entry[1]) then
-      local title = entry[2]
-      if type(title) == "function" then
-        return title(bufname)
+      local label_or_fn, icon = entry[2], entry[3]
+      local label = type(label_or_fn) == "function" and label_or_fn(bufname) or label_or_fn
+      if icon and (not opts or opts.icons ~= false) then
+        return icon .. " " .. label
       end
-      return title
+      return label
     end
   end
 end
