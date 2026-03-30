@@ -2,21 +2,21 @@ local actions = require("plugins.overseer.actions")
 
 local options = {
   task_list = {
-    keymaps = {
+    bindings = {
       ["<C-h>"] = false,
       ["<C-j>"] = false,
       ["<C-k>"] = false,
       ["<C-l>"] = false,
       ["dd"] = false,
-      ["d"] = { "keymap.run_action", opts = { action = "dispose" }, desc = "Dispose task" },
-      ["D"] = { actions.dispose_all_tasks, desc = "Dispose all tasks" },
-      ["s"] = { "keymap.run_action", opts = { action = "stop" }, desc = "Stop task" },
-      ["S"] = { actions.stop_all_tasks, desc = "Stop all tasks" },
-      ["r"] = { actions.restart_task, desc = "Restart task" },
-      ["R"] = { actions.restart_all_tasks, desc = "Restart all tasks" },
-      ["<CR>"] = { actions.open_task_output, desc = "Open task output" },
-      ["a"] = "keymap.run_action",
-      ["p"] = { actions.toggle_pin, desc = "Toggle pin" },
+      ["d"] = "Dispose",
+      ["D"] = actions.dispose_all_tasks,
+      ["s"] = "Stop",
+      ["S"] = actions.stop_all_tasks,
+      ["r"] = actions.restart_task,
+      ["R"] = actions.restart_all_tasks,
+      ["<CR>"] = actions.open_task_output,
+      ["a"] = "RunAction",
+      ["p"] = actions.toggle_pin,
     },
   },
   form = { border = "single" },
