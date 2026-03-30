@@ -6,7 +6,7 @@ local terminal = require("core.terminal")
 
 H.state = "inactive"
 H.term = nil
-H.enter = vim.fn.has("win32") == 1 and "\r\n" or "\r"
+H.enter = "\r"
 
 H.event_states = {
   UserPromptSubmit = "busy",
@@ -44,21 +44,12 @@ end
 H.settings = (function()
   local base = vim.fn.stdpath("config"):gsub("\\", "/") .. "/scripts"
   if vim.fn.has("win32") == 1 then
-    local hook = base .. "/claude-hook.ps1"
-    local path = base .. "/claude-hooks-win.json"
-    local entry = {
-      type = "command",
-      command = "pwsh -NoProfile -NonInteractive -ExecutionPolicy Bypass -File " .. hook,
-      async = true,
-    }
-    local config = { hooks = {} }
-    for _, event in ipairs({ "UserPromptSubmit", "Stop", "SessionStart", "SessionEnd" }) do
-      config.hooks[event] = { { matcher = "", hooks = { entry } } }
+    local src = base .. "/claude-hooks-win.json"
+    local dst = base .. "/claude-hooks-win.local.json"
+    if vim.fn.filereadable(dst) == 0 then
+      vim.fn.writefile(vim.fn.readfile(src), dst)
     end
-    local f = assert(io.open(path, "w"))
-    f:write(vim.json.encode(config))
-    f:close()
-    return path
+    return dst
   end
   return base .. "/claude-hooks.json"
 end)()
