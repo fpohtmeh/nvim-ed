@@ -6,6 +6,7 @@ local icons = require("core.icons")
 H.filetype = {
   help = { "Help" },
   snacks_terminal = { "Terminal", icons.terminal },
+  snacks_dashboard = { "Dashboard" },
   fugitive = { "Git", icons.git.icon },
   git = { "Git", icons.git.icon },
   gitcommit = { "Commit", icons.git.icon },
