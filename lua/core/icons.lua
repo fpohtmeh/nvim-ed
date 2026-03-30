@@ -15,7 +15,7 @@ M.file = ""
 M.directory = ""
 M.buffers = "󰪏"
 M.readonly = "󰍁"
-M.terminal = "󰘧"
+M.terminal = "λ"
 M.prompt = "❯"
 M.claude = "󱚟"
 
