@@ -1,4 +1,6 @@
 local actions = require("plugins.overseer.actions")
+local output = require("plugins.overseer.output")
+local tasks = require("plugins.overseer.tasks")
 
 local M = {}
 
@@ -16,12 +18,12 @@ end
 M.keys = {
   -- stylua: ignore start
   { prefix .. "j", actions.open_tasks_picker, desc = "Select task" },
-  { prefix .. ".", actions.restart_recent_task, desc = "Restart last task" },
-  { prefix .. "l", actions.toggle_tasks_list, desc = "Toggle tasks list" },
-  { "<leader><CR>", actions.toggle_recent_task_output, desc = "Toggle last task output" },
-  { prefix .. "x", actions.stop_recent_task, desc = "Stop last task" },
-  { ",j", actions.show_adjacent_task_output(-1), desc = "Prev task output" },
-  { ";j", actions.show_adjacent_task_output(1), desc = "Next task output" },
+  { prefix .. ".", tasks.restart_recent, desc = "Restart last task" },
+  { prefix .. "l", output.toggle_list, desc = "Toggle tasks list" },
+  { "<leader><CR>", output.toggle_recent, desc = "Toggle last task output" },
+  { prefix .. "x", tasks.stop_recent, desc = "Stop last task" },
+  { ",j", output.show_adjacent(-1), desc = "Prev task output" },
+  { ";j", output.show_adjacent(1), desc = "Next task output" },
   -- stylua: ignore end
   create_by_task_name("r", "run"),
   create_by_task_name("b", "build"),

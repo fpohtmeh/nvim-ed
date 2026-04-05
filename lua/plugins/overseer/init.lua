@@ -1,45 +1,42 @@
-local actions = require("plugins.overseer.actions")
+local tasks = require("plugins.overseer.tasks")
+local output = require("plugins.overseer.output")
 
 local options = {
   task_list = {
-    bindings = {
-      ["<C-h>"] = false,
+    keymaps = {
+      -- Disable defaults
+      ["dd"] = false,
+      ["o"] = false,
+      ["{"] = false,
+      ["}"] = false,
+      ["g."] = false,
       ["<C-j>"] = false,
       ["<C-k>"] = false,
-      ["<C-l>"] = false,
-      ["dd"] = false,
-      ["d"] = "Dispose",
-      ["D"] = actions.dispose_all_tasks,
-      ["s"] = "Stop",
-      ["S"] = actions.stop_all_tasks,
-      ["r"] = actions.restart_task,
-      ["R"] = actions.restart_all_tasks,
-      ["<CR>"] = actions.open_task_output,
-      ["a"] = "RunAction",
-      ["p"] = actions.toggle_pin,
+      ["<C-e>"] = false,
+      ["<C-f>"] = false,
+      ["<C-s>"] = false,
+      ["<C-v>"] = false,
+      ["<C-t>"] = false,
+      ["<C-q>"] = false,
+      -- Custom
+      ["d"] = { callback = tasks.dispose_selected, mode = { "n", "v" }, desc = "Dispose tasks" },
+      ["D"] = { callback = tasks.dispose_all, desc = "Dispose all tasks" },
+      ["s"] = { callback = tasks.stop_selected, mode = { "n", "v" }, desc = "Stop tasks" },
+      ["S"] = { callback = tasks.stop_all, desc = "Stop all tasks" },
+      ["r"] = { callback = tasks.restart_selected, mode = { "n", "v" }, desc = "Restart tasks" },
+      ["R"] = { callback = tasks.restart_all, desc = "Restart all tasks" },
+      ["<CR>"] = { callback = output.open, desc = "Open task output" },
+      ["a"] = { "<cmd>OverseerTaskAction<cr>", desc = "Run action" },
+      ["p"] = { callback = output.toggle_pin, desc = "Toggle pin" },
+      ["<C-p>"] = "keymap.toggle_preview",
+      ["e"] = { "keymap.run_action", opts = { action = "edit" }, desc = "Edit task" },
     },
   },
-  form = { border = "single" },
-  confirm = { border = "single" },
-  task_win = { border = "single", padding = 0 },
   component_aliases = require("plugins.overseer.components").aliases,
 }
 
 return {
   "stevearc/overseer.nvim",
-  config = function()
-    require("overseer").setup(options)
-    vim.api.nvim_create_autocmd("FileType", {
-      pattern = "OverseerList",
-      callback = function(ev)
-        local opts = function(desc)
-          return { buffer = ev.buf, desc = desc }
-        end
-        vim.keymap.set("x", "d", actions.dispose_selected_tasks, opts("Dispose selected tasks"))
-        vim.keymap.set("x", "s", actions.stop_selected_tasks, opts("Stop selected tasks"))
-        vim.keymap.set("x", "r", actions.restart_selected_tasks, opts("Restart selected tasks"))
-      end,
-    })
-  end,
+  opts = options,
   keys = require("plugins.overseer.mappings").keys,
 }
