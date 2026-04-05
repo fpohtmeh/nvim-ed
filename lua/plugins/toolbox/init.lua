@@ -94,6 +94,9 @@ H.fill = function(items)
   category = "CSV"
   H.add(items, "Toggle CSV mode ;", category, ":CsvViewToggle delimiter=; display_mode=border header_lnum=1")
   H.add(items, "Toggle CSV mode ,", category, ":CsvViewToggle delimiter=, display_mode=border header_lnum=1")
+  category = "Display"
+  H.add(items, "Show special characters", category, "set list")
+  H.add(items, "Hide special characters", category, "set nolist")
   category = "Database"
   H.add(items, "Toggle database UI", category, ":DBUIToggle")
   H.add(items, "Add database connection", category, ":DBUIAddConnection")

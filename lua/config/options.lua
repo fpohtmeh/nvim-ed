@@ -29,7 +29,15 @@ opt.grepformat = "%f:%l:%c:%m"
 opt.grepprg = "rg --vimgrep"
 opt.ignorecase = true
 opt.laststatus = 3
-opt.list = true
+opt.list = false
+opt.listchars = {
+  tab = "» ",
+  trail = "·",
+  nbsp = "␣",
+  eol = "↲",
+  precedes = "←",
+  extends = "→",
+}
 opt.linebreak = true
 opt.number = true
 opt.relativenumber = true
