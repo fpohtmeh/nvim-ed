@@ -6,10 +6,18 @@ local icons = require("core.icons")
 
 function H.theme()
   local theme = require("lualine.themes.tokyonight")
-  local term_color = require("tokyonight.colors").setup().orange
+  local colors = require("tokyonight.colors").setup()
   theme.terminal = {
-    a = { bg = term_color, fg = theme.normal.a.fg },
-    b = { bg = theme.normal.b.bg, fg = term_color },
+    a = { bg = colors.magenta, fg = theme.normal.a.fg },
+    b = { bg = theme.normal.b.bg, fg = colors.magenta },
+  }
+  theme.visual = {
+    a = { bg = colors.yellow, fg = theme.normal.a.fg },
+    b = { bg = theme.normal.b.bg, fg = colors.yellow },
+  }
+  theme.command = {
+    a = { bg = colors.orange, fg = theme.normal.a.fg },
+    b = { bg = theme.normal.b.bg, fg = colors.orange },
   }
   return theme
 end
