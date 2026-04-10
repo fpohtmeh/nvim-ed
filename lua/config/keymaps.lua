@@ -84,9 +84,10 @@ local terminal = require("core.terminal")
 map("t", "<c-/>", terminal.close, { desc = "Hide Terminal" })
 map("t", "<c-_>", terminal.close, { desc = "which_key_ignore" })
 
-map("n", "<leader>tt", terminal.open_here, { desc = "Terminal (window)" })
+map("n", "<leader>tt", terminal.open_split, { desc = "Terminal (horizontal)" })
+map("n", "<leader>tv", terminal.open_vsplit, { desc = "Terminal (vertical)" })
 map("n", "<leader>tf", terminal.open_float, { desc = "Terminal (fullscreen)" })
-map("n", "<leader>tv", terminal.open_vsplit, { desc = "Terminal (vsplit)" })
+map("n", "<leader>tb", terminal.open_here, { desc = "Terminal (buffer)" })
 
 -- Claude
 local claude = require("core.claude")
