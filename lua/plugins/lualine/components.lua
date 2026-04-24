@@ -84,7 +84,7 @@ M.filename = {
       return ""
     end
     if vim.bo.buftype == "terminal" then
-      return "%t"
+      return vim.fn.bufname() --"%t"
     end
     local directory = vim.fn.getcwd()
     local filename = fs.buf_full_path()
