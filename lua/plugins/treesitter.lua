@@ -44,31 +44,22 @@ H.opts = {
   indent = {
     enable = true,
   },
-  textobjects = {
-    move = {
-      enable = true,
-      goto_previous_start = {
-        [",f"] = "@function.outer",
-      },
-      goto_next_start = {
-        [";f"] = "@function.outer",
-      },
-    },
-  },
 }
 
 local plugin = {
   "nvim-treesitter/nvim-treesitter",
-  event = "LazyFile",
+  branch = "main",
+  commit = vim.fn.has("nvim-0.12") == 0 and "7caec274fd19c12b55902a5b795100d21531391f" or nil,
   version = false,
+  cmd = { "TSUpdate", "TSInstall", "TSLog", "TSUninstall" },
   build = ":TSUpdate",
-  config = function()
-    require("nvim-treesitter.configs").setup(H.opts)
-  end,
+  event = { "LazyFile", "VeryLazy" },
+  opts = H.opts,
 }
 
 local text_objects = {
   "nvim-treesitter/nvim-treesitter-textobjects",
+  branch = "main",
   event = "LazyFile",
 }
 
