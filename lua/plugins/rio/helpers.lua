@@ -2,6 +2,10 @@ local H = {}
 
 H.toggles = {}
 
+---@param key string
+---@param value string
+---@param enabled? boolean
+---@return fun(): string
 H.make_toggle_param = function(key, value, enabled)
   if enabled == nil then
     enabled = true
@@ -12,20 +16,22 @@ H.make_toggle_param = function(key, value, enabled)
   end
 end
 
+---@param ft string
+---@return fun(handle: Rio.Handle)
 H.make_filetype = function(ft)
-  return function(callbacks)
-    table.insert(callbacks, function(handle)
-      vim.bo[handle.state.buf].filetype = ft
-    end)
+  return function(handle)
+    vim.bo[handle.state.buf].filetype = ft
   end
 end
 
+---@param key string
+---@return fun(handle: Rio.Handle)
 H.make_toggle_key = function(key)
   return function(handle)
     local toggle = H.toggles[key]
     toggle.enabled = not toggle.enabled
-    vim.notify("[rio] Toggled parameter: " .. key .. " " .. (toggle.enabled and "ON" or "OFF"))
-    require("rio.callbacks.builtin").refresh(handle)
+    local message = "[rio] Toggled parameter: " .. key .. " " .. (toggle.enabled and "ON" or "OFF")
+    require("rio.callbacks.builtin").refresh(message)(handle)
   end
 end
 
