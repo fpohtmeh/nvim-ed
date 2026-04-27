@@ -1,10 +1,12 @@
-local function commit_hash_under_cursor()
+local H = {}
+
+H.commit_hash_under_cursor = function()
   local line = vim.api.nvim_get_current_line()
   return line:match("^(%x+)")
 end
 
-local function git_log()
-  require("rio").run("git log -100 --oneline --no-merges", {
+H.git_log = function()
+  require("rio").run("git log -{limit} --oneline --no-merges", {
     callbacks = {
       on_start = {},
       on_finish = function(callbacks)
@@ -13,9 +15,10 @@ local function git_log()
         end)
       end,
     },
+    params = { limit = 100 },
     keys = {
       ["<CR>"] = function()
-        local hash = commit_hash_under_cursor()
+        local hash = H.commit_hash_under_cursor()
         if hash then
           vim.cmd("0Git show " .. hash)
         end
@@ -29,6 +32,6 @@ return {
   dev = true,
   opts = {},
   keys = {
-    { "<leader>R", git_log, desc = "Rio: git log" },
+    { "<leader>R", H.git_log, desc = "Rio: git log" },
   },
 }
