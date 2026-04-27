@@ -7,10 +7,21 @@ end
 
 H.toggles = {}
 
-H.make_toggle_param = function(key, value)
-  H.toggles[key] = { enabled = true, value = value }
+H.make_toggle_param = function(key, value, enabled)
+  if enabled == nil then
+    enabled = true
+  end
+  H.toggles[key] = { enabled = enabled, value = value }
   return function()
     return H.toggles[key].enabled and value or ""
+  end
+end
+
+H.make_filetype = function(ft)
+  return function(callbacks)
+    table.insert(callbacks, function(handle)
+      vim.bo[handle.buf].filetype = ft
+    end)
   end
 end
 
@@ -23,15 +34,31 @@ H.make_toggle_key = function(key)
   end
 end
 
+H.git_diff = function(hash)
+  require("rio").run("git diff {name_only} {whitespace} {word_diff} {stat} {commit}~1 {commit}", {
+    params = {
+      commit = hash,
+      name_only = H.make_toggle_param("name_only", "--name-only", false),
+      whitespace = H.make_toggle_param("whitespace", "-w", false),
+      word_diff = H.make_toggle_param("word_diff", "--word-diff", false),
+      stat = H.make_toggle_param("stat", "--stat", false),
+    },
+    callbacks = {
+      on_start = {},
+      on_finish = H.make_filetype("diff"),
+    },
+    keys = {
+      tt = H.make_toggle_key("name_only"),
+      tw = H.make_toggle_key("whitespace"),
+      ts = H.make_toggle_key("stat"),
+    },
+  })
+end
+
 H.git_log = function()
   require("rio").run("git log {limit} {oneline} {merges}", {
     callbacks = {
-      on_start = {},
-      on_finish = function(callbacks)
-        table.insert(callbacks, function(handle)
-          vim.bo[handle.buf].filetype = "git"
-        end)
-      end,
+      on_finish = H.make_filetype("git"),
     },
     params = {
       limit = H.make_toggle_param("limit", "-100"),
@@ -42,7 +69,7 @@ H.git_log = function()
       ["<CR>"] = function()
         local hash = H.commit_hash_under_cursor()
         if hash then
-          vim.cmd("0Git show " .. hash)
+          H.git_diff(hash)
         end
       end,
       tl = H.make_toggle_key("limit"),
