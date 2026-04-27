@@ -5,6 +5,10 @@ local icons = require("core.icons")
 local titles = require("plugins.lualine.titles")
 
 H.filename = function()
+  local rio_cmd = vim.b.rio_cmd
+  if rio_cmd then
+    return icons.git.icon .. " " .. rio_cmd
+  end
   local bufname = vim.api.nvim_buf_get_name(0)
   local title = titles.by_bufname(bufname)
   if title then
