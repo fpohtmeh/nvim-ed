@@ -14,6 +14,24 @@ return function(hash)
       on_finish = H.make_filetype("diff"),
     },
     keys = {
+      ["<CR>"] = function()
+        if not H.toggles.name_only.enabled then
+          return
+        end
+        local file = require("plugins.rio.git").file_under_cursor()
+        if not file then
+          return
+        end
+        require("rio").run("git diff {commit}~1 {commit} -- {file}", {
+          params = {
+            commit = hash,
+            file = file,
+          },
+          callbacks = {
+            on_finish = H.make_filetype("diff"),
+          },
+        })
+      end,
       tt = H.make_toggle_key("name_only"),
       tw = H.make_toggle_key("whitespace"),
       ts = H.make_toggle_key("stat"),
