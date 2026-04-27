@@ -1,7 +1,9 @@
 local H = require("plugins.rio.helpers")
 
-return function(hash)
+return function(hash, parent_state)
+  local state = parent_state and { buf = parent_state.diff_buf, win = parent_state.diff_win } or {}
   require("rio").run("git diff {name_only} {whitespace} {word_diff} {stat} {commit}~1 {commit}", {
+    state = state,
     params = {
       commit = hash,
       name_only = H.make_toggle_param("name_only", "--name-only", false),
@@ -11,10 +13,18 @@ return function(hash)
     },
     callbacks = {
       on_start = {},
-      on_finish = H.make_filetype("diff"),
+      on_finish = function(callbacks)
+        table.insert(callbacks, function(handle)
+          vim.bo[handle.state.buf].filetype = "diff"
+          if parent_state then
+            parent_state.diff_buf = handle.state.buf
+            parent_state.diff_win = handle.state.win
+          end
+        end)
+      end,
     },
     keys = {
-      ["<CR>"] = function()
+      ["<CR>"] = function(handle)
         if not H.toggles.name_only.enabled then
           return
         end
@@ -27,8 +37,15 @@ return function(hash)
             commit = hash,
             file = file,
           },
+          state = { buf = handle.state.diff_buf, win = handle.state.diff_win },
           callbacks = {
-            on_finish = H.make_filetype("diff"),
+            on_finish = function(callbacks)
+              table.insert(callbacks, function(inner)
+                vim.bo[inner.state.buf].filetype = "diff"
+                handle.state.diff_buf = inner.state.buf
+                handle.state.diff_win = inner.state.win
+              end)
+            end,
           },
         })
       end,

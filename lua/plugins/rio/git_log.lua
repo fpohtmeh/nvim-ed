@@ -11,11 +11,12 @@ return function()
       merges = H.make_toggle_param("merges", "--no-merges"),
     },
     keys = {
-      ["<CR>"] = function()
+      ["<CR>"] = function(handle)
         local hash = require("plugins.rio.git").commit_hash_under_cursor()
-        if hash then
-          require("plugins.rio.git_diff")(hash)
+        if not hash then
+          return
         end
+        require("plugins.rio.git_diff")(hash, handle.state)
       end,
       tl = H.make_toggle_key("limit"),
       tt = H.make_toggle_key("oneline"),

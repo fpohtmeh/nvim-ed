@@ -15,7 +15,7 @@ end
 H.make_filetype = function(ft)
   return function(callbacks)
     table.insert(callbacks, function(handle)
-      vim.bo[handle.buf].filetype = ft
+      vim.bo[handle.state.buf].filetype = ft
     end)
   end
 end
