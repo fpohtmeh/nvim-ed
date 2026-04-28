@@ -1,8 +1,11 @@
 local M = {}
 
-M.commit_hash_under_cursor = function()
+M.commit_hash_under_cursor = function(handle)
   local line = vim.api.nvim_get_current_line()
-  local hash = line:match("^commit (%x+)") or line:match("^(%x%x%x%x%x%x%x+)")
+  if handle.state.toggles.oneline.enabled then
+    return line:match("^(%x%x%x%x%x%x%x+)")
+  end
+  local hash = line:match("^commit (%x+)")
   if hash then
     return hash
   end
@@ -18,6 +21,24 @@ end
 
 M.path_under_cursor = function()
   return vim.fn.getline("."):match("%S+")
+end
+
+M.status_path_under_cursor = function(handle)
+  local line = vim.api.nvim_get_current_line()
+  local path
+  if handle.state.toggles.short.enabled then
+    -- "MM path" / "?? path"
+    path = line:match("^.-%s(.+)$")
+  else
+    -- "	modified:   path" or untracked "	path"
+    path = line:match("^\t%S+:%s+(.+)$") or line:match("^\t(%S.*)$")
+  end
+  if not path then
+    return
+  end
+  path = path:match("->%s*(.+)$") or path
+  -- full format may append extra info: "submodule-name (modified content)"
+  return path:match("^(%S+)%s+%(") or path
 end
 
 return M
