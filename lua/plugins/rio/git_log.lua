@@ -1,6 +1,7 @@
 local H = {}
 
-local helpers = require("plugins.rio.helpers")
+local builtin = require("rio.callbacks.builtin")
+local togglers = require("rio.togglers")
 
 H.open_commit_diff = function(handle)
   local hash = require("plugins.rio.git").commit_hash_under_cursor()
@@ -15,19 +16,19 @@ return function()
   require("rio").run(cmd, {
     callbacks = {
       on_finish = function(callbacks)
-        table.insert(callbacks, helpers.make_filetype("git"))
+        table.insert(callbacks, builtin.set_filetype("git"))
       end,
     },
     params = {
-      limit = helpers.make_toggle_param("limit", "-100"),
-      oneline = helpers.make_toggle_param("oneline", "--oneline"),
-      merges = helpers.make_toggle_param("merges", "--no-merges"),
+      limit = togglers.param("limit", "-100"),
+      oneline = togglers.param("oneline", "--oneline"),
+      merges = togglers.param("merges", "--no-merges"),
     },
     keys = {
       ["<CR>"] = H.open_commit_diff,
-      tl = helpers.make_toggle_key("limit"),
-      tt = helpers.make_toggle_key("oneline"),
-      tm = helpers.make_toggle_key("merges"),
+      tl = togglers.key("limit"),
+      tt = togglers.key("oneline"),
+      tm = togglers.key("merges"),
     },
   })
 end
