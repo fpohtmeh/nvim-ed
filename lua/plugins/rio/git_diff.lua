@@ -15,13 +15,13 @@ H.open_file_diff = function(handle, hash)
   if not handle.state.toggles.name_only.enabled then
     return
   end
-  local file = require("plugins.rio.git").file_under_cursor()
-  if not file then
+  local path = require("plugins.rio.git").path_under_cursor()
+  if not path then
     return
   end
-  local cmd = "git diff {commit}~1 {commit} -- {file}"
+  local cmd = "git diff {commit}~1 {commit} -- {path}"
   require("rio").run(cmd, {
-    params = { commit = hash, file = file },
+    params = { commit = hash, path = path },
     state = { buf = handle.state.diff_buf, win = handle.state.diff_win },
     callbacks = {
       on_finish = function(callbacks)

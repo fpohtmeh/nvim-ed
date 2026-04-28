@@ -16,12 +16,8 @@ M.commit_hash_under_cursor = function()
   end
 end
 
-M.file_under_cursor = function()
-  local file = vim.trim(vim.api.nvim_get_current_line())
-  if file == "" then
-    return nil
-  end
-  return file
+M.path_under_cursor = function()
+  return vim.fn.getline("."):match("%S+")
 end
 
 return M
