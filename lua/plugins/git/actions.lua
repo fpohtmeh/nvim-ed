@@ -107,14 +107,4 @@ function M.create(cmd)
   end
 end
 
-M.status = M.create("")
-
-function M.add_file()
-  vim.cmd("update | Git add %")
-end
-
-function M.add_all_files()
-  vim.cmd("wall | Git add .")
-end
-
 return M
