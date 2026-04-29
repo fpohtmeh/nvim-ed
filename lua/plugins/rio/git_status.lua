@@ -1,21 +1,9 @@
 local H = {}
 
 local actions = require("plugins.rio.git_actions")
+local open = require("plugins.rio.open")
 local parse = require("plugins.rio.git_parse")
 local togglers = require("rio.togglers")
-
-H.open_file = function(path)
-  vim.cmd("edit " .. vim.fn.fnameescape(path))
-end
-
-H.open_dir = function(path)
-  local ok, oil = pcall(require, "oil")
-  if ok then
-    oil.open(path)
-  else
-    H.open_file(path)
-  end
-end
 
 H.open_path = function(handle)
   local path = parse.status_path_under_cursor(handle)
@@ -29,11 +17,7 @@ H.open_path = function(handle)
     vim.cmd("vsplit")
     handle.state.path_win = vim.api.nvim_get_current_win()
   end
-  if vim.fn.isdirectory(path) == 1 then
-    H.open_dir(path)
-  else
-    H.open_file(path)
-  end
+  open(path)
 end
 
 return function()
