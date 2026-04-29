@@ -2,7 +2,7 @@ local M = {}
 local H = {}
 
 local builtin = require("rio.callbacks.builtin")
-local parse = require("plugins.rio.git_parse")
+local parse = require("plugins.rio.git.parse")
 local process = require("rio.process")
 
 H.run_then_refresh = function(args, handle)

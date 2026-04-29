@@ -19,7 +19,7 @@ H.open_file_diff = function(hash)
       if not handle.state.toggles.name_only.enabled then
         return
       end
-      local path = require("plugins.rio.git_parse").path_under_cursor()
+      local path = require("plugins.rio.git.parse").path_under_cursor()
       if not path then
         return
       end

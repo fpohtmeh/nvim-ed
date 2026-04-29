@@ -1,8 +1,8 @@
 local H = {}
 
-local actions = require("plugins.rio.git_actions")
+local actions = require("plugins.rio.git.actions")
 local open = require("plugins.rio.open")
-local parse = require("plugins.rio.git_parse")
+local parse = require("plugins.rio.git.parse")
 local togglers = require("rio.togglers")
 
 ---@type Rio.KeyDef
