@@ -1,9 +1,11 @@
 local H = {}
 
+local actions = require("plugins.rio.git_actions")
+local git = require("plugins.rio.git")
 local togglers = require("rio.togglers")
 
 H.open_path = function(handle)
-  local path = require("plugins.rio.git").status_path_under_cursor(handle)
+  local path = git.status_path_under_cursor(handle)
   if not path then
     return
   end
@@ -28,6 +30,10 @@ return function()
     },
     keys = {
       ["<CR>"] = H.open_path,
+      ["-"] = actions.toggle,
+      s = actions.stage,
+      u = actions.unstage,
+      X = actions.discard,
       tt = togglers.key("short"),
       te = togglers.key("expand_untracked"),
       tu = togglers.key("untracked"),
