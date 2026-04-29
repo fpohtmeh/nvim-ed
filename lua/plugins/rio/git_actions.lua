@@ -14,49 +14,65 @@ H.run_then_refresh = function(args, handle)
         vim.notify(stderr, vim.log.levels.ERROR)
         return
       end
-      builtin.refresh()(handle)
+      builtin.refresh().fn(handle)
     end,
   })
 end
 
-M.stage = function(handle)
-  local path = parse.status_path_under_cursor(handle)
-  if not path then
-    return
-  end
-  H.run_then_refresh({ "git", "add", "--", path }, handle)
-end
+---@type Rio.KeyDef
+M.stage = {
+  fn = function(handle)
+    local path = parse.status_path_under_cursor(handle)
+    if not path then
+      return
+    end
+    H.run_then_refresh({ "git", "add", "--", path }, handle)
+  end,
+  desc = "stage",
+}
 
-M.unstage = function(handle)
-  local path = parse.status_path_under_cursor(handle)
-  if not path then
-    return
-  end
-  H.run_then_refresh({ "git", "restore", "--staged", "--", path }, handle)
-end
+---@type Rio.KeyDef
+M.unstage = {
+  fn = function(handle)
+    local path = parse.status_path_under_cursor(handle)
+    if not path then
+      return
+    end
+    H.run_then_refresh({ "git", "restore", "--staged", "--", path }, handle)
+  end,
+  desc = "unstage",
+}
 
-M.toggle = function(handle)
-  local path = parse.status_path_under_cursor(handle)
-  if not path then
-    return
-  end
-  if parse.is_staged(path) then
-    M.unstage(handle)
-  else
-    M.stage(handle)
-  end
-end
+---@type Rio.KeyDef
+M.toggle = {
+  fn = function(handle)
+    local path = parse.status_path_under_cursor(handle)
+    if not path then
+      return
+    end
+    if parse.is_staged(path) then
+      M.unstage.fn(handle)
+    else
+      M.stage.fn(handle)
+    end
+  end,
+  desc = "toggle staged",
+}
 
-M.discard = function(handle)
-  local path = parse.status_path_under_cursor(handle)
-  if not path then
-    return
-  end
-  local confirmed = vim.fn.confirm("Discard changes to " .. path .. "?", "&Yes\n&No") == 1
-  if not confirmed then
-    return
-  end
-  H.run_then_refresh({ "git", "checkout", "--", path }, handle)
-end
+---@type Rio.KeyDef
+M.discard = {
+  fn = function(handle)
+    local path = parse.status_path_under_cursor(handle)
+    if not path then
+      return
+    end
+    local confirmed = vim.fn.confirm("Discard changes to " .. path .. "?", "&Yes\n&No") == 1
+    if not confirmed then
+      return
+    end
+    H.run_then_refresh({ "git", "checkout", "--", path }, handle)
+  end,
+  desc = "discard",
+}
 
 return M

@@ -3,13 +3,17 @@ local H = {}
 local builtin = require("rio.callbacks.builtin")
 local togglers = require("rio.togglers")
 
-H.open_commit_diff = function(handle)
-  local hash = require("plugins.rio.git_parse").commit_hash_under_cursor(handle)
-  if not hash then
-    return
-  end
-  require("plugins.rio.git_diff")(hash, handle.state)
-end
+---@type Rio.KeyDef
+H.open_commit_diff = {
+  fn = function(handle)
+    local hash = require("plugins.rio.git_parse").commit_hash_under_cursor(handle)
+    if not hash then
+      return
+    end
+    require("plugins.rio.git_diff")(hash, handle.state)
+  end,
+  desc = "open diff",
+}
 
 return function()
   local cmd = "git log {limit} {oneline} {merges}"

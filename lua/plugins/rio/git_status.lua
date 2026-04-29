@@ -5,20 +5,24 @@ local open = require("plugins.rio.open")
 local parse = require("plugins.rio.git_parse")
 local togglers = require("rio.togglers")
 
-H.open_path = function(handle)
-  local path = parse.status_path_under_cursor(handle)
-  if not path then
-    return
-  end
-  local win = handle.state.path_win
-  if win and vim.api.nvim_win_is_valid(win) then
-    vim.api.nvim_set_current_win(win)
-  else
-    vim.cmd("vsplit")
-    handle.state.path_win = vim.api.nvim_get_current_win()
-  end
-  open(path)
-end
+---@type Rio.KeyDef
+H.open_path = {
+  fn = function(handle)
+    local path = parse.status_path_under_cursor(handle)
+    if not path then
+      return
+    end
+    local win = handle.state.path_win
+    if win and vim.api.nvim_win_is_valid(win) then
+      vim.api.nvim_set_current_win(win)
+    else
+      vim.cmd("vsplit")
+      handle.state.path_win = vim.api.nvim_get_current_win()
+    end
+    open(path)
+  end,
+  desc = "open in split",
+}
 
 return function()
   local cmd = "git status {porcelain} {expand_untracked} {untracked} {submodules}"

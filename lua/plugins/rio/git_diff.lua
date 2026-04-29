@@ -11,28 +11,35 @@ H.update_parent_state = function(handle, parent_state)
   parent_state.diff_win = handle.state.win
 end
 
-H.open_file_diff = function(handle, hash)
-  if not handle.state.toggles.name_only.enabled then
-    return
-  end
-  local path = require("plugins.rio.git_parse").path_under_cursor()
-  if not path then
-    return
-  end
-  local cmd = "git diff {commit}~1 {commit} -- {path}"
-  require("rio").run(cmd, {
-    params = { commit = hash, path = path },
-    state = { buf = handle.state.diff_buf, win = handle.state.diff_win },
-    callbacks = {
-      on_finish = function(callbacks)
-        table.insert(callbacks, builtin.set_filetype("diff"))
-        table.insert(callbacks, function(inner)
-          handle.state.diff_buf = inner.state.buf
-          handle.state.diff_win = inner.state.win
-        end)
-      end,
-    },
-  })
+---@param hash string
+---@return Rio.KeyDef
+H.open_file_diff = function(hash)
+  return {
+    fn = function(handle)
+      if not handle.state.toggles.name_only.enabled then
+        return
+      end
+      local path = require("plugins.rio.git_parse").path_under_cursor()
+      if not path then
+        return
+      end
+      local cmd = "git diff {commit}~1 {commit} -- {path}"
+      require("rio").run(cmd, {
+        params = { commit = hash, path = path },
+        state = { buf = handle.state.diff_buf, win = handle.state.diff_win },
+        callbacks = {
+          on_finish = function(callbacks)
+            table.insert(callbacks, builtin.set_filetype("diff"))
+            table.insert(callbacks, function(inner)
+              handle.state.diff_buf = inner.state.buf
+              handle.state.diff_win = inner.state.win
+            end)
+          end,
+        },
+      })
+    end,
+    desc = "open file diff",
+  }
 end
 
 return function(hash, parent_state)
@@ -56,9 +63,7 @@ return function(hash, parent_state)
       end,
     },
     keys = {
-      ["<CR>"] = function(handle)
-        H.open_file_diff(handle, hash)
-      end,
+      ["<CR>"] = H.open_file_diff(hash),
       tt = togglers.key("name_only"),
       tw = togglers.key("whitespace"),
       ts = togglers.key("stat"),
