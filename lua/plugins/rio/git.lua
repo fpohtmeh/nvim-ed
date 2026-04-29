@@ -35,7 +35,7 @@ end
 M.status_path_under_cursor = function(handle)
   local line = vim.api.nvim_get_current_line()
   local path
-  if handle.state.toggles.short.enabled then
+  if handle.state.toggles.porcelain.enabled then
     -- " M path" / "?? path" — first 3 chars are "XY "
     path = line:match("^...(.+)$")
   else

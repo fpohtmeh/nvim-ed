@@ -37,10 +37,10 @@ H.open_path = function(handle)
 end
 
 return function()
-  local cmd = "git status {short} {expand_untracked} {untracked} {submodules}"
+  local cmd = "git status {porcelain} {expand_untracked} {untracked} {submodules}"
   require("rio").run(cmd, {
     params = {
-      short = togglers.param("short", "--short"),
+      porcelain = togglers.param("porcelain", "--porcelain"),
       expand_untracked = togglers.param("expand_untracked", "-uall"),
       untracked = togglers.param("untracked", "-uno", false),
       submodules = togglers.param("submodules", "--ignore-submodules", false),
@@ -51,7 +51,7 @@ return function()
       s = actions.stage,
       u = actions.unstage,
       X = actions.discard,
-      tt = togglers.key("short"),
+      tt = togglers.key("porcelain"),
       te = togglers.key("expand_untracked"),
       tu = togglers.key("untracked"),
       ts = togglers.key("submodules"),
