@@ -4,7 +4,7 @@ return {
   opts = {},
   keys = {
     {
-      "<leader>R",
+      "<leader>U",
       function()
         require("plugins.rio.git_log")()
       end,
