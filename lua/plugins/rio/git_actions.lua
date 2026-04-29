@@ -84,6 +84,48 @@ M.amend = {
 }
 
 ---@type Rio.KeyDef
+M.stash_all = {
+  fn = function(handle)
+    local msg = vim.fn.input("Stash message: ")
+    local args = { "git", "stash", "push" }
+    if msg ~= "" then
+      table.insert(args, "-m")
+      table.insert(args, msg)
+    end
+    H.run_then_refresh(args, handle)
+  end,
+  desc = "stash all",
+}
+
+---@type Rio.KeyDef
+M.stash_unstaged = {
+  fn = function(handle)
+    local msg = vim.fn.input("Stash message: ")
+    local args = { "git", "stash", "push", "--keep-index" }
+    if msg ~= "" then
+      table.insert(args, "-m")
+      table.insert(args, msg)
+    end
+    H.run_then_refresh(args, handle)
+  end,
+  desc = "stash unstaged",
+}
+
+---@type Rio.KeyDef
+M.stash_staged = {
+  fn = function(handle)
+    local msg = vim.fn.input("Stash message: ")
+    local args = { "git", "stash", "push", "--staged" }
+    if msg ~= "" then
+      table.insert(args, "-m")
+      table.insert(args, msg)
+    end
+    H.run_then_refresh(args, handle)
+  end,
+  desc = "stash staged",
+}
+
+---@type Rio.KeyDef
 M.discard = {
   fn = function(handle)
     local path = parse.status_path_under_cursor(handle)
