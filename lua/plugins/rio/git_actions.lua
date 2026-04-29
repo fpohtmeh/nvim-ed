@@ -60,6 +60,30 @@ M.toggle = {
 }
 
 ---@type Rio.KeyDef
+M.commit = {
+  fn = function(handle)
+    local msg = vim.fn.input("Commit message: ")
+    if msg == "" then
+      return
+    end
+    H.run_then_refresh({ "git", "commit", "-m", msg }, handle)
+  end,
+  desc = "commit",
+}
+
+---@type Rio.KeyDef
+M.amend = {
+  fn = function(handle)
+    local confirmed = vim.fn.confirm("Amend last commit?", "&Yes\n&No") == 1
+    if not confirmed then
+      return
+    end
+    H.run_then_refresh({ "git", "commit", "--amend", "--no-edit" }, handle)
+  end,
+  desc = "amend",
+}
+
+---@type Rio.KeyDef
 M.discard = {
   fn = function(handle)
     local path = parse.status_path_under_cursor(handle)

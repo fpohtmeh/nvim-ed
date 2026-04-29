@@ -39,6 +39,8 @@ return function()
       s = actions.stage,
       u = actions.unstage,
       X = actions.discard,
+      cc = actions.commit,
+      ce = actions.amend,
       tt = togglers.key("porcelain"),
       te = togglers.key("expand_untracked"),
       tu = togglers.key("untracked"),
