@@ -10,7 +10,7 @@ end
 M.run_then_refresh = function(args, handle)
   process.spawn({
     cmd = args,
-    cwd = vim.fn.getcwd(),
+    cwd = handle.state.cwd,
     on_exit = function(code, _, stderr)
       if code ~= 0 then
         Snacks.notify.error(stderr)

@@ -48,7 +48,7 @@ H.rename = {
     end
     process.spawn({
       cmd = { "git", "stash", "drop", ref },
-      cwd = vim.fn.getcwd(),
+      cwd = handle.state.cwd,
       on_exit = function(code, _, stderr)
         if code ~= 0 then
           Snacks.notify.error(stderr)
