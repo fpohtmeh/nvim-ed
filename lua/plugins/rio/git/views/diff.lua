@@ -4,6 +4,40 @@ local H = {}
 local builtin = require("rio.callbacks.builtin")
 local togglers = require("rio.togglers")
 
+---@type Rio.KeyDef
+H.next_hunk = {
+  fn = function()
+    vim.fn.search("^@@", "W")
+  end,
+  desc = "next hunk",
+}
+
+---@type Rio.KeyDef
+H.prev_hunk = {
+  fn = function()
+    vim.fn.search("^@@", "bW")
+  end,
+  desc = "prev hunk",
+}
+
+---@type Rio.KeyDef
+H.stage_hunk = {
+  fn = function(handle)
+    local parse = require("plugins.rio.git.parse")
+    local patch = parse.hunk_patch_under_cursor(handle.state.buf)
+    if not patch then
+      return
+    end
+    vim.fn.system({ "git", "apply", "--cached" }, patch)
+    if vim.v.shell_error ~= 0 then
+      Snacks.notify.error("Failed to stage hunk")
+      return
+    end
+    builtin.refresh().fn(handle)
+  end,
+  desc = "stage hunk",
+}
+
 H.update_parent_state = function(handle, parent_state)
   if not parent_state then
     return
@@ -90,6 +124,9 @@ function M.working(opts)
       end,
     },
     keys = {
+      [";h"] = H.next_hunk,
+      [",h"] = H.prev_hunk,
+      s = H.stage_hunk,
       ts = togglers.key("staged"),
       tw = togglers.key("whitespace"),
       td = togglers.key("word_diff"),

@@ -55,4 +55,50 @@ M.stash_ref_under_cursor = function()
   return line:match("^(stash@{%d+})")
 end
 
+M.hunk_patch_under_cursor = function(buf)
+  local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+  local row = vim.api.nvim_win_get_cursor(0)[1]
+
+  -- find hunk header at or above cursor
+  local hunk_start
+  for i = row, 1, -1 do
+    if lines[i]:match("^@@") then
+      hunk_start = i
+      break
+    end
+  end
+  if not hunk_start then
+    return
+  end
+
+  -- find file header above hunk
+  local header_start
+  for i = hunk_start - 1, 1, -1 do
+    if lines[i]:match("^diff %-%-git") then
+      header_start = i
+      break
+    end
+  end
+  if not header_start then
+    return
+  end
+
+  -- collect file header lines (up to but not including the hunk line)
+  local patch = {}
+  for i = header_start, hunk_start - 1 do
+    table.insert(patch, lines[i])
+  end
+
+  -- collect hunk lines
+  for i = hunk_start, #lines do
+    local line = lines[i]
+    if i > hunk_start and (line:match("^@@") or line:match("^diff %-%-git")) then
+      break
+    end
+    table.insert(patch, line)
+  end
+
+  return table.concat(patch, "\n") .. "\n"
+end
+
 return M
