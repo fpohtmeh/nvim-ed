@@ -20,9 +20,6 @@ H.map = function(key, action, desc)
 end
 
 return {
-  -- add
-  H.map("a", actions.add_file, "Add (file)"),
-  H.map("A", actions.add_all_files, "Add (all files)"),
   -- commit
   H.map("c", "commit", "Commit"),
   H.map("C", "commit --amend", "Commit (ammend)"),

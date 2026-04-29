@@ -37,6 +37,7 @@ return function()
       ["<CR>"] = H.open_path,
       ["-"] = actions.toggle,
       s = actions.stage,
+      a = actions.stage_all,
       u = actions.unstage,
       X = actions.discard,
       cc = actions.commit,

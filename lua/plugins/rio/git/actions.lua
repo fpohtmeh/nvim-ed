@@ -121,6 +121,14 @@ M.discard = {
 }
 
 ---@type Rio.KeyDef
+M.stage_all = {
+  fn = function(handle)
+    util.run_then_refresh({ "git", "add", "." }, handle)
+  end,
+  desc = "stage all",
+}
+
+---@type Rio.KeyDef
 M.reset_staged = {
   fn = function(handle)
     util.run_then_refresh({ "git", "reset", "." }, handle)
