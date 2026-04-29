@@ -11,7 +11,7 @@ return {
       desc = "Rio: git log",
     },
     {
-      "<leader>Y",
+      "<leader>gg",
       function()
         require("plugins.rio.git.views.status")()
       end,

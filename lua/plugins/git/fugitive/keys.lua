@@ -20,8 +20,6 @@ H.map = function(key, action, desc)
 end
 
 return {
-  -- status
-  H.map("g", actions.status, "Status"),
   -- add
   H.map("a", actions.add_file, "Add (file)"),
   H.map("A", actions.add_all_files, "Add (all files)"),
