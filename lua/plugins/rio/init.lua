@@ -32,6 +32,20 @@ return {
       desc = "Rio: git file log (full)",
     },
     {
+      "<leader>gd",
+      function()
+        require("plugins.rio.git.views.wdiff")()
+      end,
+      desc = "Rio: git diff",
+    },
+    {
+      "<leader>gD",
+      function()
+        require("plugins.rio.git.views.wdiff")({ staged = true })
+      end,
+      desc = "Rio: git diff (staged)",
+    },
+    {
       "<leader>gg",
       function()
         require("plugins.rio.git.views.status")()
