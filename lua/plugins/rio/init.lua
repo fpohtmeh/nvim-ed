@@ -90,5 +90,20 @@ return {
       end,
       desc = "Rio: git stash",
     },
+    {
+      "<leader>T",
+      function()
+        local builtin = require("rio.callbacks.builtin")
+        require("rio").run("top -b -n 1", {
+          callbacks = {
+            on_finish = function(cbs)
+              cbs[#cbs] = builtin.open_split
+            end,
+          },
+          auto_refresh = { enabled = true, interval = 1000 },
+        })
+      end,
+      desc = "Rio: top",
+    },
   },
 }
