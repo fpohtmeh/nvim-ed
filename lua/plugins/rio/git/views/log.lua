@@ -2,6 +2,7 @@ local H = {}
 
 local builtin = require("rio.callbacks.builtin")
 local togglers = require("rio.togglers")
+local util = require("plugins.rio.git.util")
 
 ---@type Rio.KeyDef
 H.open_commit_diff = {
@@ -13,6 +14,17 @@ H.open_commit_diff = {
     require("plugins.rio.git.views.diff")(hash, handle.state)
   end,
   desc = "open diff",
+}
+
+---@type Rio.KeyDef
+H.reset_last_commit = {
+  fn = function(handle)
+    if not util.confirm("Reset last commit?") then
+      return
+    end
+    util.run_then_refresh({ "git", "reset", "HEAD~1" }, handle)
+  end,
+  desc = "reset last commit",
 }
 
 return function()
@@ -30,6 +42,7 @@ return function()
     },
     keys = {
       ["<CR>"] = H.open_commit_diff,
+      R = H.reset_last_commit,
       tl = togglers.key("limit"),
       tt = togglers.key("oneline"),
       tm = togglers.key("merges"),
