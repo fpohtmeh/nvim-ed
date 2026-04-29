@@ -2,7 +2,7 @@ local M = {}
 local H = {}
 
 local builtin = require("rio.callbacks.builtin")
-local git = require("plugins.rio.git")
+local parse = require("plugins.rio.git_parse")
 local process = require("rio.process")
 
 H.run_then_refresh = function(args, handle)
@@ -20,7 +20,7 @@ H.run_then_refresh = function(args, handle)
 end
 
 M.stage = function(handle)
-  local path = git.status_path_under_cursor(handle)
+  local path = parse.status_path_under_cursor(handle)
   if not path then
     return
   end
@@ -28,7 +28,7 @@ M.stage = function(handle)
 end
 
 M.unstage = function(handle)
-  local path = git.status_path_under_cursor(handle)
+  local path = parse.status_path_under_cursor(handle)
   if not path then
     return
   end
@@ -36,11 +36,11 @@ M.unstage = function(handle)
 end
 
 M.toggle = function(handle)
-  local path = git.status_path_under_cursor(handle)
+  local path = parse.status_path_under_cursor(handle)
   if not path then
     return
   end
-  if git.is_staged(path) then
+  if parse.is_staged(path) then
     M.unstage(handle)
   else
     M.stage(handle)
@@ -48,7 +48,7 @@ M.toggle = function(handle)
 end
 
 M.discard = function(handle)
-  local path = git.status_path_under_cursor(handle)
+  local path = parse.status_path_under_cursor(handle)
   if not path then
     return
   end

@@ -1,7 +1,7 @@
 local H = {}
 
 local actions = require("plugins.rio.git_actions")
-local git = require("plugins.rio.git")
+local parse = require("plugins.rio.git_parse")
 local togglers = require("rio.togglers")
 
 H.open_file = function(path)
@@ -18,7 +18,7 @@ H.open_dir = function(path)
 end
 
 H.open_path = function(handle)
-  local path = git.status_path_under_cursor(handle)
+  local path = parse.status_path_under_cursor(handle)
   if not path then
     return
   end

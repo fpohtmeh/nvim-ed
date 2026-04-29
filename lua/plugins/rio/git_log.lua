@@ -4,7 +4,7 @@ local builtin = require("rio.callbacks.builtin")
 local togglers = require("rio.togglers")
 
 H.open_commit_diff = function(handle)
-  local hash = require("plugins.rio.git").commit_hash_under_cursor(handle)
+  local hash = require("plugins.rio.git_parse").commit_hash_under_cursor(handle)
   if not hash then
     return
   end
