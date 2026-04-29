@@ -25,7 +25,7 @@ return {
       desc = "Rio: git status",
     },
     {
-      "<leader>O",
+      "<leader>gs",
       function()
         require("plugins.rio.git.views.stash")()
       end,
