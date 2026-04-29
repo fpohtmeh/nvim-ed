@@ -38,6 +38,24 @@ H.stage_hunk = {
   desc = "stage hunk",
 }
 
+---@type Rio.KeyDef
+H.unstage_hunk = {
+  fn = function(handle)
+    local parse = require("plugins.rio.git.parse")
+    local patch = parse.hunk_patch_under_cursor(handle.state.buf)
+    if not patch then
+      return
+    end
+    vim.fn.system({ "git", "apply", "--cached", "--reverse" }, patch)
+    if vim.v.shell_error ~= 0 then
+      Snacks.notify.error("Failed to unstage hunk")
+      return
+    end
+    builtin.refresh().fn(handle)
+  end,
+  desc = "unstage hunk",
+}
+
 H.update_parent_state = function(handle, parent_state)
   if not parent_state then
     return
@@ -127,6 +145,7 @@ function M.working(opts)
       [";h"] = H.next_hunk,
       [",h"] = H.prev_hunk,
       s = H.stage_hunk,
+      u = H.unstage_hunk,
       ts = togglers.key("staged"),
       tw = togglers.key("whitespace"),
       td = togglers.key("word_diff"),
