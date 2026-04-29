@@ -27,6 +27,22 @@ H.reset_last_commit = {
   desc = "reset last commit",
 }
 
+---@type Rio.KeyDef
+H.pull = {
+  fn = function(handle)
+    util.run_then_refresh({ "git", "pull" }, handle)
+  end,
+  desc = "pull",
+}
+
+---@type Rio.KeyDef
+H.push = {
+  fn = function(handle)
+    util.run_then_refresh({ "git", "push" }, handle)
+  end,
+  desc = "push",
+}
+
 ---@param opts? { oneline?: boolean }
 return function(opts)
   opts = opts or {}
@@ -46,6 +62,8 @@ return function(opts)
     keys = {
       ["<CR>"] = H.open_commit_diff,
       R = H.reset_last_commit,
+      p = H.pull,
+      P = H.push,
       tl = togglers.key("limit"),
       tt = togglers.key("oneline"),
       tm = togglers.key("merges"),

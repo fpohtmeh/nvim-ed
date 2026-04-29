@@ -38,7 +38,4 @@ return {
   -- branch
   H.map("b", "branch", "Branch"),
   H.map("B", "branch -a", "Branch (all)"),
-  -- pull/push
-  H.map("p", "pull", "Pull"),
-  H.map("P", "push", "Push"),
 }
