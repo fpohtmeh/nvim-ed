@@ -44,6 +44,7 @@ return function()
       st = actions.stash_all,
       su = actions.stash_unstaged,
       ss = actions.stash_staged,
+      R = actions.reset_staged,
       tt = togglers.key("porcelain"),
       te = togglers.key("expand_untracked"),
       tu = togglers.key("untracked"),

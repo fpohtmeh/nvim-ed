@@ -30,7 +30,6 @@ return {
   H.map("C", "commit --amend", "Commit (ammend)"),
   H.map("<a-c>", "commit --amend --no-edit", "Commit (ammend no-edit)"),
   -- reset
-  H.map("r", "reset .", "Reset Staged"),
   H.map("R", "reset HEAD~1", "Reset Last Commit"),
   -- log
   H.map("l", H.log .. H.arg.limit, "Log (" .. H.limit_str .. ")"),
