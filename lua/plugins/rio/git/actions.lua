@@ -1,22 +1,15 @@
 local M = {}
 local H = {}
 
-local builtin = require("rio.callbacks.builtin")
 local parse = require("plugins.rio.git.parse")
-local process = require("rio.process")
+local util = require("plugins.rio.git.util")
 
-H.run_then_refresh = function(args, handle)
-  process.spawn({
-    cmd = args,
-    cwd = vim.fn.getcwd(),
-    on_exit = function(code, _, stderr)
-      if code ~= 0 then
-        vim.notify(stderr, vim.log.levels.ERROR)
-        return
-      end
-      builtin.refresh().fn(handle)
-    end,
-  })
+H.append_stash_message = function(args)
+  local msg = vim.fn.input("Stash message: ")
+  if msg ~= "" then
+    table.insert(args, "-m")
+    table.insert(args, msg)
+  end
 end
 
 ---@type Rio.KeyDef
@@ -26,7 +19,7 @@ M.stage = {
     if not path then
       return
     end
-    H.run_then_refresh({ "git", "add", "--", path }, handle)
+    util.run_then_refresh({ "git", "add", "--", path }, handle)
   end,
   desc = "stage",
 }
@@ -38,7 +31,7 @@ M.unstage = {
     if not path then
       return
     end
-    H.run_then_refresh({ "git", "restore", "--staged", "--", path }, handle)
+    util.run_then_refresh({ "git", "restore", "--staged", "--", path }, handle)
   end,
   desc = "unstage",
 }
@@ -66,7 +59,7 @@ M.commit = {
     if msg == "" then
       return
     end
-    H.run_then_refresh({ "git", "commit", "-m", msg }, handle)
+    util.run_then_refresh({ "git", "commit", "-m", msg }, handle)
   end,
   desc = "commit",
 }
@@ -74,11 +67,10 @@ M.commit = {
 ---@type Rio.KeyDef
 M.amend = {
   fn = function(handle)
-    local confirmed = vim.fn.confirm("Amend last commit?", "&Yes\n&No") == 1
-    if not confirmed then
+    if not util.confirm("Amend last commit?") then
       return
     end
-    H.run_then_refresh({ "git", "commit", "--amend", "--no-edit" }, handle)
+    util.run_then_refresh({ "git", "commit", "--amend", "--no-edit" }, handle)
   end,
   desc = "amend",
 }
@@ -86,13 +78,9 @@ M.amend = {
 ---@type Rio.KeyDef
 M.stash_all = {
   fn = function(handle)
-    local msg = vim.fn.input("Stash message: ")
     local args = { "git", "stash", "push" }
-    if msg ~= "" then
-      table.insert(args, "-m")
-      table.insert(args, msg)
-    end
-    H.run_then_refresh(args, handle)
+    H.append_stash_message(args)
+    util.run_then_refresh(args, handle)
   end,
   desc = "stash all",
 }
@@ -100,13 +88,9 @@ M.stash_all = {
 ---@type Rio.KeyDef
 M.stash_unstaged = {
   fn = function(handle)
-    local msg = vim.fn.input("Stash message: ")
     local args = { "git", "stash", "push", "--keep-index" }
-    if msg ~= "" then
-      table.insert(args, "-m")
-      table.insert(args, msg)
-    end
-    H.run_then_refresh(args, handle)
+    H.append_stash_message(args)
+    util.run_then_refresh(args, handle)
   end,
   desc = "stash unstaged",
 }
@@ -114,13 +98,9 @@ M.stash_unstaged = {
 ---@type Rio.KeyDef
 M.stash_staged = {
   fn = function(handle)
-    local msg = vim.fn.input("Stash message: ")
     local args = { "git", "stash", "push", "--staged" }
-    if msg ~= "" then
-      table.insert(args, "-m")
-      table.insert(args, msg)
-    end
-    H.run_then_refresh(args, handle)
+    H.append_stash_message(args)
+    util.run_then_refresh(args, handle)
   end,
   desc = "stash staged",
 }
@@ -132,11 +112,10 @@ M.discard = {
     if not path then
       return
     end
-    local confirmed = vim.fn.confirm("Discard changes to " .. path .. "?", "&Yes\n&No") == 1
-    if not confirmed then
+    if not util.confirm("Discard changes to " .. path .. "?") then
       return
     end
-    H.run_then_refresh({ "git", "checkout", "--", path }, handle)
+    util.run_then_refresh({ "git", "checkout", "--", path }, handle)
   end,
   desc = "discard",
 }

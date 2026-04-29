@@ -1,22 +1,8 @@
 local H = {}
 
-local builtin = require("rio.callbacks.builtin")
 local parse = require("plugins.rio.git.parse")
 local process = require("rio.process")
-
-H.run_then_refresh = function(args, handle)
-  process.spawn({
-    cmd = args,
-    cwd = vim.fn.getcwd(),
-    on_exit = function(code, _, stderr)
-      if code ~= 0 then
-        vim.notify(stderr, vim.log.levels.ERROR)
-        return
-      end
-      builtin.refresh().fn(handle)
-    end,
-  })
-end
+local util = require("plugins.rio.git.util")
 
 ---@type Rio.KeyDef
 H.apply = {
@@ -25,7 +11,7 @@ H.apply = {
     if not ref then
       return
     end
-    H.run_then_refresh({ "git", "stash", "apply", ref }, handle)
+    util.run_then_refresh({ "git", "stash", "apply", ref }, handle)
   end,
   desc = "apply",
 }
@@ -37,11 +23,10 @@ H.pop = {
     if not ref then
       return
     end
-    local confirmed = vim.fn.confirm("Pop " .. ref .. "?", "&Yes\n&No") == 1
-    if not confirmed then
+    if not util.confirm("Pop " .. ref .. "?") then
       return
     end
-    H.run_then_refresh({ "git", "stash", "pop", ref }, handle)
+    util.run_then_refresh({ "git", "stash", "pop", ref }, handle)
   end,
   desc = "pop",
 }
@@ -66,10 +51,10 @@ H.rename = {
       cwd = vim.fn.getcwd(),
       on_exit = function(code, _, stderr)
         if code ~= 0 then
-          vim.notify(stderr, vim.log.levels.ERROR)
+          Snacks.notify.error(stderr)
           return
         end
-        H.run_then_refresh({ "git", "stash", "store", "-m", msg, hash }, handle)
+        util.run_then_refresh({ "git", "stash", "store", "-m", msg, hash }, handle)
       end,
     })
   end,
@@ -83,11 +68,10 @@ H.drop = {
     if not ref then
       return
     end
-    local confirmed = vim.fn.confirm("Drop " .. ref .. "?", "&Yes\n&No") == 1
-    if not confirmed then
+    if not util.confirm("Drop " .. ref .. "?") then
       return
     end
-    H.run_then_refresh({ "git", "stash", "drop", ref }, handle)
+    util.run_then_refresh({ "git", "stash", "drop", ref }, handle)
   end,
   desc = "drop",
 }
