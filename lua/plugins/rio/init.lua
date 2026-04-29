@@ -51,14 +51,14 @@ return {
     {
       "<leader>gd",
       function()
-        require("plugins.rio.git.views.wdiff")()
+        require("plugins.rio.git.views.diff").working()
       end,
       desc = "Rio: git diff",
     },
     {
       "<leader>gD",
       function()
-        require("plugins.rio.git.views.wdiff")({ staged = true })
+        require("plugins.rio.git.views.diff").working({ staged = true })
       end,
       desc = "Rio: git diff (staged)",
     },

@@ -11,7 +11,7 @@ H.open_commit_diff = {
     if not hash then
       return
     end
-    require("plugins.rio.git.views.diff")(hash, handle.state)
+    require("plugins.rio.git.views.diff").commit(hash, handle.state)
   end,
   desc = "open diff",
 }
