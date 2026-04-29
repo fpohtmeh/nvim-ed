@@ -46,6 +46,20 @@ return {
       desc = "Rio: git diff (staged)",
     },
     {
+      "<leader>gb",
+      function()
+        require("plugins.rio.git.views.branch")()
+      end,
+      desc = "Rio: git branch",
+    },
+    {
+      "<leader>gB",
+      function()
+        require("plugins.rio.git.views.branch")({ all = true })
+      end,
+      desc = "Rio: git branch (all)",
+    },
+    {
       "<leader>gg",
       function()
         require("plugins.rio.git.views.status")()

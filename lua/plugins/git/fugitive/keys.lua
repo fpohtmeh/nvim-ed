@@ -24,7 +24,4 @@ return {
   H.map("c", "commit", "Commit"),
   H.map("C", "commit --amend", "Commit (ammend)"),
   H.map("<a-c>", "commit --amend --no-edit", "Commit (ammend no-edit)"),
-  -- branch
-  H.map("b", "branch", "Branch"),
-  H.map("B", "branch -a", "Branch (all)"),
 }
