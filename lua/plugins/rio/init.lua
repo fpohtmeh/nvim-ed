@@ -18,6 +18,20 @@ return {
       desc = "Rio: git log (full)",
     },
     {
+      "<leader>gf",
+      function()
+        require("plugins.rio.git.views.log")({ file = true })
+      end,
+      desc = "Rio: git file log",
+    },
+    {
+      "<leader>gF",
+      function()
+        require("plugins.rio.git.views.log")({ oneline = false, file = true })
+      end,
+      desc = "Rio: git file log (full)",
+    },
+    {
       "<leader>gg",
       function()
         require("plugins.rio.git.views.status")()

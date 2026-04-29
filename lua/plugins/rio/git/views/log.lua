@@ -43,11 +43,12 @@ H.push = {
   desc = "push",
 }
 
----@param opts? { oneline?: boolean }
+---@param opts? { oneline?: boolean, file?: boolean }
 return function(opts)
   opts = opts or {}
   local oneline = opts.oneline ~= false
-  local cmd = "git log {limit} {oneline} {merges}"
+  local file = opts.file and vim.fn.expand("%:p") or nil
+  local cmd = "git log {limit} {oneline} {merges}" .. (file and " -- " .. file or "")
   require("rio").run(cmd, {
     callbacks = {
       on_finish = function(callbacks)
