@@ -50,4 +50,9 @@ M.status_path_under_cursor = function(handle)
   return path:match("^(%S+)%s+%(") or path
 end
 
+M.stash_ref_under_cursor = function()
+  local line = vim.api.nvim_get_current_line()
+  return line:match("^(stash@{%d+})")
+end
+
 return M

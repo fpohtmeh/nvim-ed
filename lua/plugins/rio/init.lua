@@ -17,5 +17,12 @@ return {
       end,
       desc = "Rio: git status",
     },
+    {
+      "<leader>O",
+      function()
+        require("plugins.rio.git_stash")()
+      end,
+      desc = "Rio: git stash",
+    },
   },
 }
