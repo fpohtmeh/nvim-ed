@@ -27,11 +27,6 @@ return {
   H.map("c", "commit", "Commit"),
   H.map("C", "commit --amend", "Commit (ammend)"),
   H.map("<a-c>", "commit --amend --no-edit", "Commit (ammend no-edit)"),
-  -- log
-  H.map("l", H.log .. H.arg.limit, "Log (" .. H.limit_str .. ")"),
-  H.map("L", H.log .. H.arg.limit1 .. H.arg.detail, "Log (detailed 1)"),
-  H.map("<c-l>", H.log .. H.arg.limit .. H.arg.detail, "Log (detailed " .. H.limit_str .. ")"),
-  H.map("<a-l>", H.log, "Log (full)"),
   -- log: file
   H.map("f", H.log .. H.arg.limit .. H.arg.file, "File Log (" .. H.limit_str .. ")"),
   H.map("F", H.log .. H.arg.limit1 .. H.arg.detail .. H.arg.file, "File Log (detailed 1)"),

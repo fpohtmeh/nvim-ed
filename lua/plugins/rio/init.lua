@@ -4,11 +4,18 @@ return {
   opts = {},
   keys = {
     {
-      "<leader>U",
+      "<leader>gl",
       function()
         require("plugins.rio.git.views.log")()
       end,
       desc = "Rio: git log",
+    },
+    {
+      "<leader>gL",
+      function()
+        require("plugins.rio.git.views.log")({ oneline = false })
+      end,
+      desc = "Rio: git log (full)",
     },
     {
       "<leader>gg",

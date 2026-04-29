@@ -27,7 +27,10 @@ H.reset_last_commit = {
   desc = "reset last commit",
 }
 
-return function()
+---@param opts? { oneline?: boolean }
+return function(opts)
+  opts = opts or {}
+  local oneline = opts.oneline ~= false
   local cmd = "git log {limit} {oneline} {merges}"
   require("rio").run(cmd, {
     callbacks = {
@@ -37,7 +40,7 @@ return function()
     },
     params = {
       limit = togglers.param("limit", "-100"),
-      oneline = togglers.param("oneline", "--oneline"),
+      oneline = togglers.param("oneline", "--oneline", oneline),
       merges = togglers.param("merges", "--no-merges"),
     },
     keys = {
