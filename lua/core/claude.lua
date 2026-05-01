@@ -64,6 +64,7 @@ H.run = function(args)
 end
 
 function M.resume()
+  vim.notify("Resuming Claude session…", vim.log.levels.INFO)
   H.run("--continue")
 end
 
@@ -73,11 +74,13 @@ end
 
 function M.send(text, submit)
   local buf = H.term and H.term.buf
-  if not buf or not vim.api.nvim_buf_is_valid(buf) then
-    vim.notify("No Claude terminal running", vim.log.levels.WARN)
-    return
+  if buf and vim.api.nvim_buf_is_valid(buf) then
+    return vim.fn.chansend(vim.b[buf].terminal_job_id, submit and text .. H.enter or text)
   end
-  vim.fn.chansend(vim.b[buf].terminal_job_id, submit and text .. H.enter or text)
+  M.resume()
+  vim.defer_fn(function()
+    M.send(text, submit)
+  end, 1000)
 end
 
 function M.input(submit)
