@@ -48,7 +48,7 @@ return function(opts)
   opts = opts or {}
   local oneline = opts.oneline ~= false
   local file = opts.file and vim.fn.expand("%:p") or nil
-  local cmd = "git log {limit} {oneline} {merges}" .. (file and " -- " .. file or "")
+  local cmd = "git log {limit} {oneline} {merges} {decorate}" .. (file and " -- " .. file or "")
   require("rio").run(cmd, {
     callbacks = {
       on_finish = function(callbacks)
@@ -58,7 +58,8 @@ return function(opts)
     params = {
       limit = togglers.param("limit", "-100"),
       oneline = togglers.param("oneline", "--oneline", oneline),
-      merges = togglers.param("merges", "--no-merges"),
+      merges = togglers.switch("merges", "", "--no-merges"),
+      decorate = togglers.param("decorate", "--decorate"),
     },
     keys = {
       ["<CR>"] = H.open_commit_diff,
@@ -68,6 +69,7 @@ return function(opts)
       tl = togglers.key("limit"),
       tt = togglers.key("oneline"),
       tm = togglers.key("merges"),
+      td = togglers.key("decorate"),
     },
   })
 end
