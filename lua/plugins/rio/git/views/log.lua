@@ -51,9 +51,7 @@ return function(opts)
   local cmd = "git log {limit} {oneline} {merges} {decorate}" .. (file and " -- " .. file or "")
   require("rio").run(cmd, {
     callbacks = {
-      on_finish = function(callbacks)
-        table.insert(callbacks, builtin.set_filetype("git"))
-      end,
+      on_finish = { builtin.set_filetype("git") },
     },
     params = {
       limit = togglers.param("limit", "-100"),

@@ -81,13 +81,13 @@ H.open_file_diff = function(hash)
         params = { commit = hash, path = path },
         state = { buf = handle.state.diff_buf, win = handle.state.diff_win },
         callbacks = {
-          on_finish = function(callbacks)
-            table.insert(callbacks, builtin.set_filetype("diff"))
-            table.insert(callbacks, function(inner)
+          on_finish = {
+            builtin.set_filetype("diff"),
+            function(inner)
               handle.state.diff_buf = inner.state.buf
               handle.state.diff_win = inner.state.win
-            end)
-          end,
+            end,
+          },
         },
       })
     end,
@@ -108,12 +108,12 @@ function M.commit(hash, parent_state)
       stat = togglers.param("stat", "--stat", false),
     },
     callbacks = {
-      on_finish = function(callbacks)
-        table.insert(callbacks, builtin.set_filetype("diff"))
-        table.insert(callbacks, function(handle)
+      on_finish = {
+        builtin.set_filetype("diff"),
+        function(handle)
           H.update_parent_state(handle, parent_state)
-        end)
-      end,
+        end,
+      },
     },
     keys = {
       ["<CR>"] = H.open_file_diff(hash),
@@ -137,9 +137,7 @@ function M.working(opts)
       stat = togglers.param("stat", "--stat", false),
     },
     callbacks = {
-      on_finish = function(callbacks)
-        table.insert(callbacks, builtin.set_filetype("diff"))
-      end,
+      on_finish = { builtin.set_filetype("diff") },
     },
     keys = {
       [";h"] = H.next_hunk,

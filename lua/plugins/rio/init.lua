@@ -93,12 +93,10 @@ return {
     {
       "<leader>T",
       function()
-        local builtin = require("rio.callbacks.builtin")
+        local win_builtin = require("rio.resolver.win.builtin")
         require("rio").run("top -b -n 1", {
-          callbacks = {
-            on_finish = function(cbs)
-              cbs[#cbs] = builtin.open_split
-            end,
+          resolver = {
+            win = { win_builtin.reuse, win_builtin.split },
           },
           auto_refresh = { enabled = true, interval = 1000 },
         })
