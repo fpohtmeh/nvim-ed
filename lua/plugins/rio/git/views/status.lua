@@ -22,6 +22,7 @@ H.open_path = {
     open(path)
   end,
   desc = "open in split",
+  group = "Navigate",
 }
 
 return function()

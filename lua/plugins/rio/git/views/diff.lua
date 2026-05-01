@@ -10,6 +10,7 @@ H.next_hunk = {
     vim.fn.search("^@@", "W")
   end,
   desc = "next hunk",
+  group = "Navigate",
 }
 
 ---@type Rio.KeyDef
@@ -18,6 +19,7 @@ H.prev_hunk = {
     vim.fn.search("^@@", "bW")
   end,
   desc = "prev hunk",
+  group = "Navigate",
 }
 
 ---@type Rio.KeyDef
@@ -36,6 +38,7 @@ H.stage_hunk = {
     builtin.refresh().fn(handle)
   end,
   desc = "stage hunk",
+  group = "Stage",
 }
 
 ---@type Rio.KeyDef
@@ -54,6 +57,7 @@ H.unstage_hunk = {
     builtin.refresh().fn(handle)
   end,
   desc = "unstage hunk",
+  group = "Stage",
 }
 
 H.update_parent_state = function(handle, parent_state)
@@ -92,6 +96,7 @@ H.open_file_diff = function(hash)
       })
     end,
     desc = "open file diff",
+    group = "Navigate",
   }
 end
 

@@ -14,6 +14,7 @@ H.open_commit_diff = {
     require("plugins.rio.git.views.diff").commit(hash, handle.state)
   end,
   desc = "open diff",
+  group = "Navigate",
 }
 
 ---@type Rio.KeyDef
@@ -25,6 +26,7 @@ H.reset_last_commit = {
     util.run_then_refresh({ "git", "reset", "HEAD~1" }, handle)
   end,
   desc = "reset last commit",
+  group = "Reset",
 }
 
 ---@type Rio.KeyDef
@@ -33,6 +35,7 @@ H.pull = {
     util.run_then_refresh({ "git", "pull" }, handle)
   end,
   desc = "pull",
+  group = "Remote",
 }
 
 ---@type Rio.KeyDef
@@ -41,6 +44,7 @@ H.push = {
     util.run_then_refresh({ "git", "push" }, handle)
   end,
   desc = "push",
+  group = "Remote",
 }
 
 ---@param opts? { oneline?: boolean, file?: boolean }

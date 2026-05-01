@@ -14,6 +14,7 @@ H.apply = {
     util.run_then_refresh({ "git", "stash", "apply", ref }, handle)
   end,
   desc = "apply",
+  group = "Stash",
 }
 
 ---@type Rio.KeyDef
@@ -29,6 +30,7 @@ H.pop = {
     util.run_then_refresh({ "git", "stash", "pop", ref }, handle)
   end,
   desc = "pop",
+  group = "Stash",
 }
 
 ---@type Rio.KeyDef
@@ -59,6 +61,7 @@ H.rename = {
     })
   end,
   desc = "rename",
+  group = "Stash",
 }
 
 ---@type Rio.KeyDef
@@ -74,6 +77,7 @@ H.drop = {
     util.run_then_refresh({ "git", "stash", "drop", ref }, handle)
   end,
   desc = "drop",
+  group = "Stash",
 }
 
 return function()

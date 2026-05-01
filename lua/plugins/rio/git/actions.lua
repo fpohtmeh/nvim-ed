@@ -22,6 +22,7 @@ M.stage = {
     util.run_then_refresh({ "git", "add", "--", path }, handle)
   end,
   desc = "stage",
+  group = "Stage",
 }
 
 ---@type Rio.KeyDef
@@ -34,6 +35,7 @@ M.unstage = {
     util.run_then_refresh({ "git", "restore", "--staged", "--", path }, handle)
   end,
   desc = "unstage",
+  group = "Stage",
 }
 
 ---@type Rio.KeyDef
@@ -50,6 +52,7 @@ M.toggle = {
     end
   end,
   desc = "toggle staged",
+  group = "Stage",
 }
 
 ---@type Rio.KeyDef
@@ -62,6 +65,7 @@ M.commit = {
     util.run_then_refresh({ "git", "commit", "-m", msg }, handle)
   end,
   desc = "commit",
+  group = "Commit",
 }
 
 ---@type Rio.KeyDef
@@ -73,6 +77,7 @@ M.amend = {
     util.run_then_refresh({ "git", "commit", "--amend", "--no-edit" }, handle)
   end,
   desc = "amend",
+  group = "Commit",
 }
 
 ---@type Rio.KeyDef
@@ -83,6 +88,7 @@ M.stash_all = {
     util.run_then_refresh(args, handle)
   end,
   desc = "stash all",
+  group = "Stash",
 }
 
 ---@type Rio.KeyDef
@@ -93,6 +99,7 @@ M.stash_unstaged = {
     util.run_then_refresh(args, handle)
   end,
   desc = "stash unstaged",
+  group = "Stash",
 }
 
 ---@type Rio.KeyDef
@@ -103,6 +110,7 @@ M.stash_staged = {
     util.run_then_refresh(args, handle)
   end,
   desc = "stash staged",
+  group = "Stash",
 }
 
 ---@type Rio.KeyDef
@@ -118,6 +126,7 @@ M.discard = {
     util.run_then_refresh({ "git", "checkout", "--", path }, handle)
   end,
   desc = "discard",
+  group = "Stage",
 }
 
 ---@type Rio.KeyDef
@@ -126,6 +135,7 @@ M.stage_all = {
     util.run_then_refresh({ "git", "add", "." }, handle)
   end,
   desc = "stage all",
+  group = "Stage",
 }
 
 ---@type Rio.KeyDef
@@ -134,6 +144,7 @@ M.reset_staged = {
     util.run_then_refresh({ "git", "reset", "." }, handle)
   end,
   desc = "reset staged",
+  group = "Stage",
 }
 
 return M
