@@ -146,10 +146,10 @@ function M.working(opts)
       [",h"] = H.prev_hunk,
       s = H.stage_hunk,
       u = H.unstage_hunk,
-      ts = togglers.key("staged"),
+      tt = togglers.key("staged"),
       tw = togglers.key("whitespace"),
       td = togglers.key("word_diff"),
-      ta = togglers.key("stat"),
+      ts = togglers.key("stat"),
     },
   })
 end
