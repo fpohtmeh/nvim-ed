@@ -6,7 +6,7 @@ local util = require("plugins.rio.git.util")
 
 ---@type Rio.KeyDef
 H.apply = {
-  fn = function(handle)
+  action = function(handle)
     local ref = parse.stash_ref_under_cursor()
     if not ref then
       return
@@ -19,7 +19,7 @@ H.apply = {
 
 ---@type Rio.KeyDef
 H.pop = {
-  fn = function(handle)
+  action = function(handle)
     local ref = parse.stash_ref_under_cursor()
     if not ref then
       return
@@ -35,7 +35,7 @@ H.pop = {
 
 ---@type Rio.KeyDef
 H.rename = {
-  fn = function(handle)
+  action = function(handle)
     local ref = parse.stash_ref_under_cursor()
     if not ref then
       return
@@ -66,7 +66,7 @@ H.rename = {
 
 ---@type Rio.KeyDef
 H.drop = {
-  fn = function(handle)
+  action = function(handle)
     local ref = parse.stash_ref_under_cursor()
     if not ref then
       return

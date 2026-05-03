@@ -6,7 +6,7 @@ local togglers = require("rio.togglers")
 
 ---@type Rio.KeyDef
 H.next_hunk = {
-  fn = function()
+  action = function()
     vim.fn.search("^@@", "W")
   end,
   desc = "next hunk",
@@ -15,7 +15,7 @@ H.next_hunk = {
 
 ---@type Rio.KeyDef
 H.prev_hunk = {
-  fn = function()
+  action = function()
     vim.fn.search("^@@", "bW")
   end,
   desc = "prev hunk",
@@ -24,7 +24,7 @@ H.prev_hunk = {
 
 ---@type Rio.KeyDef
 H.stage_hunk = {
-  fn = function(handle)
+  action = function(handle)
     local parse = require("plugins.rio.git.parse")
     local patch = parse.hunk_patch_under_cursor(handle.state.buf)
     if not patch then
@@ -35,7 +35,7 @@ H.stage_hunk = {
       Snacks.notify.error("Failed to stage hunk")
       return
     end
-    builtin.refresh().fn(handle)
+    builtin.refresh().action(handle)
   end,
   desc = "stage hunk",
   group = "Stage",
@@ -43,7 +43,7 @@ H.stage_hunk = {
 
 ---@type Rio.KeyDef
 H.unstage_hunk = {
-  fn = function(handle)
+  action = function(handle)
     local parse = require("plugins.rio.git.parse")
     local patch = parse.hunk_patch_under_cursor(handle.state.buf)
     if not patch then
@@ -54,25 +54,17 @@ H.unstage_hunk = {
       Snacks.notify.error("Failed to unstage hunk")
       return
     end
-    builtin.refresh().fn(handle)
+    builtin.refresh().action(handle)
   end,
   desc = "unstage hunk",
   group = "Stage",
 }
 
-H.update_parent_state = function(handle, parent_state)
-  if not parent_state then
-    return
-  end
-  parent_state.diff_buf = handle.state.buf
-  parent_state.diff_win = handle.state.win
-end
-
 ---@param hash string
 ---@return Rio.KeyDef
 H.open_file_diff = function(hash)
   return {
-    fn = function(handle)
+    action = function(handle)
       if not handle.state.toggles.name_only.enabled then
         return
       end
@@ -83,15 +75,9 @@ H.open_file_diff = function(hash)
       local cmd = "git diff {commit}~1 {commit} -- {path}"
       require("rio").run(cmd, {
         params = { commit = hash, path = path },
-        state = { buf = handle.state.diff_buf, win = handle.state.diff_win },
+        link = "diff",
         callbacks = {
-          on_finish = {
-            builtin.set_filetype("diff"),
-            function(inner)
-              handle.state.diff_buf = inner.state.buf
-              handle.state.diff_win = inner.state.win
-            end,
-          },
+          on_finish = { builtin.set_filetype("diff") },
         },
       })
     end,
@@ -100,11 +86,11 @@ H.open_file_diff = function(hash)
   }
 end
 
-function M.commit(hash, parent_state)
-  local state = parent_state and { buf = parent_state.diff_buf, win = parent_state.diff_win } or {}
+---@param hash string
+function M.commit(hash)
   local cmd = "git diff {name_only} {whitespace} {word_diff} {stat} {commit}~1 {commit}"
   require("rio").run(cmd, {
-    state = state,
+    link = "diff",
     params = {
       commit = hash,
       name_only = togglers.param("name_only", "--name-only", false),
@@ -113,12 +99,7 @@ function M.commit(hash, parent_state)
       stat = togglers.param("stat", "--stat", false),
     },
     callbacks = {
-      on_finish = {
-        builtin.set_filetype("diff"),
-        function(handle)
-          H.update_parent_state(handle, parent_state)
-        end,
-      },
+      on_finish = { builtin.set_filetype("diff") },
     },
     keys = {
       ["<CR>"] = H.open_file_diff(hash),

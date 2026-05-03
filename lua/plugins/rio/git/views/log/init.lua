@@ -10,12 +10,12 @@ local util = require("plugins.rio.git.util")
 
 ---@type Rio.KeyDef
 H.open_commit_diff = {
-  fn = function(handle)
+  action = function(handle)
     local hash = parse.commit_hash_under_cursor(handle)
     if not hash then
       return
     end
-    diff.commit(hash, handle.state)
+    diff.commit(hash)
   end,
   desc = "open diff",
   group = "Navigate",
@@ -23,7 +23,7 @@ H.open_commit_diff = {
 
 ---@type Rio.KeyDef
 H.reset_last_commit = {
-  fn = function(handle)
+  action = function(handle)
     if not util.confirm("Reset last commit?") then
       return
     end
@@ -35,7 +35,7 @@ H.reset_last_commit = {
 
 ---@type Rio.KeyDef
 H.pull = {
-  fn = function(handle)
+  action = function(handle)
     util.run_then_refresh({ "git", "pull" }, handle)
   end,
   desc = "pull",
@@ -44,7 +44,7 @@ H.pull = {
 
 ---@type Rio.KeyDef
 H.push = {
-  fn = function(handle)
+  action = function(handle)
     util.run_then_refresh({ "git", "push" }, handle)
   end,
   desc = "push",

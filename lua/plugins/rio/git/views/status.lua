@@ -7,7 +7,7 @@ local togglers = require("rio.togglers")
 
 ---@type Rio.KeyDef
 H.open_path = {
-  fn = function(handle)
+  action = function(handle)
     local path = parse.status_path_under_cursor(handle)
     if not path then
       return

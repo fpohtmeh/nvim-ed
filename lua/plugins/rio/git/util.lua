@@ -16,7 +16,7 @@ M.run_then_refresh = function(args, handle)
         Snacks.notify.error(stderr)
         return
       end
-      builtin.refresh().fn(handle)
+      builtin.refresh().action(handle)
     end,
   })
 end

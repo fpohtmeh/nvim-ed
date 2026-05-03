@@ -4,13 +4,22 @@ local builtin = require("rio.callbacks.builtin")
 local rio = require("rio")
 local parse = require("plugins.rio.git.parse")
 
-M.save_state = function(parent, cursor)
+local H = {}
+
+H.linked_cursor = function(handle, key)
+  local linked = handle.state.links and handle.state.links[key]
+  if not linked then
+    return nil
+  end
+  local win = linked.state.win
+  if not win or not vim.api.nvim_win_is_valid(win) then
+    return nil
+  end
+  return vim.api.nvim_win_get_cursor(win)
+end
+
+H.restore_cursor = function(cursor)
   return function(handle)
-    parent.state.file_buf = handle.state.buf
-    parent.state.file_win = handle.state.win
-    if not cursor then
-      return
-    end
     local max = vim.api.nvim_buf_line_count(handle.state.buf)
     vim.api.nvim_win_set_cursor(handle.state.win, { math.min(cursor[1], max), cursor[2] })
   end
@@ -21,22 +30,19 @@ end
 M.show_at_commit = function(file)
   local ft = vim.filetype.match({ filename = file }) or ""
   return {
-    fn = function(handle)
+    action = function(handle)
       local hash = parse.commit_hash_under_cursor(handle)
       if not hash then
         return
       end
-      local win = handle.state.file_win
-      local cursor = win and vim.api.nvim_win_is_valid(win) and vim.api.nvim_win_get_cursor(win)
-      local cmd = "git show " .. hash .. ":" .. file
-      rio.run(cmd, {
-        state = { buf = handle.state.file_buf, win = handle.state.file_win },
-        callbacks = {
-          on_finish = {
-            builtin.set_filetype(ft),
-            M.save_state(handle, cursor),
-          },
-        },
+      local cursor = H.linked_cursor(handle, "file")
+      local on_finish = { builtin.set_filetype(ft) }
+      if cursor then
+        table.insert(on_finish, H.restore_cursor(cursor))
+      end
+      rio.run("git show " .. hash .. ":" .. file, {
+        link = "file",
+        callbacks = { on_finish = on_finish },
       })
     end,
     desc = "show file at commit",
@@ -48,22 +54,16 @@ end
 ---@return Rio.KeyDef
 M.show_diff_at_commit = function(file)
   return {
-    fn = function(handle)
+    action = function(handle)
       local hash = parse.commit_hash_under_cursor(handle)
       if not hash then
         return
       end
       local cmd = "git diff " .. hash .. "~1 " .. hash .. " -- " .. file
       rio.run(cmd, {
-        state = { buf = handle.state.file_buf, win = handle.state.file_win },
+        link = "file",
         callbacks = {
-          on_finish = {
-            builtin.set_filetype("diff"),
-            function(inner)
-              handle.state.file_buf = inner.state.buf
-              handle.state.file_win = inner.state.win
-            end,
-          },
+          on_finish = { builtin.set_filetype("diff") },
         },
       })
     end,

@@ -14,7 +14,7 @@ end
 
 ---@type Rio.KeyDef
 M.stage = {
-  fn = function(handle)
+  action = function(handle)
     local path = parse.status_path_under_cursor(handle)
     if not path then
       return
@@ -27,7 +27,7 @@ M.stage = {
 
 ---@type Rio.KeyDef
 M.unstage = {
-  fn = function(handle)
+  action = function(handle)
     local path = parse.status_path_under_cursor(handle)
     if not path then
       return
@@ -40,15 +40,15 @@ M.unstage = {
 
 ---@type Rio.KeyDef
 M.toggle = {
-  fn = function(handle)
+  action = function(handle)
     local path = parse.status_path_under_cursor(handle)
     if not path then
       return
     end
     if parse.is_staged(path) then
-      M.unstage.fn(handle)
+      M.unstage.action(handle)
     else
-      M.stage.fn(handle)
+      M.stage.action(handle)
     end
   end,
   desc = "toggle staged",
@@ -57,7 +57,7 @@ M.toggle = {
 
 ---@type Rio.KeyDef
 M.commit = {
-  fn = function(handle)
+  action = function(handle)
     local msg = vim.fn.input("Commit message: ")
     if msg == "" then
       return
@@ -70,7 +70,7 @@ M.commit = {
 
 ---@type Rio.KeyDef
 M.amend = {
-  fn = function(handle)
+  action = function(handle)
     if not util.confirm("Amend last commit?") then
       return
     end
@@ -82,7 +82,7 @@ M.amend = {
 
 ---@type Rio.KeyDef
 M.stash_all = {
-  fn = function(handle)
+  action = function(handle)
     local args = { "git", "stash", "push" }
     H.append_stash_message(args)
     util.run_then_refresh(args, handle)
@@ -93,7 +93,7 @@ M.stash_all = {
 
 ---@type Rio.KeyDef
 M.stash_unstaged = {
-  fn = function(handle)
+  action = function(handle)
     local args = { "git", "stash", "push", "--keep-index" }
     H.append_stash_message(args)
     util.run_then_refresh(args, handle)
@@ -104,7 +104,7 @@ M.stash_unstaged = {
 
 ---@type Rio.KeyDef
 M.stash_staged = {
-  fn = function(handle)
+  action = function(handle)
     local args = { "git", "stash", "push", "--staged" }
     H.append_stash_message(args)
     util.run_then_refresh(args, handle)
@@ -115,7 +115,7 @@ M.stash_staged = {
 
 ---@type Rio.KeyDef
 M.discard = {
-  fn = function(handle)
+  action = function(handle)
     local path = parse.status_path_under_cursor(handle)
     if not path then
       return
@@ -131,7 +131,7 @@ M.discard = {
 
 ---@type Rio.KeyDef
 M.stage_all = {
-  fn = function(handle)
+  action = function(handle)
     util.run_then_refresh({ "git", "add", "." }, handle)
   end,
   desc = "stage all",
@@ -140,7 +140,7 @@ M.stage_all = {
 
 ---@type Rio.KeyDef
 M.reset_staged = {
-  fn = function(handle)
+  action = function(handle)
     util.run_then_refresh({ "git", "reset", "." }, handle)
   end,
   desc = "reset staged",
