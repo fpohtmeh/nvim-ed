@@ -1,23 +1,40 @@
 local M = {}
+local H = {}
 
 local builtin = require("rio.callbacks.builtin")
-local process = require("rio.process")
+local rio = require("rio")
+
+H.refresh_parent = function(h)
+  builtin.refresh().action(h.parent)
+end
+
+H.on_finish_resolver = function()
+  return { builtin.notify_error, H.refresh_parent }
+end
 
 M.confirm = function(msg)
   return vim.fn.confirm(msg, "&Yes\n&No", 2) == 1
 end
 
-M.run_then_refresh = function(args, handle)
-  process.spawn({
-    cmd = args,
-    cwd = handle.state.cwd,
-    on_exit = function(code, _, stderr)
-      if code ~= 0 then
-        Snacks.notify.error(stderr)
-        return
-      end
-      builtin.refresh().action(handle)
-    end,
+M.confirm_action = function(msg)
+  return function()
+    if not M.confirm(msg) then
+      return false
+    end
+  end
+end
+
+M.run_then_refresh = function(cmd, handle, on_start)
+  rio.run(cmd, {
+    parent = handle,
+    resolver = {
+      callbacks = {
+        on_start = on_start and function()
+          return on_start
+        end,
+        on_finish = H.on_finish_resolver,
+      },
+    },
   })
 end
 

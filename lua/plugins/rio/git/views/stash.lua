@@ -17,11 +17,7 @@ H.parser = {
 ---@type Rio.KeyDef
 H.apply = {
   action = function(handle)
-    local ref = H.parser.parse("ref", handle)
-    if not ref then
-      return
-    end
-    util.run_then_refresh({ "git", "stash", "apply", ref }, handle)
+    util.run_then_refresh("git stash apply {ref}", handle)
   end,
   desc = "apply",
   group = "Stash",
@@ -30,14 +26,9 @@ H.apply = {
 ---@type Rio.KeyDef
 H.pop = {
   action = function(handle)
-    local ref = H.parser.parse("ref", handle)
-    if not ref then
-      return
-    end
-    if not util.confirm("Pop " .. ref .. "?") then
-      return
-    end
-    util.run_then_refresh({ "git", "stash", "pop", ref }, handle)
+    util.run_then_refresh("git stash pop {ref}", handle, {
+      util.confirm_action("Pop stash?"),
+    })
   end,
   desc = "pop",
   group = "Stash",
@@ -46,14 +37,9 @@ H.pop = {
 ---@type Rio.KeyDef
 H.drop = {
   action = function(handle)
-    local ref = H.parser.parse("ref", handle)
-    if not ref then
-      return
-    end
-    if not util.confirm("Drop " .. ref .. "?") then
-      return
-    end
-    util.run_then_refresh({ "git", "stash", "drop", ref }, handle)
+    util.run_then_refresh("git stash drop {ref}", handle, {
+      util.confirm_action("Drop stash?"),
+    })
   end,
   desc = "drop",
   group = "Stash",

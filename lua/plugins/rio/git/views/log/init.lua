@@ -39,10 +39,9 @@ H.open_commit_diff = {
 ---@type Rio.KeyDef
 H.reset_last_commit = {
   action = function(handle)
-    if not util.confirm("Reset last commit?") then
-      return
-    end
-    util.run_then_refresh({ "git", "reset", "HEAD~1" }, handle)
+    util.run_then_refresh("git reset HEAD~1", handle, {
+      util.confirm_action("Reset last commit?"),
+    })
   end,
   desc = "reset last commit",
   group = "Reset",
@@ -51,7 +50,7 @@ H.reset_last_commit = {
 ---@type Rio.KeyDef
 H.pull = {
   action = function(handle)
-    util.run_then_refresh({ "git", "pull" }, handle)
+    util.run_then_refresh("git pull", handle)
   end,
   desc = "pull",
   group = "Remote",
@@ -60,7 +59,7 @@ H.pull = {
 ---@type Rio.KeyDef
 H.push = {
   action = function(handle)
-    util.run_then_refresh({ "git", "push" }, handle)
+    util.run_then_refresh("git push", handle)
   end,
   desc = "push",
   group = "Remote",
