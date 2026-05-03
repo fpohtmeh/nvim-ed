@@ -1,7 +1,6 @@
 local M = {}
 local H = {}
 
-local parse = require("plugins.rio.git.parse")
 local util = require("plugins.rio.git.util")
 
 H.append_stash_message = function(args)
@@ -12,10 +11,19 @@ H.append_stash_message = function(args)
   end
 end
 
+H.parse_path = function(handle)
+  for _, parser in ipairs(handle.parsers) do
+    local result = parser.parse("path", handle)
+    if result ~= nil then
+      return result
+    end
+  end
+end
+
 ---@type Rio.KeyDef
 M.stage = {
   action = function(handle)
-    local path = parse.status_path_under_cursor(handle)
+    local path = H.parse_path(handle)
     if not path then
       return
     end
@@ -28,7 +36,7 @@ M.stage = {
 ---@type Rio.KeyDef
 M.unstage = {
   action = function(handle)
-    local path = parse.status_path_under_cursor(handle)
+    local path = H.parse_path(handle)
     if not path then
       return
     end
@@ -41,11 +49,11 @@ M.unstage = {
 ---@type Rio.KeyDef
 M.toggle = {
   action = function(handle)
-    local path = parse.status_path_under_cursor(handle)
+    local path = H.parse_path(handle)
     if not path then
       return
     end
-    if parse.is_staged(path) then
+    if util.is_staged(path) then
       M.unstage.action(handle)
     else
       M.stage.action(handle)
@@ -116,7 +124,7 @@ M.stash_staged = {
 ---@type Rio.KeyDef
 M.discard = {
   action = function(handle)
-    local path = parse.status_path_under_cursor(handle)
+    local path = H.parse_path(handle)
     if not path then
       return
     end

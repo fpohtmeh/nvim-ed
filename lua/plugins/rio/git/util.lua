@@ -21,4 +21,13 @@ M.run_then_refresh = function(args, handle)
   })
 end
 
+M.is_staged = function(path)
+  local out = vim.fn.systemlist({ "git", "status", "--porcelain", "--", path })
+  if #out == 0 then
+    return false
+  end
+  local x = out[1]:sub(1, 1)
+  return x ~= " " and x ~= "?"
+end
+
 return M

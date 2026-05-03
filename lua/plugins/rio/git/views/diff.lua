@@ -4,6 +4,58 @@ local H = {}
 local builtin = require("rio.callbacks.builtin")
 local togglers = require("rio.togglers")
 
+---@type Rio.Parser
+H.parser = {
+  parse = function(param, handle)
+    local cursor = vim.api.nvim_win_get_cursor(handle.state.win)
+    local line = vim.api.nvim_buf_get_lines(handle.state.buf, cursor[1] - 1, cursor[1], false)[1]
+
+    if param == "path" then
+      return line:match("%S+")
+    end
+
+    if param == "patch" then
+      local lines = vim.api.nvim_buf_get_lines(handle.state.buf, 0, -1, false)
+      local row = cursor[1]
+
+      local hunk_start
+      for i = row, 1, -1 do
+        if lines[i]:match("^@@") then
+          hunk_start = i
+          break
+        end
+      end
+      if not hunk_start then
+        return nil
+      end
+
+      local header_start
+      for i = hunk_start - 1, 1, -1 do
+        if lines[i]:match("^diff %-%-git") then
+          header_start = i
+          break
+        end
+      end
+      if not header_start then
+        return nil
+      end
+
+      local patch = {}
+      for i = header_start, hunk_start - 1 do
+        table.insert(patch, lines[i])
+      end
+      for i = hunk_start, #lines do
+        local l = lines[i]
+        if i > hunk_start and (l:match("^@@") or l:match("^diff %-%-git")) then
+          break
+        end
+        table.insert(patch, l)
+      end
+      return table.concat(patch, "\n") .. "\n"
+    end
+  end,
+}
+
 ---@type Rio.KeyDef
 H.next_hunk = {
   action = function()
@@ -25,8 +77,7 @@ H.prev_hunk = {
 ---@type Rio.KeyDef
 H.stage_hunk = {
   action = function(handle)
-    local parse = require("plugins.rio.git.parse")
-    local patch = parse.hunk_patch_under_cursor(handle.state.buf)
+    local patch = H.parser.parse("patch", handle)
     if not patch then
       return
     end
@@ -44,8 +95,7 @@ H.stage_hunk = {
 ---@type Rio.KeyDef
 H.unstage_hunk = {
   action = function(handle)
-    local parse = require("plugins.rio.git.parse")
-    local patch = parse.hunk_patch_under_cursor(handle.state.buf)
+    local patch = H.parser.parse("patch", handle)
     if not patch then
       return
     end
@@ -60,39 +110,30 @@ H.unstage_hunk = {
   group = "Stage",
 }
 
----@param hash string
----@return Rio.KeyDef
-H.open_file_diff = function(hash)
-  return {
-    action = function(handle)
-      if not handle.state.toggles.name_only.enabled then
-        return
-      end
-      local path = require("plugins.rio.git.parse").path_under_cursor()
-      if not path then
-        return
-      end
-      local cmd = "git diff {commit}~1 {commit} -- {path}"
-      require("rio").run(cmd, {
-        params = { commit = hash, path = path },
-        link = "diff",
-        callbacks = {
-          on_finish = { builtin.set_filetype("diff") },
-        },
-      })
-    end,
-    desc = "open file diff",
-    group = "Navigate",
-  }
-end
+---@type Rio.KeyDef
+H.open_file_diff = {
+  action = function(handle)
+    if not handle.state.toggles.name_only.enabled then
+      return
+    end
+    require("rio").run("git diff {commit}~1 {commit} -- {path}", {
+      parent = handle,
+      link = { key = "diff" },
+      callbacks = { on_finish = { builtin.set_filetype("diff") } },
+    })
+  end,
+  desc = "open file diff",
+  group = "Navigate",
+}
 
----@param hash string
-function M.commit(hash)
+---@param parent Rio.Handle
+function M.for_commit(parent)
   local cmd = "git diff {name_only} {whitespace} {word_diff} {stat} {commit}~1 {commit}"
   require("rio").run(cmd, {
-    link = "diff",
+    parent = parent,
+    link = { key = "diff" },
+    parsers = { H.parser },
     params = {
-      commit = hash,
       name_only = togglers.param("name_only", "--name-only", false),
       whitespace = togglers.param("whitespace", "-w", false),
       word_diff = togglers.param("word_diff", "--word-diff", false),
@@ -102,7 +143,7 @@ function M.commit(hash)
       on_finish = { builtin.set_filetype("diff") },
     },
     keys = {
-      ["<CR>"] = H.open_file_diff(hash),
+      ["<CR>"] = H.open_file_diff,
       tt = togglers.key("name_only"),
       tw = togglers.key("whitespace"),
       ts = togglers.key("stat"),
@@ -116,6 +157,7 @@ function M.working(opts)
   local staged = opts.staged or false
   local cmd = "git diff {staged} {whitespace} {word_diff} {stat}"
   require("rio").run(cmd, {
+    parsers = { H.parser },
     params = {
       staged = togglers.param("staged", "--staged", staged),
       whitespace = togglers.param("whitespace", "-w", false),

@@ -2,13 +2,34 @@ local H = {}
 
 local actions = require("plugins.rio.git.actions")
 local open = require("plugins.rio.open")
-local parse = require("plugins.rio.git.parse")
 local togglers = require("rio.togglers")
+
+H.parser = {
+  ---@type fun(param: string, handle: Rio.Handle): string?
+  parse = function(param, handle)
+    if param ~= "path" then
+      return nil
+    end
+    local cursor = vim.api.nvim_win_get_cursor(handle.state.win)
+    local line = vim.api.nvim_buf_get_lines(handle.state.buf, cursor[1] - 1, cursor[1], false)[1]
+    local path
+    if handle.state.toggles.porcelain.enabled then
+      path = line:match("^...(.+)$")
+    else
+      path = line:match("^\t.+:%s+(.+)$") or line:match("^\t(%S.*)$")
+    end
+    if not path then
+      return nil
+    end
+    path = path:match("->%s*(.+)$") or path
+    return path:match("^(%S+)%s+%(") or path
+  end,
+}
 
 ---@type Rio.KeyDef
 H.open_path = {
   action = function(handle)
-    local path = parse.status_path_under_cursor(handle)
+    local path = H.parser.parse("path", handle)
     if not path then
       return
     end
@@ -28,6 +49,7 @@ H.open_path = {
 return function()
   local cmd = "git status {porcelain} {expand_untracked} {untracked} {submodules}"
   require("rio").run(cmd, {
+    parsers = { H.parser },
     params = {
       porcelain = togglers.param("porcelain", "--porcelain"),
       expand_untracked = togglers.param("expand_untracked", "-uall"),
