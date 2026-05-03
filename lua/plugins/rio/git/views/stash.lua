@@ -1,6 +1,5 @@
 local H = {}
 
-local process = require("rio.process")
 local util = require("plugins.rio.git.util")
 
 ---@type Rio.Parser
@@ -45,37 +44,6 @@ H.pop = {
 }
 
 ---@type Rio.KeyDef
-H.rename = {
-  action = function(handle)
-    local ref = H.parser.parse("ref", handle)
-    if not ref then
-      return
-    end
-    local msg = vim.fn.input("New stash message: ")
-    if msg == "" then
-      return
-    end
-    local hash = vim.fn.systemlist({ "git", "rev-parse", ref })[1]
-    if not hash then
-      return
-    end
-    process.spawn({
-      cmd = { "git", "stash", "drop", ref },
-      cwd = handle.state.cwd,
-      on_exit = function(code, _, stderr)
-        if code ~= 0 then
-          Snacks.notify.error(stderr)
-          return
-        end
-        util.run_then_refresh({ "git", "stash", "store", "-m", msg, hash }, handle)
-      end,
-    })
-  end,
-  desc = "rename",
-  group = "Stash",
-}
-
----@type Rio.KeyDef
 H.drop = {
   action = function(handle)
     local ref = H.parser.parse("ref", handle)
@@ -96,7 +64,6 @@ return function()
     parsers = { H.parser },
     keys = {
       a = H.apply,
-      R = H.rename,
       P = H.pop,
       X = H.drop,
     },
