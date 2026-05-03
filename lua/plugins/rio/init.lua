@@ -3,12 +3,17 @@ return {
   dev = true,
   opts = {},
   keys = {
-    -- add
     {
       "<leader>ga",
       function()
         vim.cmd("update")
-        vim.system({ "git", "add", vim.fn.expand("%:p") })
+        require("rio").run("git add {file}", {
+          params = {
+            file = function()
+              return vim.fn.expand("%:p")
+            end,
+          },
+        })
       end,
       desc = "Rio: git add (file)",
     },
@@ -16,7 +21,7 @@ return {
       "<leader>gA",
       function()
         vim.cmd("wall")
-        vim.system({ "git", "add", "." })
+        require("rio").run("git add .")
       end,
       desc = "Rio: git add (all)",
     },
