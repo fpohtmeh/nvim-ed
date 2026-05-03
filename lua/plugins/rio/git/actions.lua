@@ -1,6 +1,7 @@
 local M = {}
 local H = {}
 
+local open = require("plugins.rio.open")
 local util = require("plugins.rio.git.util")
 
 H.append_stash_message = function(args)
@@ -144,6 +145,26 @@ M.reset_staged = {
   end,
   desc = "reset staged",
   group = "Stage",
+}
+
+---@type Rio.KeyDef
+M.open_path = {
+  action = function(handle)
+    local path = H.parse_path(handle)
+    if not path then
+      return
+    end
+    local win = handle.state.path_win
+    if win and vim.api.nvim_win_is_valid(win) then
+      vim.api.nvim_set_current_win(win)
+    else
+      vim.cmd("vsplit")
+      handle.state.path_win = vim.api.nvim_get_current_win()
+    end
+    open(path)
+  end,
+  desc = "open in split",
+  group = "Navigate",
 }
 
 return M

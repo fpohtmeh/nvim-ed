@@ -1,8 +1,66 @@
 local H = {}
 
 local actions = require("plugins.rio.git.actions")
-local open = require("plugins.rio.open")
+local builtin = require("rio.callbacks.builtin")
 local togglers = require("rio.togglers")
+
+H.has_path = function(line, handle)
+  if handle.state.toggles.porcelain.enabled then
+    return line:match("^...(.+)$") ~= nil
+  end
+  return line:match("^\t") ~= nil
+end
+
+H.next_file = {
+  action = function(handle)
+    local buf = handle.state.buf
+    local win = handle.state.win
+    local cursor = vim.api.nvim_win_get_cursor(win)
+    local lines = vim.api.nvim_buf_get_lines(buf, cursor[1], -1, false)
+    for i, line in ipairs(lines) do
+      if H.has_path(line, handle) then
+        vim.api.nvim_win_set_cursor(win, { cursor[1] + i, 0 })
+        return
+      end
+    end
+  end,
+  desc = "next file",
+  group = "Navigate",
+}
+
+H.prev_file = {
+  action = function(handle)
+    local buf = handle.state.buf
+    local win = handle.state.win
+    local cursor = vim.api.nvim_win_get_cursor(win)
+    local lines = vim.api.nvim_buf_get_lines(buf, 0, cursor[1] - 1, false)
+    for i = #lines, 1, -1 do
+      if H.has_path(lines[i], handle) then
+        vim.api.nvim_win_set_cursor(win, { i, 0 })
+        return
+      end
+    end
+  end,
+  desc = "prev file",
+  group = "Navigate",
+}
+
+H.diff_file = {
+  action = function(handle)
+    require("rio").run("git diff --staged -- {path}", {
+      parent = handle,
+      link = { key = "diff_staged" },
+      callbacks = { on_finish = { builtin.set_filetype("diff") } },
+    })
+    require("rio").run("git diff -- {path}", {
+      parent = handle,
+      link = { key = "diff_unstaged" },
+      callbacks = { on_finish = { builtin.set_filetype("diff") } },
+    })
+  end,
+  desc = "diff file",
+  group = "Diff",
+}
 
 H.parser = {
   ---@type fun(param: string, handle: Rio.Handle): string?
@@ -26,26 +84,6 @@ H.parser = {
   end,
 }
 
----@type Rio.KeyDef
-H.open_path = {
-  action = function(handle)
-    local path = H.parser.parse("path", handle)
-    if not path then
-      return
-    end
-    local win = handle.state.path_win
-    if win and vim.api.nvim_win_is_valid(win) then
-      vim.api.nvim_set_current_win(win)
-    else
-      vim.cmd("vsplit")
-      handle.state.path_win = vim.api.nvim_get_current_win()
-    end
-    open(path)
-  end,
-  desc = "open in split",
-  group = "Navigate",
-}
-
 return function()
   local cmd = "git status {porcelain} {expand_untracked} {untracked} {submodules}"
   require("rio").run(cmd, {
@@ -57,7 +95,7 @@ return function()
       submodules = togglers.param("submodules", "--ignore-submodules", false),
     },
     keys = {
-      ["<CR>"] = H.open_path,
+      ["<CR>"] = actions.open_path,
       ["-"] = actions.toggle,
       s = actions.stage,
       a = actions.stage_all,
@@ -69,6 +107,9 @@ return function()
       su = actions.stash_unstaged,
       ss = actions.stash_staged,
       R = actions.reset_staged,
+      dd = H.diff_file,
+      [";;"] = H.next_file,
+      [",,"] = H.prev_file,
       tt = togglers.key("porcelain"),
       te = togglers.key("expand_untracked"),
       tu = togglers.key("untracked"),

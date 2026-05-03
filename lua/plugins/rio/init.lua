@@ -52,6 +52,10 @@ H.status = function()
   require("plugins.rio.git.views.status")()
 end
 
+H.summary = function()
+  require("plugins.rio.git.views.summary")()
+end
+
 H.stash = function()
   require("plugins.rio.git.views.stash")()
 end
@@ -84,6 +88,7 @@ return {
     { "<leader>gD", H.diff_staged, desc = "Rio: git diff (staged)" },
     { "<leader>gb", H.branch, desc = "Rio: git branch" },
     { "<leader>gB", H.branch_all, desc = "Rio: git branch (all)" },
+    { "<leader>gg", H.summary, desc = "Rio: git summary" },
     { "<leader>gs", H.status, desc = "Rio: git status" },
     { "<leader>gz", H.stash, desc = "Rio: git stash" },
     { "<leader>T", H.top, desc = "Rio: top" },
