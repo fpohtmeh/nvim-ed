@@ -2,6 +2,7 @@ local H = {}
 
 local actions = require("plugins.rio.git.actions")
 local builtin = require("rio.callbacks.builtin")
+local diff = require("plugins.rio.git.views.diff")
 local togglers = require("rio.togglers")
 local win_builtin = require("rio.resolver.win.builtin")
 
@@ -61,20 +62,35 @@ end
 
 H.diff_file = {
   action = function(handle)
+    local sibling_win
+    local function resolve_win()
+      if sibling_win and vim.api.nvim_win_is_valid(sibling_win) then
+        vim.api.nvim_set_current_win(sibling_win)
+        vim.cmd("belowright split")
+      else
+        vim.cmd("vsplit")
+      end
+      sibling_win = vim.api.nvim_get_current_win()
+      return sibling_win
+    end
+
     local staged_opts = {
       parent = handle,
       link = { key = "diff_staged" },
-      resolver = { win = { win_builtin.reuse, win_builtin.vsplit } },
+      resolver = { win = { win_builtin.reuse, resolve_win } },
       callbacks = { on_finish = { builtin.set_filetype("diff") } },
-    }
-    local unstaged_resolver = {
-      win = { win_builtin.reuse, win_builtin.split },
-      callbacks = { on_finish = H.unstaged_on_finish(handle) },
+      parsers = diff.parsers,
+      keys = diff.keys,
     }
     local unstaged_opts = {
       parent = handle,
       link = { key = "diff_unstaged" },
-      resolver = unstaged_resolver,
+      resolver = {
+        win = { win_builtin.reuse, resolve_win },
+        callbacks = { on_finish = H.unstaged_on_finish(handle) },
+      },
+      parsers = diff.parsers,
+      keys = diff.keys,
     }
     require("rio").run("git diff {staged_args} {path}", staged_opts)
     require("rio").run("git diff {unstaged_args} {path}", unstaged_opts)

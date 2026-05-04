@@ -127,6 +127,15 @@ H.open_file_diff = {
   group = "Navigate",
 }
 
+M.keys = {
+  [";h"] = H.next_hunk,
+  [",h"] = H.prev_hunk,
+  s = H.stage_hunk,
+  u = H.unstage_hunk,
+}
+
+M.parsers = { H.parser }
+
 ---@param parent Rio.Handle
 function M.for_commit(parent)
   local cmd = "git diff {name_only} {whitespace} {word_diff} {stat} {commit}~1 {commit}"
@@ -145,8 +154,11 @@ function M.for_commit(parent)
     },
     keys = {
       ["<CR>"] = H.open_file_diff,
+      [";h"] = H.next_hunk,
+      [",h"] = H.prev_hunk,
       tt = togglers.key("name_only"),
       tw = togglers.key("whitespace"),
+      td = togglers.key("word_diff"),
       ts = togglers.key("stat"),
     },
   })
