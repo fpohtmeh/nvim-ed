@@ -13,7 +13,7 @@ H.parser = {
     end
     local cursor = vim.api.nvim_win_get_cursor(handle.state.win)
     local line = vim.api.nvim_buf_get_lines(handle.state.buf, cursor[1] - 1, cursor[1], false)[1]
-    return line:match("^%s*%*?%s*(%S+)")
+    return line:match("^%s*[%*%+]?%s*(%S+)")
   end,
 }
 
