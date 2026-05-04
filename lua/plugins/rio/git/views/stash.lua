@@ -1,5 +1,8 @@
 local H = {}
 
+local builtin = require("rio.callbacks.builtin")
+local diff = require("plugins.rio.git.views.diff")
+local rio = require("rio")
 local util = require("plugins.rio.git.util")
 local win_builtin = require("rio.resolver.win.builtin")
 
@@ -46,6 +49,23 @@ H.drop = {
   group = "Stash",
 }
 
+---@type Rio.KeyDef
+H.show_diff = {
+  action = function(parent)
+    rio.run("git stash show -p {ref}", {
+      parent = parent,
+      link = { key = "diff" },
+      parsers = diff.parsers,
+      keys = diff.keys,
+      callbacks = {
+        on_finish = { builtin.set_filetype("diff") },
+      },
+    })
+  end,
+  desc = "show diff",
+  group = "Navigate",
+}
+
 return function()
   require("rio").run("git stash list", {
     resolver = {
@@ -53,6 +73,7 @@ return function()
     },
     parsers = { H.parser },
     keys = {
+      ["<CR>"] = H.show_diff,
       a = H.apply,
       P = H.pop,
       X = H.drop,
