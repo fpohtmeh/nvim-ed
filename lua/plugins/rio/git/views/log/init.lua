@@ -76,20 +76,49 @@ H.reset_last_commit = {
   group = "Reset",
 }
 
+H.notify_remote = function(label)
+  return function(handle)
+    local result = handle.result
+    local msg = (result.stdout ~= "" and result.stdout or result.stderr):gsub("%s+$", "")
+    local opts = { id = "git-" .. label, title = "[rio]" }
+    if result.code ~= 0 then
+      Snacks.notify.error(msg ~= "" and msg or ("git " .. label .. " failed"), opts)
+      return false
+    end
+    Snacks.notify.info(msg ~= "" and msg or ("git " .. label .. " done"), opts)
+  end
+end
+
+H.refresh_parent = function(handle)
+  builtin.refresh().action(handle.parent)
+end
+
+H.remote_action = function(cmd, label)
+  return function(parent)
+    Snacks.notify.info("git " .. label .. "…", { id = "git-" .. label, title = "[rio]", timeout = false })
+    rio.run(cmd, {
+      parent = parent,
+      resolver = {
+        callbacks = {
+          on_finish = function()
+            return { H.notify_remote(label), H.refresh_parent }
+          end,
+        },
+      },
+    })
+  end
+end
+
 ---@type Rio.KeyDef
 H.pull = {
-  action = function(handle)
-    util.run_then_refresh("git pull", handle)
-  end,
+  action = H.remote_action("git pull", "pull"),
   desc = "pull",
   group = "Remote",
 }
 
 ---@type Rio.KeyDef
 H.push = {
-  action = function(handle)
-    util.run_then_refresh("git push", handle)
-  end,
+  action = H.remote_action("git push", "push"),
   desc = "push",
   group = "Remote",
 }
