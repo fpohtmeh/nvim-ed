@@ -40,16 +40,23 @@ H.open_commit_diff = {
 ---@type Rio.KeyDef
 H.show_commit = {
   action = function(parent)
-    rio.run("git show {stat} {commit}", {
+    rio.run("git show {whitespace} {word_diff} {stat} {commit}", {
       parent = parent,
       link = { key = "show" },
+      parsers = diff.parsers,
       params = {
+        whitespace = togglers.param("whitespace", "-w", false),
+        word_diff = togglers.param("word_diff", "--word-diff", false),
         stat = togglers.param("stat", "--stat", false),
       },
       callbacks = {
-        on_finish = { builtin.set_filetype("git") },
+        on_finish = { builtin.set_filetype("diff") },
       },
       keys = {
+        [";h"] = diff.keys[";h"],
+        [",h"] = diff.keys[",h"],
+        tw = togglers.key("whitespace"),
+        td = togglers.key("word_diff"),
         ts = togglers.key("stat"),
       },
     })

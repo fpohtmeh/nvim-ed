@@ -74,13 +74,29 @@ H.diff_file = {
       return sibling_win
     end
 
+    local diff_params = {
+      whitespace = togglers.param("whitespace", "-w", false),
+      word_diff = togglers.param("word_diff", "--word-diff", false),
+      stat = togglers.param("stat", "--stat", false),
+    }
+    local diff_keys = {
+      [";h"] = diff.keys[";h"],
+      [",h"] = diff.keys[",h"],
+      s = diff.keys.s,
+      u = diff.keys.u,
+      tw = togglers.key("whitespace"),
+      td = togglers.key("word_diff"),
+      ts = togglers.key("stat"),
+    }
+
     local staged_opts = {
       parent = handle,
       link = { key = "diff_staged" },
       resolver = { win = { win_builtin.reuse, resolve_win } },
       callbacks = { on_finish = { builtin.set_filetype("diff") } },
       parsers = diff.parsers,
-      keys = diff.keys,
+      params = diff_params,
+      keys = diff_keys,
     }
     local unstaged_opts = {
       parent = handle,
@@ -90,10 +106,11 @@ H.diff_file = {
         callbacks = { on_finish = H.unstaged_on_finish(handle) },
       },
       parsers = diff.parsers,
-      keys = diff.keys,
+      params = diff_params,
+      keys = diff_keys,
     }
-    require("rio").run("git diff {staged_args} {path}", staged_opts)
-    require("rio").run("git diff {unstaged_args} {path}", unstaged_opts)
+    require("rio").run("git diff {staged_args} {whitespace} {word_diff} {stat} {path}", staged_opts)
+    require("rio").run("git diff {unstaged_args} {whitespace} {word_diff} {stat} {path}", unstaged_opts)
   end,
   desc = "diff file",
   group = "Diff",

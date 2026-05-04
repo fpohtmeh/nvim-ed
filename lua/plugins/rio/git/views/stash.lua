@@ -3,6 +3,7 @@ local H = {}
 local builtin = require("rio.callbacks.builtin")
 local diff = require("plugins.rio.git.views.diff")
 local rio = require("rio")
+local togglers = require("rio.togglers")
 local util = require("plugins.rio.git.util")
 local win_builtin = require("rio.resolver.win.builtin")
 
@@ -52,13 +53,24 @@ H.drop = {
 ---@type Rio.KeyDef
 H.show_diff = {
   action = function(parent)
-    rio.run("git stash show -p {ref}", {
+    rio.run("git stash show -p {whitespace} {word_diff} {stat} {ref}", {
       parent = parent,
       link = { key = "diff" },
       parsers = diff.parsers,
-      keys = diff.keys,
+      params = {
+        whitespace = togglers.param("whitespace", "-w", false),
+        word_diff = togglers.param("word_diff", "--word-diff", false),
+        stat = togglers.param("stat", "--stat", false),
+      },
       callbacks = {
         on_finish = { builtin.set_filetype("diff") },
+      },
+      keys = {
+        [";h"] = diff.keys[";h"],
+        [",h"] = diff.keys[",h"],
+        tw = togglers.key("whitespace"),
+        td = togglers.key("word_diff"),
+        ts = togglers.key("stat"),
       },
     })
   end,
