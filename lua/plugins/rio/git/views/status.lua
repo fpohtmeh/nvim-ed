@@ -3,6 +3,7 @@ local H = {}
 local actions = require("plugins.rio.git.actions")
 local builtin = require("rio.callbacks.builtin")
 local togglers = require("rio.togglers")
+local win_builtin = require("rio.resolver.win.builtin")
 
 H.has_path = function(line, handle)
   if handle.state.toggles.porcelain.enabled then
@@ -87,6 +88,9 @@ H.parser = {
 return function()
   local cmd = "git status {porcelain} {expand_untracked} {untracked} {submodules}"
   require("rio").run(cmd, {
+    resolver = {
+      win = { win_builtin.reuse, win_builtin.current },
+    },
     parsers = { H.parser },
     params = {
       porcelain = togglers.param("porcelain", "--porcelain"),

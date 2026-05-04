@@ -1,6 +1,7 @@
 local H = {}
 
 local togglers = require("rio.togglers")
+local win_builtin = require("rio.resolver.win.builtin")
 
 ---@type Rio.Parser
 H.parser = {
@@ -20,6 +21,9 @@ return function(opts)
   local all = opts.all or false
   local cmd = "git branch {all}"
   require("rio").run(cmd, {
+    resolver = {
+      win = { win_builtin.reuse, win_builtin.current },
+    },
     parsers = { H.parser },
     params = {
       all = togglers.param("all", "-a", all),

@@ -1,6 +1,7 @@
 local H = {}
 
 local util = require("plugins.rio.git.util")
+local win_builtin = require("rio.resolver.win.builtin")
 
 ---@type Rio.Parser
 H.parser = {
@@ -47,6 +48,9 @@ H.drop = {
 
 return function()
   require("rio").run("git stash list", {
+    resolver = {
+      win = { win_builtin.reuse, win_builtin.current },
+    },
     parsers = { H.parser },
     keys = {
       a = H.apply,

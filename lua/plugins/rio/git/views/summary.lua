@@ -2,6 +2,7 @@ local H = {}
 
 local actions = require("plugins.rio.git.actions")
 local builtin = require("rio.callbacks.builtin")
+local win_builtin = require("rio.resolver.win.builtin")
 
 H.format_output = function(handle)
   local stdout = handle.result.stdout
@@ -188,6 +189,7 @@ return function()
   require("rio").run("git status --porcelain -uall", {
     parsers = { H.parser },
     resolver = {
+      win = { win_builtin.reuse, win_builtin.current },
       callbacks = {
         on_finish = function(finish_actions)
           table.insert(finish_actions, 2, H.format_output)

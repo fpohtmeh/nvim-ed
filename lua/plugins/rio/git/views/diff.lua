@@ -3,6 +3,7 @@ local H = {}
 
 local builtin = require("rio.callbacks.builtin")
 local togglers = require("rio.togglers")
+local win_builtin = require("rio.resolver.win.builtin")
 
 ---@type Rio.Parser
 H.parser = {
@@ -157,6 +158,9 @@ function M.working(opts)
   local staged = opts.staged or false
   local cmd = "git diff {staged} {whitespace} {word_diff} {stat}"
   require("rio").run(cmd, {
+    resolver = {
+      win = { win_builtin.reuse, win_builtin.current },
+    },
     parsers = { H.parser },
     params = {
       staged = togglers.param("staged", "--staged", staged),

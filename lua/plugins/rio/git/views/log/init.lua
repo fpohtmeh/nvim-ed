@@ -3,6 +3,7 @@ local H = {}
 local builtin = require("rio.callbacks.builtin")
 local rio = require("rio")
 local togglers = require("rio.togglers")
+local win_builtin = require("rio.resolver.win.builtin")
 local diff = require("plugins.rio.git.views.diff")
 local file_view = require("plugins.rio.git.views.log.file")
 local util = require("plugins.rio.git.util")
@@ -72,6 +73,9 @@ return function(opts)
   local file = opts.file and vim.fn.expand("%:.") or nil
   local cmd = "git log {limit} {oneline} {merges} {decorate}" .. (file and " -- {file}" or "")
   rio.run(cmd, {
+    resolver = {
+      win = { win_builtin.reuse, win_builtin.current },
+    },
     callbacks = {
       on_finish = { builtin.set_filetype("git") },
     },

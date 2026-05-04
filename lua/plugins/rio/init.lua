@@ -79,7 +79,7 @@ H.top = function()
   local builtin = require("rio.callbacks.builtin")
   require("rio").run("top -b -n 1", {
     resolver = {
-      win = { win_builtin.reuse, win_builtin.split },
+      win = { win_builtin.reuse, win_builtin.current },
     },
     callbacks = {
       on_finish = { builtin.auto_refresh({ interval = 1000 }) },
