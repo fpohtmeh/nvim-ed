@@ -164,6 +164,24 @@ H.build_block_patch = function(handle, reverse)
 end
 
 ---@type Rio.KeyDef
+H.next_block = {
+  action = function()
+    vim.fn.search("^+[^+]", "W")
+  end,
+  desc = "next block",
+  group = "Navigate",
+}
+
+---@type Rio.KeyDef
+H.prev_block = {
+  action = function()
+    vim.fn.search("^+[^+]", "bW")
+  end,
+  desc = "prev block",
+  group = "Navigate",
+}
+
+---@type Rio.KeyDef
 H.next_hunk = {
   action = function()
     vim.fn.search("^@@", "W")
@@ -263,8 +281,10 @@ H.open_file_diff = {
 }
 
 M.keys = {
-  [";h"] = H.next_hunk,
-  [",h"] = H.prev_hunk,
+  [";h"] = H.next_block,
+  [",h"] = H.prev_block,
+  [";H"] = H.next_hunk,
+  [",H"] = H.prev_hunk,
   s = H.stage_block,
   u = H.unstage_block,
   S = H.stage_hunk,
@@ -291,8 +311,10 @@ function M.for_commit(parent)
     },
     keys = {
       ["<CR>"] = H.open_file_diff,
-      [";h"] = H.next_hunk,
-      [",h"] = H.prev_hunk,
+      [";h"] = H.next_block,
+      [",h"] = H.prev_block,
+      [";H"] = H.next_hunk,
+      [",H"] = H.prev_hunk,
       tt = togglers.key("name_only"),
       tw = togglers.key("whitespace"),
       td = togglers.key("word_diff"),
@@ -321,8 +343,10 @@ function M.working(opts)
       on_finish = { builtin.set_filetype("diff") },
     },
     keys = {
-      [";h"] = H.next_hunk,
-      [",h"] = H.prev_hunk,
+      [";h"] = H.next_block,
+      [",h"] = H.prev_block,
+      [";H"] = H.next_hunk,
+      [",H"] = H.prev_hunk,
       s = H.stage_block,
       u = H.unstage_block,
       S = H.stage_hunk,
