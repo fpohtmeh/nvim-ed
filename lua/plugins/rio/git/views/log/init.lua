@@ -38,6 +38,27 @@ H.open_commit_diff = {
 }
 
 ---@type Rio.KeyDef
+H.show_commit = {
+  action = function(parent)
+    rio.run("git show {stat} {commit}", {
+      parent = parent,
+      link = { key = "show" },
+      params = {
+        stat = togglers.param("stat", "--stat", false),
+      },
+      callbacks = {
+        on_finish = { builtin.set_filetype("git") },
+      },
+      keys = {
+        ts = togglers.key("stat"),
+      },
+    })
+  end,
+  desc = "show commit",
+  group = "Navigate",
+}
+
+---@type Rio.KeyDef
 H.reset_last_commit = {
   action = function(handle)
     util.run_then_refresh("git reset HEAD~1", handle, {
@@ -89,6 +110,7 @@ return function(opts)
     parsers = { H.parser },
     keys = {
       ["<CR>"] = H.open_commit_diff,
+      dd = H.show_commit,
       R = H.reset_last_commit,
       o = file and file_view.show_at_commit(file) or false,
       d = file and file_view.show_diff_at_commit or false,
