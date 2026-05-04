@@ -1,19 +1,33 @@
 local H = {}
 
+H.notify_only = function(msg)
+  local builtin = require("rio.callbacks.builtin")
+  return {
+    on_finish = function()
+      return {
+        builtin.notify_error,
+        function()
+          vim.notify(msg, vim.log.levels.INFO)
+        end,
+      }
+    end,
+  }
+end
+
 H.add_file = function()
   vim.cmd("update")
-  require("rio").run("git add {file}", {
-    params = {
-      file = function()
-        return vim.fn.expand("%:p")
-      end,
-    },
+  local file = vim.fn.expand("%:.")
+  require("rio").run("git add -- {file}", {
+    params = { file = file },
+    resolver = { callbacks = H.notify_only("Added " .. file) },
   })
 end
 
 H.add_all = function()
   vim.cmd("wall")
-  require("rio").run("git add .")
+  require("rio").run("git add .", {
+    resolver = { callbacks = H.notify_only("Added all") },
+  })
 end
 
 H.log = function()
