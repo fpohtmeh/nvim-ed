@@ -46,42 +46,87 @@ H.prev_file = {
   group = "Navigate",
 }
 
+H.unstaged_on_finish = function(handle)
+  return function(callbacks)
+    callbacks[1] = function(h)
+      local _, x, _ = H.parse_line(handle)
+      if x == "?" and h.result.code == 1 then
+        return
+      end
+      return builtin.notify_error(h)
+    end
+    table.insert(callbacks, builtin.set_filetype("diff"))
+  end
+end
+
 H.diff_file = {
   action = function(handle)
-    require("rio").run("git diff --staged -- {path}", {
+    local staged_opts = {
       parent = handle,
       link = { key = "diff_staged" },
+      resolver = { win = { win_builtin.reuse, win_builtin.vsplit } },
       callbacks = { on_finish = { builtin.set_filetype("diff") } },
-    })
-    require("rio").run("git diff -- {path}", {
+    }
+    local unstaged_resolver = {
+      win = { win_builtin.reuse, win_builtin.split },
+      callbacks = { on_finish = H.unstaged_on_finish(handle) },
+    }
+    local unstaged_opts = {
       parent = handle,
       link = { key = "diff_unstaged" },
-      callbacks = { on_finish = { builtin.set_filetype("diff") } },
-    })
+      resolver = unstaged_resolver,
+    }
+    require("rio").run("git diff {staged_args} {path}", staged_opts)
+    require("rio").run("git diff {unstaged_args} {path}", unstaged_opts)
   end,
   desc = "diff file",
   group = "Diff",
 }
 
+H.parse_line = function(handle)
+  local cursor = vim.api.nvim_win_get_cursor(handle.state.win)
+  local line = vim.api.nvim_buf_get_lines(handle.state.buf, cursor[1] - 1, cursor[1], false)[1]
+  if not line then
+    return nil, nil, nil
+  end
+  local x, y, path
+  if handle.state.toggles.porcelain.enabled then
+    x = line:sub(1, 1)
+    y = line:sub(2, 2)
+    path = line:sub(4)
+    if path == "" then
+      return nil, nil, nil
+    end
+  else
+    path = line:match("^\t.+:%s+(.+)$") or line:match("^\t(%S.*)$")
+  end
+  if not path then
+    return nil, nil, nil
+  end
+  path = path:match("->%s*(.+)$") or path
+  path = path:match("^(%S+)%s+%(") or path
+  return path, x, y
+end
+
 H.parser = {
   ---@type fun(param: string, handle: Rio.Handle): string?
   parse = function(param, handle)
-    if param ~= "path" then
-      return nil
-    end
-    local cursor = vim.api.nvim_win_get_cursor(handle.state.win)
-    local line = vim.api.nvim_buf_get_lines(handle.state.buf, cursor[1] - 1, cursor[1], false)[1]
-    local path
-    if handle.state.toggles.porcelain.enabled then
-      path = line:match("^...(.+)$")
-    else
-      path = line:match("^\t.+:%s+(.+)$") or line:match("^\t(%S.*)$")
-    end
+    local path, x, _ = H.parse_line(handle)
     if not path then
       return nil
     end
-    path = path:match("->%s*(.+)$") or path
-    return path:match("^(%S+)%s+%(") or path
+    if param == "path" then
+      return path
+    end
+    if param == "staged_args" then
+      return "--staged --"
+    end
+    if param == "unstaged_args" then
+      if x == "?" then
+        return "--no-index -- /dev/null"
+      end
+      return "--"
+    end
   end,
 }
 
