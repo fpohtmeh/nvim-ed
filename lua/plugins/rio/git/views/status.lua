@@ -128,11 +128,8 @@ H.parser = {
   ---@type fun(param: string, handle: Rio.Handle): string?
   parse = function(param, handle)
     local path, x, _ = H.parse_line(handle)
-    if not path then
-      return nil
-    end
     if param == "path" then
-      return path
+      return path or "."
     end
     if param == "staged_args" then
       return "--staged --"
