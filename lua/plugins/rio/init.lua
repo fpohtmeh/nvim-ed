@@ -74,6 +74,10 @@ H.stash = function()
   require("plugins.rio.git.views.stash")()
 end
 
+H.mr_list = function()
+  require("plugins.rio.glab.views.mr_list")()
+end
+
 H.top = function()
   local win_builtin = require("rio.resolver.win.builtin")
   local builtin = require("rio.callbacks.builtin")
@@ -105,6 +109,7 @@ return {
     { "<leader>gg", H.status, desc = "Rio: git status" },
     { "<leader>gs", H.summary, desc = "Rio: git summary" },
     { "<leader>gz", H.stash, desc = "Rio: git stash" },
+    { "<leader>gm", H.mr_list, desc = "Rio: glab MR list" },
     { "<leader>T", H.top, desc = "Rio: top" },
   },
 }
