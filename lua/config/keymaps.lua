@@ -91,12 +91,13 @@ map("n", "<leader>tb", terminal.open_here, { desc = "Terminal (buffer)" })
 
 -- Claude
 local claude = require("core.claude")
+-- stylua: ignore start
 map("n", "<leader>ar", claude.resume, { desc = "Toggle Claude (resume)" })
 map("n", "<leader>an", claude.new, { desc = "Toggle Claude (new)" })
--- stylua: ignore start
 map("n", "<leader>at", function() claude.input(false) end, { desc = "Send text" })
 map("n", "<leader>as", function() claude.input(true) end, { desc = "Submit text" })
 map("n", "<leader>aq", function() claude.send_qf(true) end, { desc = "Send qf list" })
+map("n", "<leader>af", claude.send_file, { desc = "Send file path" })
 map("n", "<leader>ac", claude.commit, { desc = "Commit" })
 map("n", "<leader>ax", claude.clear, { desc = "Clear" })
 -- stylua: ignore end

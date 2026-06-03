@@ -56,14 +56,16 @@ end)()
 
 H.run = function(args)
   local cmd = "claude --settings " .. H.settings .. (args and " " .. args or "")
+  H.cwd = fs.tab_cwd()
   H.term = Snacks.terminal(cmd, {
-    cwd = fs.tab_cwd(),
+    cwd = H.cwd,
     win = { position = "right", width = 80, keys = terminal.keys },
     env = { terminal_style = "claude" },
   })
 end
 
 function M.resume()
+  vim.notify("Resuming Claude session…", vim.log.levels.INFO)
   H.run("--continue")
 end
 
@@ -73,11 +75,13 @@ end
 
 function M.send(text, submit)
   local buf = H.term and H.term.buf
-  if not buf or not vim.api.nvim_buf_is_valid(buf) then
-    vim.notify("No Claude terminal running", vim.log.levels.WARN)
-    return
+  if buf and vim.api.nvim_buf_is_valid(buf) then
+    return vim.fn.chansend(vim.b[buf].terminal_job_id, submit and text .. H.enter or text)
   end
-  vim.fn.chansend(vim.b[buf].terminal_job_id, submit and text .. H.enter or text)
+  M.resume()
+  vim.defer_fn(function()
+    M.send(text, submit)
+  end, 1000)
 end
 
 function M.input(submit)
@@ -86,6 +90,20 @@ function M.input(submit)
       M.send(input, submit)
     end
   end)
+end
+
+function M.send_file()
+  local path = fs.buf_full_path()
+  if path == "" then
+    vim.notify("No file in current buffer", vim.log.levels.WARN)
+    return
+  end
+  path = fs.to_unix(path)
+  local cwd = fs.to_unix(H.cwd or fs.tab_cwd())
+  if path:sub(1, #cwd + 1) == cwd .. "/" then
+    path = path:sub(#cwd + 2)
+  end
+  M.send("@" .. path .. " ", false)
 end
 
 function M.commit()
