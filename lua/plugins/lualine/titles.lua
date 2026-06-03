@@ -9,6 +9,7 @@ H.filetype = {
   snacks_dashboard = { "Dashboard" },
   fugitive = { "Git", icons.git.icon },
   git = { "Git", icons.git.icon },
+  diff = { "Git", icons.git.icon },
   gitcommit = { "Commit", icons.git.icon },
   qf = { "Quickfix" },
   oil = { "Files" },
