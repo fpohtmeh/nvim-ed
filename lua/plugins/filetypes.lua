@@ -5,6 +5,7 @@ vim.filetype.add({
     log = "log",
     mdc = "markdown",
     base = "yaml",
+    applescript = "applescript",
   },
 })
 
@@ -23,5 +24,10 @@ return {
   {
     "fei6409/log-highlight.nvim",
     ft = { "log" },
+  },
+  -- applescript
+  {
+    "vim-scripts/applescript.vim",
+    ft = { "applescript" },
   },
 }
