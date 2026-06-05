@@ -14,7 +14,7 @@ end
 
 H.find_and_run_template = function(templates, task_name)
   for _, template in ipairs(templates) do
-    if string.find(template.name, task_name) then
+    if template.name == task_name then
       require("overseer").run_task({ name = template.name })
       return
     end
