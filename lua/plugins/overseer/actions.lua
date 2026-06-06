@@ -12,9 +12,13 @@ H.template_search_params = function()
   return { dir = dir, filetype = vim.bo.filetype }
 end
 
+H.matches = function(template_name, task_name)
+  return template_name == task_name or template_name:match("%s" .. vim.pesc(task_name) .. "$") ~= nil
+end
+
 H.find_and_run_template = function(templates, task_name)
   for _, template in ipairs(templates) do
-    if template.name == task_name then
+    if H.matches(template.name, task_name) then
       require("overseer").run_task({ name = template.name })
       return
     end
