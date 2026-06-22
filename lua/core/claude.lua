@@ -54,23 +54,86 @@ H.settings = (function()
   return base .. "/claude-hooks.json"
 end)()
 
-H.run = function(args)
-  local cmd = "claude --settings " .. H.settings .. (args and " " .. args or "")
+H.float_height = function()
+  return vim.o.lines - 1
+end
+
+H.geometry = function(style)
+  if style == "float" then
+    return { position = "float", row = 0, col = 0, width = 0, height = H.float_height, border = "none", zindex = 50 }
+  end
+  return { position = "bottom", height = 0.4, border = "none" }
+end
+
+H.keys = vim.tbl_extend("force", {}, terminal.keys, {
+  toggle_style = {
+    "<A-t>",
+    function()
+      M.toggle_style()
+    end,
+    mode = { "n", "t" },
+    desc = "Toggle Claude window",
+  },
+})
+
+H.win = function(style)
+  return vim.tbl_extend("force", {
+    keys = H.keys,
+    relative = "editor",
+    backdrop = false,
+  }, H.geometry(style))
+end
+
+-- Try to continue the last session; start a new one if there is none.
+H.run = function(style)
+  H.style = style
+  local cmd = "claude --settings " .. H.settings
+  cmd = cmd .. " --continue || " .. cmd
   H.cwd = fs.tab_cwd()
   H.term = Snacks.terminal(cmd, {
     cwd = H.cwd,
-    win = { position = "right", width = 80, keys = terminal.keys },
+    win = H.win(style),
     env = { terminal_style = "claude" },
   })
 end
 
-function M.resume()
-  vim.notify("Resuming Claude session…", vim.log.levels.INFO)
-  H.run("--continue")
+H.apply_style = function(style)
+  local o, g = H.term.opts, H.geometry(style)
+  o.relative = "editor"
+  o.backdrop = false
+  o.row, o.col = g.row, g.col
+  o.position = g.position
+  o.width = g.width
+  o.height = g.height
+  o.border = g.border
+  o.zindex = g.zindex
+  H.style = style
 end
 
-function M.new()
-  H.run()
+H.show = function(style)
+  if not (H.term and H.term:buf_valid()) then
+    return H.run(style)
+  end
+  if H.style ~= style then
+    H.term:hide()
+    H.apply_style(style)
+  end
+  if not H.term:win_valid() then
+    H.term:show()
+  end
+  H.term:focus()
+end
+
+function M.float()
+  H.show("float")
+end
+
+function M.bottom()
+  H.show("bottom")
+end
+
+function M.toggle_style()
+  H.show(H.style == "float" and "bottom" or "float")
 end
 
 function M.send(text, submit)
@@ -78,7 +141,7 @@ function M.send(text, submit)
   if buf and vim.api.nvim_buf_is_valid(buf) then
     return vim.fn.chansend(vim.b[buf].terminal_job_id, submit and text .. H.enter or text)
   end
-  M.resume()
+  H.show(H.style or "float")
   vim.defer_fn(function()
     M.send(text, submit)
   end, 1000)
