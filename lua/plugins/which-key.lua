@@ -7,5 +7,9 @@ return {
     win = { border = "single" },
     icons = { mappings = false },
     defaults = {},
+    spec = {
+      { "<leader>a", group = "Claude" },
+      { "<leader>t", group = "Terminal" },
+    },
   },
 }
