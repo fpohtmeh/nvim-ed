@@ -88,10 +88,8 @@ end
 
 H.cmd = function(action)
   local base = "claude --settings " .. H.hooks_ref
-  if action == "resume" then
-    return base .. " --resume"
-  end
-  return base .. " --continue || " .. base
+  local flag = action == "resume" and "--resume" or "--continue"
+  return base .. " " .. flag .. " || " .. base
 end
 
 H.run = function(style, action)
