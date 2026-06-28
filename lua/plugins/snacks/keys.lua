@@ -21,10 +21,12 @@ H.opts.main_preview = {
   layout = { preview = { main = true } },
 }
 
+H.opts.grep = vim.tbl_extend("force", H.opts.main_preview, { regex = false })
+
 return {
   -- stylua: ignore start
   { "<leader><space>", function() Snacks.picker.files() end, desc = "Files" },
-  { "<leader>/", function() Snacks.picker.grep(H.opts.main_preview) end, desc = "Grep" },
+  { "<leader>/", function() Snacks.picker.grep(H.opts.grep) end, desc = "Grep" },
   { "<leader>b", function() Snacks.picker.buffers(H.opts.main_preview) end, desc = "Buffers" },
   { "<leader>sl", function() Snacks.picker.lsp_symbols(H.opts.lsp) end, desc = "Lsp Symbols (Buffer)" },
   { "<leader>sh", function() Snacks.picker.help(H.opts.main_preview) end, desc = "Help Pages" },
