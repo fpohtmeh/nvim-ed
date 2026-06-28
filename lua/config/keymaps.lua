@@ -93,13 +93,13 @@ map("n", "<leader>tb", terminal.open_here, { desc = "Terminal (buffer)" })
 local claude = require("core.claude")
 -- stylua: ignore start
 map("n", "<leader>aa", claude.bottom, { desc = "Claude (bottom)" })
-map("n", "<leader>ar", claude.resume, { desc = "Resume session" })
-map("n", "<leader>at", function() claude.input(false) end, { desc = "Send text" })
-map("n", "<leader>as", function() claude.input(true) end, { desc = "Submit text" })
-map("n", "<leader>aq", function() claude.send_qf(true) end, { desc = "Send qf list" })
-map("n", "<leader>af", claude.send_file, { desc = "Send file path" })
-map("n", "<leader>ac", claude.commit, { desc = "Commit" })
-map("n", "<leader>ax", claude.clear, { desc = "Clear" })
+map("n", "<leader>ar", claude.resume, { desc = "Claude (resume)" })
+map("n", "<leader>at", function() claude.input(false) end, { desc = "Claude (send text)" })
+map("n", "<leader>as", function() claude.input(true) end, { desc = "Claude (submit text)" })
+map("n", "<leader>aq", function() claude.send_qf(true) end, { desc = "Claude (send qf)" })
+map("n", "<leader>af", claude.send_file, { desc = "Claude (send file)" })
+map("n", "<leader>ac", claude.commit, { desc = "Claude (commit)" })
+map("n", "<leader>ax", claude.clear, { desc = "Claude (clear)" })
 -- stylua: ignore end
 
 -- Lazygit
