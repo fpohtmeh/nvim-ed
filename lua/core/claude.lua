@@ -138,10 +138,6 @@ H.show = function(style)
   H.term:focus()
 end
 
-function M.float()
-  H.show("float")
-end
-
 function M.bottom()
   H.show("bottom")
 end
