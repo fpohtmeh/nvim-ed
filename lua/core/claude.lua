@@ -86,16 +86,29 @@ H.win = function(style)
   }, H.geometry(style))
 end
 
-H.run = function(style)
+H.cmd = function(action)
+  local base = "claude --settings " .. H.hooks_ref
+  if action == "resume" then
+    return base .. " --resume"
+  end
+  return base .. " --continue || " .. base
+end
+
+H.run = function(style, action)
   H.style = style
-  local cmd = "claude --settings " .. H.hooks_ref
-  cmd = cmd .. " --continue || " .. cmd
   H.cwd = fs.tab_cwd()
-  H.term = Snacks.terminal(cmd, {
+  H.term = Snacks.terminal(H.cmd(action), {
     cwd = H.cwd,
     win = H.win(style),
     env = { terminal_style = "claude", CLAUDE_HOOKS = H.hooks },
   })
+end
+
+H.close = function()
+  if H.term and H.term:buf_valid() then
+    vim.api.nvim_buf_delete(H.term.buf, { force = true })
+  end
+  H.term = nil
 end
 
 H.apply_style = function(style)
@@ -135,6 +148,11 @@ end
 
 function M.toggle_style()
   H.show(H.style == "float" and "bottom" or "float")
+end
+
+function M.resume()
+  H.close()
+  H.run(H.style or "float", "resume")
 end
 
 function M.send(text, submit)
