@@ -41,7 +41,7 @@ function M.color()
   return highlight_map[H.state] or highlight_map.inactive
 end
 
-H.settings = (function()
+H.hooks = (function()
   local base = vim.fn.stdpath("config"):gsub("\\", "/") .. "/scripts"
   if vim.fn.has("win32") == 1 then
     local src = base .. "/claude-hooks-win.json"
@@ -53,6 +53,8 @@ H.settings = (function()
   end
   return base .. "/claude-hooks.json"
 end)()
+
+H.hooks_ref = vim.fn.has("win32") == 1 and "$env:CLAUDE_HOOKS" or '"$CLAUDE_HOOKS"'
 
 H.float_height = function()
   return vim.o.lines - 1
@@ -84,16 +86,15 @@ H.win = function(style)
   }, H.geometry(style))
 end
 
--- Try to continue the last session; start a new one if there is none.
 H.run = function(style)
   H.style = style
-  local cmd = "claude --settings " .. H.settings
+  local cmd = "claude --settings " .. H.hooks_ref
   cmd = cmd .. " --continue || " .. cmd
   H.cwd = fs.tab_cwd()
   H.term = Snacks.terminal(cmd, {
     cwd = H.cwd,
     win = H.win(style),
-    env = { terminal_style = "claude" },
+    env = { terminal_style = "claude", CLAUDE_HOOKS = H.hooks },
   })
 end
 
