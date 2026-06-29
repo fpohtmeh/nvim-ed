@@ -25,14 +25,14 @@
 
 ## Navigation
 
-| Key                | Action                       |
-| ------------------ | ---------------------------- |
-| `<S-h>` / `<S-l>`  | Start/End of line            |
-| `<C-1>` to `<C-5>` | Go to window 1-5             |
-| `;b` / `,b`        | Next/Previous buffer         |
-| `<leader><tab>`    | New tab                      |
-| `<leader>1-9`      | Go to tab 1-9                |
-| `gq` / `gQ`        | Close tab / Close other tabs |
+| Key               | Action                       |
+| ----------------- | ---------------------------- |
+| `<S-h>` / `<S-l>` | Start/End of line            |
+| `<C-h/j/k/l/;>`   | Go to window 1-5             |
+| `;b` / `,b`       | Next/Previous buffer         |
+| `<leader><tab>`   | New tab                      |
+| `<leader>1-9`     | Go to tab 1-9                |
+| `gq` / `gQ`       | Close tab / Close other tabs |
 
 ## Buffers & Windows
 
