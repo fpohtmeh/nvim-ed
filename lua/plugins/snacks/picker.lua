@@ -27,6 +27,21 @@ H.search_and_replace = {
   end,
 }
 
+---@class snacks.picker.Action
+H.open_with_oil = {
+  name = "Open with Oil",
+  action = function(picker, item)
+    if not item then
+      return
+    end
+    local dir = item.dir and item.file or vim.fs.dirname(item.file)
+    picker:close()
+    vim.schedule(function()
+      require("plugins.oil.actions").open_oil(dir)
+    end)
+  end,
+}
+
 return {
   layout = {
     preset = "ivy",
@@ -46,8 +61,14 @@ return {
   },
   actions = {
     search_and_replace = H.search_and_replace,
+    open_with_oil = H.open_with_oil,
   },
   sources = {
     html_colors = require("core.colors").picker,
+    explorer = {
+      win = {
+        list = { keys = { ["O"] = "open_with_oil" } },
+      },
+    },
   },
 }
