@@ -21,6 +21,15 @@ H.opts.main_preview = {
   layout = { preview = { main = true } },
 }
 
+H.opts.explorer = {
+  focus = "input",
+  layout = {
+    preset = "sidebar",
+    preview = "main",
+    layout = { position = "right" },
+  },
+}
+
 H.opts.grep = vim.tbl_extend("force", H.opts.main_preview, { regex = false })
 
 return {
@@ -32,6 +41,7 @@ return {
   { "<leader>sh", function() Snacks.picker.help(H.opts.main_preview) end, desc = "Help Pages" },
   { "<leader>sw", function() Snacks.picker.grep_word(H.opts.main_preview) end, desc = "Word (Visual Selection)", mode = { "n", "x" } },
   { "<leader>sb", function() Snacks.picker.grep_buffers(H.opts.main_preview) end, desc = "Grep (Open Buffers)" },
+  { "<leader>se", function() Snacks.explorer(H.opts.explorer) end, desc = "Explorer" },
   { "<leader>sH", function() Snacks.picker.highlights() end, desc = "Highlights" },
   { "<leader>sc", function() Snacks.picker.html_colors() end, desc = "HTML Colors" },
   { "<leader>sp", function() Snacks.picker.projects() end, desc = "Projects" },
