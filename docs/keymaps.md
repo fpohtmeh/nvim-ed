@@ -97,23 +97,26 @@
 
 | Key          | Action                    |
 | ------------ | ------------------------- |
-| `<C-/>`      | Toggle terminal           |
-| `<leader>tt` | Terminal (window)         |
+| `<C-/>`      | Hide terminal             |
+| `<leader>tt` | Terminal (horizontal)     |
+| `<leader>tv` | Terminal (vertical)       |
 | `<leader>tf` | Terminal (fullscreen)     |
-| `<leader>tv` | Terminal (vsplit)         |
+| `<leader>tb` | Terminal (buffer)         |
 | `<S-Esc>`    | Normal mode (in terminal) |
 
 ## Claude
 
-| Key          | Action                 |
-| ------------ | ---------------------- |
-| `<leader>ar` | Toggle Claude (resume) |
-| `<leader>an` | Toggle Claude (new)    |
-| `<leader>at` | Send text              |
-| `<leader>as` | Submit text            |
-| `<leader>aq` | Send quickfix list     |
-| `<leader>ac` | Commit                 |
-| `<leader>ax` | Clear                  |
+| Key          | Action                       |
+| ------------ | ---------------------------- |
+| `<leader>aa` | Open Claude (bottom)         |
+| `<leader>ar` | Resume session               |
+| `<leader>at` | Send text                    |
+| `<leader>as` | Submit text                  |
+| `<leader>aq` | Send quickfix list           |
+| `<leader>af` | Send file path               |
+| `<leader>ac` | Commit                       |
+| `<leader>ax` | Clear                        |
+| `<A-t>`      | Toggle window (float/bottom) |
 
 ## Tasks (Overseer)
 
