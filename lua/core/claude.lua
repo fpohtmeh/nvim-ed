@@ -136,8 +136,8 @@ H.show = function(style)
   H.term:focus()
 end
 
-function M.bottom()
-  H.show("bottom")
+function M.show()
+  H.show(H.style or "bottom")
 end
 
 function M.toggle_style()

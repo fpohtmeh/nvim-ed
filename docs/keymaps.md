@@ -108,7 +108,7 @@
 
 | Key          | Action                       |
 | ------------ | ---------------------------- |
-| `<leader>aa` | Open Claude (bottom)         |
+| `<leader>aa` | Show                         |
 | `<leader>ar` | Resume session               |
 | `<leader>at` | Send text                    |
 | `<leader>as` | Submit text                  |
