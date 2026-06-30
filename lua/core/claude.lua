@@ -86,21 +86,34 @@ H.win = function(style)
   }, H.geometry(style))
 end
 
-H.cmd = function(action)
+H.cmd = function(flags)
   local base = "claude --settings " .. H.hooks_ref
-  local flag = action == "resume" and "--resume" or "--continue"
-  return base .. " " .. flag .. " || " .. base
+  if not flags or #flags == 0 then
+    return base
+  end
+  local cmd = base .. " " .. table.concat(flags, " ")
+  if vim.tbl_contains(flags, "--continue") then
+    return cmd .. " || " .. base
+  end
+  return cmd
 end
 
-H.run = function(style, action)
+H.run = function(style, flags)
   H.style = style
   H.cwd = fs.tab_cwd()
-  H.term = Snacks.terminal(H.cmd(action), {
+  H.term = Snacks.terminal(H.cmd(flags or { "--continue" }), {
     cwd = H.cwd,
     win = H.win(style),
     env = { terminal_style = "claude", CLAUDE_HOOKS = H.hooks },
   })
 end
+
+H.launch_options = {
+  { text = "Continue", flag = "--continue" },
+  { text = "Resume", flag = "--resume" },
+  { text = "No system prompt", flag = "--system-prompt '.'" },
+  { text = "Extra flags...", input = true },
+}
 
 H.close = function()
   if H.term and H.term:buf_valid() then
@@ -144,9 +157,40 @@ function M.toggle_style()
   H.show(H.style == "float" and "bottom" or "float")
 end
 
-function M.resume()
+H.launch = function(flags)
   H.close()
-  H.run(H.style or "float", "resume")
+  H.run(H.style or "float", flags)
+end
+
+function M.open()
+  Snacks.picker({
+    title = "Claude flags",
+    items = H.launch_options,
+    format = "text",
+    layout = { preset = "select" },
+    confirm = function(picker, _)
+      local selected = picker:selected({ fallback = true })
+      picker:close()
+      local flags, custom = {}, false
+      for _, item in ipairs(selected) do
+        if item.input then
+          custom = true
+        else
+          table.insert(flags, item.flag)
+        end
+      end
+      if not custom then
+        return H.launch(flags)
+      end
+      vim.ui.input({ prompt = "claude flags: " }, function(input)
+        if not input then
+          return
+        end
+        vim.list_extend(flags, vim.split(input, "%s+", { trimempty = true }))
+        H.launch(flags)
+      end)
+    end,
+  })
 end
 
 function M.send(text, submit)
