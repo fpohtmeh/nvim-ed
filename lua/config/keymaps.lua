@@ -89,19 +89,6 @@ map("n", "<leader>tv", terminal.open_vsplit, { desc = "Vertical" })
 map("n", "<leader>tf", terminal.open_float, { desc = "Fullscreen" })
 map("n", "<leader>tb", terminal.open_here, { desc = "Buffer" })
 
--- Claude
-local claude = require("core.claude")
--- stylua: ignore start
-map("n", "<leader>aa", claude.show, { desc = "Show" })
-map("n", "<leader>ao", claude.open, { desc = "Open with options" })
-map("n", "<leader>at", function() claude.input(false) end, { desc = "Send Text" })
-map("n", "<leader>as", function() claude.input(true) end, { desc = "Submit Text" })
-map("n", "<leader>aq", function() claude.send_qf(true) end, { desc = "Send Quickfix" })
-map("n", "<leader>af", claude.send_file, { desc = "Send File" })
-map("n", "<leader>ac", claude.commit, { desc = "Commit" })
-map("n", "<leader>ax", claude.clear, { desc = "Clear" })
--- stylua: ignore end
-
 -- Lazygit
 if vim.fn.executable("lazygit") == 1 then
   map("n", "<leader>G", terminal.lazy_git, { desc = "Lazygit" })
