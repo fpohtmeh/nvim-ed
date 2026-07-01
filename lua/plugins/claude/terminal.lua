@@ -3,6 +3,7 @@ local H = {}
 
 local fs = require("core.fs")
 local terminal = require("core.terminal")
+local context = require("core.context")
 
 H.term = nil
 H.enter = "\r"
@@ -198,18 +199,25 @@ function M.send_selection()
   M.send(table.concat(lines, "\n"), { focus = true, paste = true })
 end
 
-function M.send_file()
-  local path = fs.buf_full_path()
-  if path == "" then
-    vim.notify("No file in current buffer", vim.log.levels.WARN)
-    return
+H.send_paths = function(paths)
+  local refs = {}
+  for _, path in ipairs(paths) do
+    if path ~= "" then
+      table.insert(refs, "@" .. path)
+    end
   end
-  path = fs.to_unix(path)
-  local cwd = fs.to_unix(H.cwd or fs.tab_cwd())
-  if path:sub(1, #cwd + 1) == cwd .. "/" then
-    path = path:sub(#cwd + 2)
+  if #refs == 0 then
+    return vim.notify("No file to send", vim.log.levels.WARN)
   end
-  M.send("@" .. path .. " ", { focus = true })
+  M.send(table.concat(refs, " ") .. " ", { focus = true })
+end
+
+function M.send_filepath()
+  H.send_paths(context.selection.full_path)
+end
+
+function M.send_relative_path()
+  H.send_paths(context.selection.relative_path)
 end
 
 function M.commit()

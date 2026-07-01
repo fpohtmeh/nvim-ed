@@ -114,7 +114,8 @@
 | `<leader>ao` | Open with options            |
 | `<leader>at` | Send text / visual selection |
 | `<leader>aq` | Send quickfix list           |
-| `<leader>af` | Send file path               |
+| `<leader>af` | Send filepath                |
+| `<leader>ar` | Send relative path           |
 | `<leader>ac` | Commit                       |
 | `<leader>ax` | Clear                        |
 | `<A-t>`      | Toggle window (float/bottom) |
