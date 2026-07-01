@@ -14,13 +14,13 @@ H.git_output = function(args)
 end
 
 M.yank_filepath = function()
-  H.yank(context.current.full_path)
+  H.yank(table.concat(context.selection.full_path, "\n"))
 end
 M.yank_filename = function()
-  H.yank(context.current.filename)
+  H.yank(table.concat(context.selection.filename, "\n"))
 end
 M.yank_relative_path = function()
-  H.yank(context.current.relative_path)
+  H.yank(table.concat(context.selection.relative_path, "\n"))
 end
 M.yank_directory = function()
   H.yank(context.current.dir_path)
