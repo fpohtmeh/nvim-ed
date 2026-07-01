@@ -230,11 +230,7 @@ function M.send_qf()
     local fname = item.bufnr > 0 and vim.api.nvim_buf_get_name(item.bufnr) or ""
     return fname .. ":" .. item.lnum .. ": " .. item.text
   end, items)
-  vim.ui.input({ prompt = "Claude: " }, function(input)
-    if input then
-      M.send(input .. "\n" .. table.concat(lines, "\n"), { focus = true, paste = true })
-    end
-  end)
+  M.send(table.concat(lines, "\n") .. "\n", { focus = true, paste = true })
 end
 
 return M
