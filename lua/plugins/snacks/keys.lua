@@ -38,6 +38,7 @@ return {
   { "<leader>/", function() Snacks.picker.grep(H.opts.grep) end, desc = "Grep" },
   { "<leader>b", function() Snacks.picker.buffers(H.opts.main_preview) end, desc = "Buffers" },
   { "<leader>sl", function() Snacks.picker.lsp_symbols(H.opts.lsp) end, desc = "Lsp Symbols (Buffer)" },
+  { "<leader>sq", function() Snacks.picker.diagnostics_buffer(H.opts.main_preview) end, desc = "Diagnostics (Buffer)" },
   { "<leader>sh", function() Snacks.picker.help(H.opts.main_preview) end, desc = "Help Pages" },
   { "<leader>sw", function() Snacks.picker.grep_word(H.opts.main_preview) end, desc = "Word (Visual Selection)", mode = { "n", "x" } },
   { "<leader>sb", function() Snacks.picker.grep_buffers(H.opts.main_preview) end, desc = "Grep (Open Buffers)" },

@@ -53,6 +53,7 @@
 | `<leader>/`       | Grep                         |
 | `<leader>b`       | Buffers                      |
 | `<leader>sl`      | LSP symbols (buffer)         |
+| `<leader>sq`      | Diagnostics (buffer)         |
 | `<leader>sh`      | Help pages                   |
 | `<leader>sw`      | Grep word / visual selection |
 | `<leader>sb`      | Grep open buffers            |
