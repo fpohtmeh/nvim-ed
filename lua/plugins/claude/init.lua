@@ -5,6 +5,7 @@ return {
   "folke/snacks.nvim",
   keys = {
     { "<leader>aa", claude.show, desc = "Show" },
+    { "<leader>an", claude.new, desc = "New session" },
     { "<leader>ao", claude.open, desc = "Open with options" },
     { "<leader>at", function() claude.input(false) end, desc = "Send Text" },
     { "<leader>as", function() claude.input(true) end, desc = "Submit Text" },

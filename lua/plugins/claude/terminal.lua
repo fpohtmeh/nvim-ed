@@ -159,6 +159,10 @@ function M.open()
   })
 end
 
+function M.new()
+  H.launch({})
+end
+
 function M.send(text, submit)
   local buf = H.term and H.term.buf
   if buf and vim.api.nvim_buf_is_valid(buf) then

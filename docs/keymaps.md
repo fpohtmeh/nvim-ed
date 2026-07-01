@@ -109,6 +109,7 @@
 | Key          | Action                       |
 | ------------ | ---------------------------- |
 | `<leader>aa` | Show                         |
+| `<leader>an` | New session                  |
 | `<leader>ar` | Resume session               |
 | `<leader>at` | Send text                    |
 | `<leader>as` | Submit text                  |
