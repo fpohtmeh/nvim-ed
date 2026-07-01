@@ -110,9 +110,8 @@
 | ------------ | ---------------------------- |
 | `<leader>aa` | Show                         |
 | `<leader>an` | New session                  |
-| `<leader>ar` | Resume session               |
-| `<leader>at` | Send text                    |
-| `<leader>as` | Submit text                  |
+| `<leader>ao` | Open with options            |
+| `<leader>at` | Send text / visual selection |
 | `<leader>aq` | Send quickfix list           |
 | `<leader>af` | Send file path               |
 | `<leader>ac` | Commit                       |

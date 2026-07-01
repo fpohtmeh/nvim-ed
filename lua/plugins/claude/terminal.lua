@@ -6,6 +6,8 @@ local terminal = require("core.terminal")
 
 H.term = nil
 H.enter = "\r"
+H.paste_open = "\27[200~"
+H.paste_close = "\27[201~"
 
 H.hooks = (function()
   local base = vim.fn.stdpath("config"):gsub("\\", "/") .. "/scripts"
@@ -163,23 +165,37 @@ function M.new()
   H.launch({})
 end
 
-function M.send(text, submit)
+function M.send(text, opts)
+  opts = opts or {}
+  if opts.paste then
+    text = H.paste_open .. text .. H.paste_close
+  end
   local buf = H.term and H.term.buf
   if buf and vim.api.nvim_buf_is_valid(buf) then
-    return vim.fn.chansend(vim.b[buf].terminal_job_id, submit and text .. H.enter or text)
+    vim.fn.chansend(vim.b[buf].terminal_job_id, opts.submit and text .. H.enter or text)
+    if opts.focus then
+      H.show(H.style or "float")
+    end
+    return
   end
   H.show(H.style or "float")
   vim.defer_fn(function()
-    M.send(text, submit)
+    M.send(text, opts)
   end, 1000)
 end
 
-function M.input(submit)
+function M.input()
   vim.ui.input({ prompt = "Claude: " }, function(input)
     if input then
-      M.send(input, submit)
+      M.send(input, { focus = true })
     end
   end)
+end
+
+function M.send_selection()
+  local mode = vim.fn.mode()
+  local lines = vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."), { type = mode })
+  M.send(table.concat(lines, "\n"), { focus = true, paste = true })
 end
 
 function M.send_file()
@@ -193,18 +209,18 @@ function M.send_file()
   if path:sub(1, #cwd + 1) == cwd .. "/" then
     path = path:sub(#cwd + 2)
   end
-  M.send("@" .. path .. " ", false)
+  M.send("@" .. path .. " ", { focus = true })
 end
 
 function M.commit()
-  M.send("commit", true)
+  M.send("commit", { submit = true })
 end
 
 function M.clear()
-  M.send("/clear", true)
+  M.send("/clear", { submit = true })
 end
 
-function M.send_qf(submit)
+function M.send_qf()
   local items = vim.fn.getqflist()
   if #items == 0 then
     vim.notify("Quickfix list is empty", vim.log.levels.WARN)
@@ -216,7 +232,7 @@ function M.send_qf(submit)
   end, items)
   vim.ui.input({ prompt = "Claude: " }, function(input)
     if input then
-      M.send(input .. H.enter .. table.concat(lines, H.enter), submit)
+      M.send(input .. "\n" .. table.concat(lines, "\n"), { focus = true, paste = true })
     end
   end)
 end
