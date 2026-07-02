@@ -16,6 +16,34 @@ vim.api.nvim_create_autocmd("FileType", {
   callback = disable_indentation,
 })
 
+-- Dashboard
+local function dashboard_to_new_file()
+  vim.schedule(function()
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      if vim.api.nvim_win_is_valid(win) and vim.bo[vim.api.nvim_win_get_buf(win)].filetype == "snacks_dashboard" then
+        vim.api.nvim_win_call(win, function()
+          vim.cmd("enew")
+        end)
+      end
+    end
+  end)
+end
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "qf",
+  callback = dashboard_to_new_file,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "snacks_picker_input",
+  callback = function(ev)
+    local win = vim.fn.bufwinid(ev.buf)
+    if win ~= -1 and vim.api.nvim_win_get_config(win).relative ~= "" then
+      dashboard_to_new_file()
+    end
+  end,
+})
+
 -- Yank
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
