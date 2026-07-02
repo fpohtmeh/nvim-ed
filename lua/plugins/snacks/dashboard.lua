@@ -44,7 +44,7 @@ H.keys = {
   { action = ':lua require("core.fs").create_new_file()', desc = "New file", icon = "", key = "n" },
   { action = ':lua require("persistence").load()', desc = "Restore Session", icon = "", key = "s" },
   { action = H.pick_color, desc = "Pick color", icon = "󰸌", key = "c" },
-  { action = ":qa", desc = "Quit", icon = "", key = "q" },
+  { action = ":q", desc = "Quit", icon = "", key = "q" },
 }
 
 H.lazy_stats = nil
