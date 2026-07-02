@@ -56,7 +56,35 @@ H.oil.selection = function()
   return paths
 end
 
-H.types = { H.oil }
+H.snacks = {}
+H.snacks.picker = function()
+  for _, picker in ipairs(Snacks.picker.get()) do
+    if picker:is_focused() then
+      return picker
+    end
+  end
+end
+H.snacks.matches = function()
+  return H.snacks.picker() ~= nil
+end
+H.snacks.path = function(item)
+  return item and require("snacks.picker.util").path(item) or ""
+end
+H.snacks.current = function()
+  return H.snacks.path(H.snacks.picker():current())
+end
+H.snacks.selection = function()
+  local paths = {}
+  for _, item in ipairs(H.snacks.picker():selected({ fallback = true })) do
+    local path = H.snacks.path(item)
+    if path ~= "" then
+      table.insert(paths, path)
+    end
+  end
+  return paths
+end
+
+H.types = { H.snacks, H.oil }
 
 H.active = function()
   for _, context in ipairs(H.types) do
